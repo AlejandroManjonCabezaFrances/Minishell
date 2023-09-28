@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2023/09/18 15:34:05 by amanjon-         ###   ########.fr        #
+#    Updated: 2023/09/28 16:01:30 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,13 @@ $(LIBFT): $(LIBFT_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 ##########basic library compiled##########
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)#### minishell has been compiled ####$(COLOR_OFF)"
-	@echo "$(GREEN)      -Has been compiled $(COLOR_OFF)"
+	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	@echo "$(GREEN)#### minishell ####$(COLOR_OFF)"
+	@echo "    -Has been compiled ✅"
 
 ##########all .o files removed##########
 clean:

@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 12:50:11 by amanjon-          #+#    #+#              #
-#    Updated: 2023/09/18 15:35:26 by amanjon-         ###   ########.fr        #
+#    Updated: 2023/09/19 13:10:12 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ $(OBJ_DIR)%.o:$(SRC3_DIR)%.c
 $(NAME): $(OBJ)
 	@$(LIB) $(NAME) $(OBJ)
 	@echo "$(GREEN)#### Libft, ft_printf & GNL ####$(COLOR_OFF)"
-	@echo "$(GREEN)      -Has been compiled $(COLOR_OFF)"
+	@echo "    -Has been compiled ✅ \n"
 
 clean:
 	@$(RM) $(OBJ)
