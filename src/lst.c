@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 13:29:36 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/09/29 18:31:15 by amanjon-         ###   ########.fr       */
+/*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
+/*   Updated: 2023/09/29 18:31:39 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_node	*ft_lstnew_mshell(char *content)
 {
-	t_list	*aux;
+	t_node	*k;
+
+	k = malloc(sizeof(t_node));
+	if (k == NULL)
+		return (NULL);
+	k->content = content;
+	k->next = NULL;
+	return (k);
+}
+
+void	ft_lstadd_mshell(t_node **lst, t_node *new)
+{
+	t_node	*aux;
 
 	aux = *lst;
 	if (*lst == NULL)
@@ -29,21 +41,3 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		aux->next = new;
 	}
 }
-
-/* int	main(void)
-{
-	t_list *head;
-	t_list *new;
-
-	head = ft_lstnew("hola");
-	new = ft_lstnew("adios");
-	ft_lstadd_back(&head, new);
-	while (head)
-	{
-		printf("%s\n", head->content);
-		head = head->next;
-	}
-	return (0);
-} */
-
-/* Descripción Añade el nodo ’new’ al final de la lista ’lst’. */

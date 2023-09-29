@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/09/28 16:54:17 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/09/29 18:59:32 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,22 @@ int ft_signal(void)
 	return (0);
 }
 
-int ft_save_token(t_process *process, t_list *list)
-{
-	
-	return (0);
-}
 
-int ft_tokens(t_process *process, int *i)
+int ft_tokens(t_process *process, int i)
 {  
-		if (process->line[*i] == '>')
-			return (GREAT);
-		if (process->line[*i] == '<')
-			return (LESS);
-		if (process->line[*i] == '>' && process->line[*i + 1] == '>')
-			return (GREATGREAT);
-		if (process->line[*i] == '<' && process->line[*i + 1] == '<')
+		if (process->line[i] == '>' && process->line[i + 1] == '>')
+			return (APPEND);
+		else if (process->line[i] == '<' && process->line[i + 1] == '<')
 			return (HEREDOC);
-		if (process->line[*i] == '>' && process->line[*i + 1] == '&')
+		else if (process->line[i] == '>')
+			return (GREAT);
+		else if (process->line[i] == '<')
+			return (LESS);
+		else if (process->line[i] == '>' && process->line[i + 1] == '&')
 			return (GREATAMPERSAND);
-		if (process->line[*i] == '|')
+		else if (process->line[i] == '|')
 			return (PIPE);
-		if (process->line[*i] == '\0')
+		else if (process->line[i] == '\0')
 			return (END);
 	return (1);
 }
@@ -66,11 +61,41 @@ int ft_token_size(t_process *process)
 	len = ft_strlen(&process->line[i]);
 	while (process->line != NULL && process->line[i] && len != 0)
 	{
-		if (ft_tokens(process, &i) != 1)
+		process->type_tokens = ft_tokens(process, i);
+		if (process->type_tokens != 1)
+		{
+			printf("process.line[i] + i+1 = %c%c\n", process->line[i], process->line[i+1]);
+			printf("i = %d\n", i);
 			return (i);
+		}
 		i++;
 	}
 	return (1);
+}
+
+int ft_save_token(t_process *process, t_node *node)
+{
+	t_node *temp;
+	int i;
+	char *token;
+
+	i = 0;
+	temp = ft_lstnew_mshell(NULL);
+	i = ft_token_size(process);
+	printf("i = %d\n", i);
+	printf("process->type_tokens == %d\n", process->type_tokens);
+	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
+		token = ft_substr(process->line, i, 2);
+	else
+		token = ft_substr(process->line, i, 1);
+	node = ft_lstnew_mshell(token);
+	ft_lstadd_mshell(&node, temp);
+	// while (tokens)
+	// {
+	// 	printf("temp -->%s\n", tokens->content);
+	// 	tokens = tokens->next;
+	// }
+	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -78,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	(void) env;
 	t_process	process;
-	t_list		list;
+	t_node		node;
 	int i;
 	
 	i = 0;
@@ -88,17 +113,19 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	process.line = NULL;
-	process.line = readline("minishell-3.2$ ");
-	if (process.line == NULL)
+	while (1)
 	{
-		printf("function readline don `t open well\n");
-		exit (0);
+		process.line = readline("minishell-3.2$ ");
+		if (process.line == NULL)
+		{
+			printf("function readline don `t open well\n");
+			exit (0);
+		}
+		/* i = ft_token_size(&process); */
+		ft_save_token(&process, &node);
+		/* printf("i = %d\n", i); */
+		printf("process.line = %s\n", process.line);
 	}
-	i = ft_token_size(&process);
-	ft_save_token(&process, &list);
-	printf("i = %d\n", i);
-	printf("process.line[i] = %c\n", process.line[i]);
-	printf("process.line = %s\n", process.line);
 	ft_signal();
 	free(process.line);
 	return (0);
