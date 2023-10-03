@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2023/09/29 11:56:31 by amanjon-         ###   ########.fr        #
+#    Updated: 2023/10/03 10:28:57 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
 DEBUG = -g3 -fsanitize=address
 RM = rm -f
-SRC = main.c lst.c
+SRC = main.c lst.c signals.c
 
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
@@ -26,11 +26,15 @@ OBJ_DIR = ./obj/
 OBJ_FILES = $(SRC:.c=.o)
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-######COLOURS######
+# READLINE
+RLINE_INC	= -I/sgoinfre/students/$(USER)/homebrew/opt/readline/include
+RLINE_L		= -lreadline -L /sgoinfre/students/$(USER)/homebrew/opt/readline/lib
+
+# COLOURS
 GREEN = \033[0;32m
 COLOR_OFF = \033[0m
 
-##########RULES##########
+# RULES
 all: $(OBJ_DIR) $(LIBFT_DIR) $(NAME)
 
 $(LIBFT): $(LIBFT_DIR)
@@ -39,21 +43,21 @@ $(LIBFT): $(LIBFT_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(RLINE_INC) -c $< -o $@
 
-##########basic library compiled##########
+# basic library compiled
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT) $(RLINE_L) -o $(NAME)
 	@echo "$(GREEN)#### minishell ####$(COLOR_OFF)"
 	@echo "    -Has been compiled ✅"
 
-##########all .o files removed##########
+# all .o files removed
 clean:
 	@$(RM) $(OBJ)
 	@make clean -C libft
 	@rm -rf $(OBJ_DIR)
 
-##########library .a file removed##########
+# library .a file removed
 fclean: clean
 	@$(RM) $(NAME)
 	@make fclean -C libft

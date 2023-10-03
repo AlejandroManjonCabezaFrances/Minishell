@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:31:36 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:31:57 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:45:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	*ft_memset(void *b, int c, size_t len)
 	return (result);
 }
 
-/*int	main(void)
-{
-    char	b[15] = "ordenador";
+// int	main(void)
+// {
+//     char	b[15] = "ordenador";
 
-	//printf("antes del memset: %s\n", str);
-	printf("%s\n", memset(b, 'a', sizeof(char) * 15));
-	//printf("despues de memset; %s", str);
-	printf("%s", ft_memset(b, 'a', 15));
-	return (0);
-}*/
+// 	// printf("antes del memset: %s\n", b);
+// 	// printf("%s\n", memset(b, 'a', sizeof(char) * 15));
+// 	// printf("despues de memset; %s", b);
+// 	//printf("%s", ft_memset(b, 'a', 10));
+// 	return (0);
+// }

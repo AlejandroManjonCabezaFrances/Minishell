@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/09/29 18:31:39 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/02 08:41:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_node	*ft_lstnew_mshell(char *content)
 	return (k);
 }
 
-void	ft_lstadd_mshell(t_node **lst, t_node *new)
+void	ft_lstadd_back_mshell(t_node **lst, t_node *new)
 {
 	t_node	*aux;
 
