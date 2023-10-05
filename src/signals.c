@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/03 10:27:36 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/04 09:08:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_signal_quit(void)
 {
 	struct sigaction act;
-	(void) signal;
 	
 	ft_memset(&act, 0, sizeof(act));
 	act.sa_handler = SIG_IGN;
@@ -25,6 +24,7 @@ void	ft_signal_quit(void)
 void	ft_signal_reset_prompt(int signal)
 {
 	(void) signal;
+    
 	g_info.signal_code = 130;
 	printf("\n");
 	rl_on_new_line();

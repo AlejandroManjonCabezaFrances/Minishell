@@ -6,12 +6,41 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/03 10:28:26 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:32:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/**
+ * This function disable chars printed by ctrl+c '^C'
+ * @param	void
+ * @return	void
+*/
+static void	ft_disable_ctrl_c_printing_chars(void)
+{
+	int rc;
+
+	rc = tcgetattr(0, &g_info.termios);
+	if (rc != 0)
+	{
+		perror("tcgetattr");
+		exit (1);
+	}
+	g_info.termios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &g_info.termios);
+	if (rc != 0)
+	{
+		perror("tcsetattr");
+		exit(1);
+	}
+}
+
+/**
+ * This function find commands_tokens
+ * @param	t_process *process, int i 
+ * @return	int
+*/
 int ft_tokens(t_process *process, int i)
 {  
 		if (process->line[i] == '>' && process->line[i + 1] == '>')
@@ -31,6 +60,11 @@ int ft_tokens(t_process *process, int i)
 	return (1);
 }
 
+/**
+ * This function determines size of command_token find in the line commands (prompt)
+ * @param	t_process *process
+ * @return	int / 1.		int = size comand token / 1 = not find command token
+*/
 int ft_token_size(t_process *process)
 {
 	int i;
@@ -53,7 +87,7 @@ int ft_token_size(t_process *process)
 	return (1);
 }
 
-int ft_save_token(t_process *process, t_node *node)
+int ft_save_command_token(t_process *process, t_node *node)
 {
 	t_node *temp;
 	int i;
@@ -85,26 +119,28 @@ int	main(int argc, char **argv, char **env)
 	t_node		node;
 	int i;
 	
+	process.line = NULL;
+	process.token = NULL;
+	node.content = NULL;
 	i = 0;
+	ft_disable_ctrl_c_printing_chars();
 	if (argc != 1)
 	{
 		printf("enter only the executable ./minishell, thanks\n");
 		return (1);
 	}
-	process.line = NULL;
-	process.token = NULL;
-	node.content = NULL;
-	ft_signals();
 	while (1)
 	{
+		ft_signals();
 		process.line = readline("minishell-3.2$ ");
 		if (process.line == NULL)
 		{
 			printf("function readline don `t open well\n");
 			exit (0);
 		}
-		ft_save_token(&process, &node);
+		ft_save_command_token(&process, &node);
 		printf("process.line = %s\n", process.line);
+		tcsetattr(0, 0, &g_info.termios);
 	}
 	free(process.line);
 	return (0);
