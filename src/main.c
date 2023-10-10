@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/04 10:32:08 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:37:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ft_disable_ctrl_c_printing_chars(void)
  * @param	t_process *process, int i 
  * @return	int
 */
-int ft_tokens(t_process *process, int i)
+int ft_tokens_operators(t_process *process, int i)
 {  
 		if (process->line[i] == '>' && process->line[i + 1] == '>')
 			return (APPEND);
@@ -57,7 +57,147 @@ int ft_tokens(t_process *process, int i)
 			return (PIPE);
 		else if (process->line[i] == '\0')
 			return (END);
-	return (1);
+	return (FALSE);
+}
+
+// /**
+//  * This function find open/close quotes and rest of prompt.
+//  * @param	t_process *process, int i 
+//  * @return	int, size of prompt ?¿?¿?¿
+// */
+// int	ft_token_word_aux(t_process *process, int i) 
+// {
+//     char	quote;
+// 	int		j;
+// 	char	*word;
+// 	int		flag;
+// 	t_node *temp;
+	
+ 
+// 	quote = 0;
+// 	j = i;
+// 	flag = 0;
+// 	temp = NULL;
+//     while (process->line[j])
+// 	{
+//         if (process->line[j] == '\'' || (process->line[j] == '"' && j == i))
+// 		{
+//             quote = process->line[j];	// inicia comillas
+// 			j++;
+// 		}
+//         else if (process->line[j] == quote)		// NO ENTRA AQUI   #########################################################################
+// 		{
+// 			quote = 0;					//	finaliza comillas
+// 			word = ft_substr(process->line, i, j - i);
+// 			temp = ft_lstnew_mshell(word);
+// 			ft_lstadd_back_mshell(&node, temp);
+// 			j++;
+// 		}
+// 		else
+//             j++;
+// 		while (node)
+// 		{
+// 			printf("temp = %s\n", node->content);
+// 			node = node->next;
+// 		}
+// 		// else if ((flag) == 0 && !ft_is_space(process->line[i]) && !ft_what_delimiter(process->line[i]))
+// 		// {
+//         //     flag = 1;					//	empieza palabra
+//         //     i++;
+//         // }
+// 		// else if ((flag) == 1 && (ft_is_space(process->line[i]) || ft_what_delimiter(process->line[i])))
+// 		// {
+//         //     flag = 0;					//	finaliza palabra
+//         //     i++;
+//         // }
+//     }
+// 	return (0);
+// }
+
+// int	ft_tokens_words(t_process *process, int i)
+// {
+// 	process->type_quotes = ft_what_quotes(process->line[i]);
+// 	ft_token_word_aux(process, i);
+	
+// 	return (0);
+// }
+
+
+
+
+int ft_tokens_words(t_process *process, int i)
+{
+    int j;
+    int type;
+    char *word;
+	t_node *temp;
+
+	type = 0;
+	j = i;
+	word = NULL;
+	temp = NULL;
+    while (process->line[j])
+    {
+        if (ft_is_space(process->line[j]) || ft_what_delimiter(process->line[j]))
+        {
+            if (type)
+            {
+                word = ft_substr(process->line, i, j - i);
+                ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(word));
+            }
+            return (j);
+        }
+        else if (!type)
+        {
+            i = j;
+            type = 1;
+        }
+        else if (ft_what_quotes(process->line[j]) == type)
+        {
+            word = ft_substr(process->line, i + 1, j - i - 1);
+            ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(word));
+            type = 0;
+        }
+        j++;
+    }
+    if (type)
+    {
+        word = ft_substr(process->line, i, j - i);
+        ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(word));
+    }
+	while (temp)
+	{
+		printf("temp = %s\n", temp->content);
+		temp = temp->next;
+	}
+    return (j);
+}
+
+
+/**
+ * This function save commands_tokens in list.
+ * @param	t_process *process, t_node *node, int *i
+ * @return	int
+*/
+void	ft_save_command_token(t_process *process, int *i)
+{
+	t_node *temp;
+	
+	temp = ft_lstnew_mshell(NULL);
+	process->type_tokens = ft_tokens_operators(process, *i);
+	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
+	{
+		temp->content = ft_substr(process->line, *i, 2);
+		*i = *i + 1;
+	}
+	else
+		temp->content = ft_substr(process->line, *i, 1);
+	ft_lstadd_back_mshell(&process->tokens, temp);
+	while (temp)
+	{
+		printf("temp = %s\n", temp->content);
+		temp = temp->next;
+	}
 }
 
 /**
@@ -71,57 +211,29 @@ int ft_token_size(t_process *process)
 	int len;
 
 	i = 0;
-	len = 0;
 	len = ft_strlen(&process->line[i]);
 	while (process->line != NULL && process->line[i] && len != 0)
 	{
-		process->type_tokens = ft_tokens(process, i);
-		if (process->type_tokens != 1)
-		{
-			printf("process.line[i] + i+1 = %c + %c\n", process->line[i], process->line[i+1]);
-			printf("i = %d\n", i);
-			return (i);
-		}
+		if (ft_what_delimiter(process->line[i]))
+			ft_save_command_token(process, &i);
+		else
+			ft_tokens_words(process, i);
 		i++;
-	}
-	return (1);
-}
-
-int ft_save_command_token(t_process *process, t_node *node)
-{
-	t_node *temp;
-	int i;
-
-	i = 0;
-	temp = ft_lstnew_mshell(NULL);
-	i = ft_token_size(process);
-	printf("i = %d\n", i);
-	printf("process->type_tokens == %d\n", process->type_tokens);
-	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
-		process->token = ft_substr(process->line, i, 2);
-	else
-		process->token = ft_substr(process->line, i, 1);
-	node = ft_lstnew_mshell(process->token);
-	ft_lstadd_back_mshell(&node, temp);
-	while (node)
-	{
-		printf("temp = %s\n", node->content);
-		node = node->next;
 	}
 	return (0);
 }
+
 
 int	main(int argc, char **argv, char **env)
 {
 	(void) argv;
 	(void) env;
 	t_process	process;
-	t_node		node;
+	/* t_node		node; */
 	int i;
 	
 	process.line = NULL;
-	process.token = NULL;
-	node.content = NULL;
+	/* node.content */
 	i = 0;
 	ft_disable_ctrl_c_printing_chars();
 	if (argc != 1)
@@ -138,7 +250,7 @@ int	main(int argc, char **argv, char **env)
 			printf("function readline don `t open well\n");
 			exit (0);
 		}
-		ft_save_command_token(&process, &node);
+		ft_token_size(&process);
 		printf("process.line = %s\n", process.line);
 		tcsetattr(0, 0, &g_info.termios);
 	}

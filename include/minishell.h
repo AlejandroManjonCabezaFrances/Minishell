@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/04 15:03:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:44:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,33 @@
 
 
 /* ------ STRUCT ------ */
-typedef struct s_process
-{
-	char			*line;
-	char			*token;
-	int				type_tokens;	// < << > >> | >& \0
-}	t_process;
-
 typedef struct s_node				//para funciones de listas
 {
 	char			*content;
 	struct s_node	*next;
 }	t_node;
 
+typedef struct s_process
+{
+	char			*line;
+	int				type_tokens;	// < << > >> | >& \0
+	int				type_quotes;
+	t_node			*tokens;
+}	t_process;
+
 typedef struct s_info				//para utilizar variable globales o estructuras globales
 {
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 
-}	t_info;							// variable global con tipo de dato 't_info'
+}	t_inf;							// variable global con tipo de dato 't_info'
 
 /* -- DECLARATION VARIABLE GOBAL -- */
-t_info					g_info;
+t_inf					g_info;
 
 /* ------ MACROS ------ */
-#define TRUE			0
-#define FALSE			1
+#define FALSE			0
+#define TRUE			1
 #define GREAT			3	//'>'
 #define	LESS			4	//'<'
 #define	APPEND			5	//'>>'
@@ -71,6 +72,8 @@ t_info					g_info;
 #define	GREATAMPERSAND	7	//'>&'
 #define	PIPE			8	//'|'
 #define	END				9	//'\0'
+#define SINGLE_QUOTES	10	//'\''
+#define DOUBLE_QUOTES	11	//"""
 
 // enum {
 //     GREAT = 3,
@@ -79,19 +82,26 @@ t_info					g_info;
 //     HEREDOC = 6,
 //     GREATAMPERSAND = 7,
 //     PIPE = 8,
-//     END = 9
+//     END = 9,
+// 	SIMPLE_QUOTES = 10,
+// 	DOUBLE_QUOTES = 11
 // };
 
 /* ----------------- FUNCTION ----------------- */
 int			main(int argc, char **argv, char **env);
-int			ft_tokens(t_process *process, int i);
-int			ft_save_command_token(t_process *process, t_node *node);
 t_node		*ft_lstnew_mshell(char *content);
-int			ft_token_size(t_process *process);
 void		ft_lstadd_back_mshell(t_node **lst, t_node *new);
 void		ft_signals(void);
 void		ft_signal_interrupt(void);
 void		ft_signal_reset_prompt(int signal);
 void		ft_signal_quit(void);
+void		ft_save_command_token(t_process *process, int *i);
+int			ft_tokens_operators(t_process *process, int i);
+int			ft_tokens_words(t_process *process, int i);
+int			ft_token_size(t_process *process);
+// int			ft_token_word_aux(t_process *process, int i);
+int			ft_what_delimiter(char c);
+int			ft_what_quotes(char c);
+int			ft_is_space(char c);
 
 #endif
