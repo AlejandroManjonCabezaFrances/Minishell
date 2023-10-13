@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:36:50 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/10 15:37:13 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/13 11:00:59 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int ft_what_delimiter(char c)
 {
 	if (c == '|' || c == '<' || c == '>')
-		return (1);	
+		return (TRUE);	
 	return (FALSE);
 }
 
@@ -31,6 +31,6 @@ int ft_what_quotes(char c)
 int ft_is_space(char c)
 {
 	if (c == ' ')
-		return (1);
+		return (TRUE);
 	return (FALSE);
 }
