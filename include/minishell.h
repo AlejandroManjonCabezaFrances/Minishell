@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/10 13:44:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/13 16:59:00 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,13 @@ t_inf					g_info;
 #define	GREATAMPERSAND	7	//'>&'
 #define	PIPE			8	//'|'
 #define	END				9	//'\0'
+
+
+/*--delimiters --*/
 #define SINGLE_QUOTES	10	//'\''
 #define DOUBLE_QUOTES	11	//"""
 
-// enum {
+// enum delimeters {
 //     GREAT = 3,
 //     LESS = 4,
 //     APPEND = 5,
@@ -91,6 +94,7 @@ t_inf					g_info;
 int			main(int argc, char **argv, char **env);
 t_node		*ft_lstnew_mshell(char *content);
 void		ft_lstadd_back_mshell(t_node **lst, t_node *new);
+void		ft_lstclear_mshell(t_node **lst);
 void		ft_signals(void);
 void		ft_signal_interrupt(void);
 void		ft_signal_reset_prompt(int signal);
@@ -99,9 +103,10 @@ void		ft_save_command_token(t_process *process, int *i);
 int			ft_tokens_operators(t_process *process, int i);
 int			ft_tokens_words(t_process *process, int i);
 int			ft_token_size(t_process *process);
-// int			ft_token_word_aux(t_process *process, int i);
 int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
+void		ft_print_lst(t_node *temp);
+void		ft_find_open_close_quotes(t_process *process, int *j, int *type_quotes);
 
 #endif

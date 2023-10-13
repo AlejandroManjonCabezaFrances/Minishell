@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/02 08:41:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/13 16:58:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,26 @@ void	ft_lstadd_back_mshell(t_node **lst, t_node *new)
 			aux = aux->next;
 		aux->next = new;
 	}
+}
+
+void	ft_print_lst(t_node *temp)
+{
+	while (temp)
+	{
+		printf("temp = %s\n", temp->content);
+		temp = temp->next;
+	}
+}
+
+void	ft_lstclear_mshell(t_node **lst)
+{
+	t_node	*aux;
+
+	while (*lst)
+	{
+		aux = (*lst)->next;
+		free(*lst);
+		(*lst) = aux;
+	}
+	*lst = NULL;
 }

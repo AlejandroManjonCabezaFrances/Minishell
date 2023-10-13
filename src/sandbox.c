@@ -6,11 +6,91 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:20:52 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/09 18:25:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:49:24 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// int	store_word(t_inf *info, char *line, int i)
+// {
+// 	int		j;
+// 	int		type;
+// 	char	*word;
+
+// 	j = i;
+// 	type = is_quote(line[j]);
+// 	if (type)
+// 		j++;
+// 	store_word_aux(line, &j, &type);
+// 	// if (line[j] && type > 0 && !is_space(line[j]))
+// 	// 	type = 0 ;
+// 	while (line[j] && !is_space(line[j]) && !is_delimiter(line[j]))
+// 		j++;
+// 	// if (type > 0) si estas dentro de comillas
+// 	// 	j++;
+// 	if (j > (int)ft_strlen(line))
+// 		return (-1);
+// 	word = ft_substr(line, i, j - i);
+// 	ft_lstadd_back(&info->tokens, ft_lstnew(word));
+// 	if (is_delimiter(line[j - 1]))
+// 		return (j);
+// 	return (j);
+// }
+
+// int ft_tokens_words(t_process *process, int i)
+// {
+//     int j;
+//     int type;
+//     /* char *word; */
+// 	t_node *temp;
+
+// 	type = 0;
+// 	j = i;
+// 	/* word = NULL; */
+// 	temp = NULL;
+// 	printf("antes de la funcion\n");
+//     while (process->line[j])
+//     {
+//         if (ft_is_space(process->line[j]) || ft_what_delimiter(process->line[j]))
+//         {
+// 			printf("if 1/2\n");
+//             if (type)	//type = 0, dentro de comillas
+//             {
+// 				printf("if 2/2\n");
+//                 temp->content = ft_substr(process->line, i, j - i - 1);
+//                 ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
+//             }
+//             return (j);
+//         }
+//         else if (!type)
+//         {
+// 			printf("if2\n");
+//             i = j;
+//             type = 1; // type = 1, fuera de comillas
+//         }
+//         else if (ft_what_quotes(process->line[j]) == type)
+//         {
+// 			printf("if 3\n");
+//             temp->content = ft_substr(process->line, i + 1, j - i - 1);
+//             ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
+//             type = 0;
+//         }
+//         j++;
+//     }
+//     if (type)
+//     {
+// 		printf("if 4\n");
+//         temp->content = ft_substr(process->line, i, j - i);
+//         ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
+//     }
+// 	while (temp)
+// 	{
+// 		printf("temp = %s\n", temp->content);
+// 		temp = temp->next;
+// 	}
+//     return (j);
+// }
 
 
 // void ft_open_close_different_quotes(char *line, int *j, int *type)

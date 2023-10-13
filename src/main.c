@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/13 11:10:54 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:19:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,125 +60,46 @@ int ft_tokens_operators(t_process *process, int i)
 	return (FALSE);
 }
 
-// /**
-//  * This function find open/close quotes and rest of prompt.
-//  * @param	t_process *process, int i 
-//  * @return	int, size of prompt ?¿?¿?¿
-// */
-// int	ft_token_word_aux(t_process *process, int i) 
-// {
-//     char	quote;
-// 	int		j;
-// 	char	*word;
-// 	int		flag;
-// 	t_node *temp;
-	
- 
-// 	quote = 0;
-// 	j = i;
-// 	flag = 0;
-// 	temp = NULL;
-//     while (process->line[j])
-// 	{
-//         if (process->line[j] == '\'' || (process->line[j] == '"' && j == i))
-// 		{
-//             quote = process->line[j];	// inicia comillas
-// 			j++;
-// 		}
-//         else if (process->line[j] == quote)		// NO ENTRA AQUI   #########################################################################
-// 		{
-// 			quote = 0;					//	finaliza comillas
-// 			word = ft_substr(process->line, i, j - i);
-// 			temp = ft_lstnew_mshell(word);
-// 			ft_lstadd_back_mshell(&node, temp);
-// 			j++;
-// 		}
-// 		else
-//             j++;
-// 		while (node)
-// 		{
-// 			printf("temp = %s\n", node->content);
-// 			node = node->next;
-// 		}
-// 		// else if ((flag) == 0 && !ft_is_space(process->line[i]) && !ft_what_delimiter(process->line[i]))
-// 		// {
-//         //     flag = 1;					//	empieza palabra
-//         //     i++;
-//         // }
-// 		// else if ((flag) == 1 && (ft_is_space(process->line[i]) || ft_what_delimiter(process->line[i])))
-// 		// {
-//         //     flag = 0;					//	finaliza palabra
-//         //     i++;
-//         // }
-//     }
-// 	return (0);
-// }
-
-// int	ft_tokens_words(t_process *process, int i)
-// {
-// 	process->type_quotes = ft_what_quotes(process->line[i]);
-// 	ft_token_word_aux(process, i);
-	
-// 	return (0);
-// }
-
-
-
+//type_quptes = 0 --> no estamos dentro de comillas
+//type_quptes = 1 --> dentro de comillas simples o dobles
+void	ft_find_open_close_quotes(t_process *process, int *j, int *type_quotes)
+{
+	// while (process->line[*j] && ft_what_quotes(process->line[*j]) != (*type_quotes)) // Palabras sueltas y comillas opuestas
+	// {
+	// 	if (ft_what_quotes(process->line[*j] > 0))
+	// 		(*type_quotes) = ft_what_quotes(process->line[*j]);
+	// 	(*j)++;
+	// }
+	if (process->line[*j] && (*type_quotes) == 0 && ft_what_quotes(process->line[*j] > 0 ))  // dentro de mismas comillas
+	{
+		(*type_quotes) = ft_what_quotes(process->line[*j]);
+		(*j)++;
+		while (process->line[*j] && ft_what_quotes(process->line[*j] != (*type_quotes)))
+			(*j)++;
+		if (ft_what_quotes(process->line[*j]) == (*type_quotes))
+			(*type_quotes) = 0; //fuera de las comillas
+	}
+}
 
 int ft_tokens_words(t_process *process, int i)
 {
-    int j;
-    int type;
-    /* char *word; */
-	t_node *temp;
-
-	type = 0;
+	t_node	*temp;
+	int 	j;
+	int 	type_quotes;
+	
+	temp = ft_lstnew_mshell(NULL);
 	j = i;
-	/* word = NULL; */
-	temp = NULL;
-	printf("antes de la funcion\n");
-    while (process->line[j])
-    {
-        if (ft_is_space(process->line[j]) || ft_what_delimiter(process->line[j]))
-        {
-			printf("if 1/2\n");
-            if (type)
-            {
-				printf("if 2/2\n");
-                temp->content = ft_substr(process->line, i, j);
-                ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
-            }
-            return (j);
-        }
-        else if (!type)
-        {
-			printf("if2\n");
-            i = j;
-            type = 1;
-        }
-        else if (ft_what_quotes(process->line[j]) == type)
-        {
-			printf("if 3\n");
-            temp->content = ft_substr(process->line, i + 1, j - i - 1);
-            ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
-            type = 0;
-        }
-        j++;
-    }
-    if (type)
-    {
-		printf("if 4\n");
-        // temp->content = ft_substr(process->line, i, j - i);
-        // ft_lstadd_back_mshell(&process->tokens, ft_lstnew_mshell(temp->content));
-    }
-	while (temp)
-	{
-		printf("temp = %s\n", temp->content);
-		temp = temp->next;
-	}
+	type_quotes = ft_what_quotes(process->line[j]); // apertura posible comilla
+	if(type_quotes)	// salta primera comilla
+		j++;
+	ft_find_open_close_quotes(process, &j, &type_quotes);
+	while(process->line[j] && !ft_is_space(process->line[j]) && !ft_what_delimiter(process->line[j]))
+		j++;
+	temp->content = ft_substr(process->line, i, j - i);
+	ft_lstadd_back_mshell(&process->tokens, temp);
+	ft_print_lst(temp);
     return (j);
 }
-
 
 /**
  * This function save commands_tokens in list.
@@ -199,11 +120,7 @@ void	ft_save_command_token(t_process *process, int *i)
 	else
 		temp->content = ft_substr(process->line, *i, 1);
 	ft_lstadd_back_mshell(&process->tokens, temp);
-	while (temp)
-	{
-		printf("temp = %s\n", temp->content);
-		temp = temp->next;
-	}
+	ft_print_lst(temp);
 }
 
 /**
