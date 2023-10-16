@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/13 16:59:00 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:16:56 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_info				//para utilizar variable globales o estructuras globale
 {
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
-
 }	t_inf;							// variable global con tipo de dato 't_info'
 
 /* -- DECLARATION VARIABLE GOBAL -- */
@@ -99,10 +98,10 @@ void		ft_signals(void);
 void		ft_signal_interrupt(void);
 void		ft_signal_reset_prompt(int signal);
 void		ft_signal_quit(void);
-void		ft_save_command_token(t_process *process, int *i);
-int			ft_tokens_operators(t_process *process, int i);
-int			ft_tokens_words(t_process *process, int i);
-int			ft_token_size(t_process *process);
+void		ft_save_tokens_delimiters(t_process *process, int *i);
+int			ft_tokens_delimiters(t_process *process, int *i);
+int			ft_save_tokens_words(t_process *process, int i);
+int			ft_tokenize(t_process *process);
 int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
