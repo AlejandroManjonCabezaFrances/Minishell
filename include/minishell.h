@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/16 15:16:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:08:30 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_process
 {
 	char			*line;
 	int				type_tokens;	// < << > >> | >& \0
-	int				type_quotes;
+	/* int				quote; */
 	t_node			*tokens;
 }	t_process;
 
@@ -106,6 +106,6 @@ int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
 void		ft_print_lst(t_node *temp);
-void		ft_find_open_close_quotes(t_process *process, int *j, int *type_quotes);
+void		ft_find_open_close_quotes(t_process *process, int *j, int *quote);
 
 #endif
