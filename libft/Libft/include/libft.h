@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 09:59:56 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/08/02 12:32:11 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/19 09:36:05 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct s_list
 {
-	void			*content;
+	int				*content;
 	struct s_list	*next;
 }	t_list;
 

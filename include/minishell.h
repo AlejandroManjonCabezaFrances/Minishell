@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/17 09:08:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:40:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,22 @@
 # include "../libft/ft_printf/include/ft_printf.h"
 # include "../libft/Gnl/include/get_next_line.h"
 
-
 /* ------ STRUCT ------ */
-typedef struct s_node				//para funciones de listas
+/* typedef struct s_node				//para funciones de listas
 {
 	char			*content;
 	struct s_node	*next;
-}	t_node;
+}	t_node; */
 
 typedef struct s_process
 {
-	char			*line;
-	int				type_tokens;	// < << > >> | >& \0
-	/* int				quote; */
-	t_node			*tokens;
+	char				*line;
+	int					type_tokens;	// < << > >> | >& \0
+	char				*content;
+	struct s_process	*next;
 }	t_process;
 
-typedef struct s_info				//para utilizar variable globales o estructuras globales
+typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
@@ -91,21 +90,21 @@ t_inf					g_info;
 
 /* ----------------- FUNCTION ----------------- */
 int			main(int argc, char **argv, char **env);
-t_node		*ft_lstnew_mshell(char *content);
-void		ft_lstadd_back_mshell(t_node **lst, t_node *new);
-void		ft_lstclear_mshell(t_node **lst);
+t_process	*ft_lstnew_mshell(char *content);
+void		ft_lstadd_back_mshell(t_process **lst, t_process *new);
+void		ft_lstclear_mshell(t_process **lst);
 void		ft_signals(void);
 void		ft_signal_interrupt(void);
 void		ft_signal_reset_prompt(int signal);
 void		ft_signal_quit(void);
-void		ft_save_tokens_delimiters(t_process *process, int *i);
-int			ft_tokens_delimiters(t_process *process, int *i);
+void		ft_save_tokens_delimiters(t_process *process, int i);
+int			ft_operators_type(t_process *process, int i);
 int			ft_save_tokens_words(t_process *process, int i);
 int			ft_tokenize(t_process *process);
 int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
-void		ft_print_lst(t_node *temp);
+void		ft_print_lst(t_process *temp);
 void		ft_find_open_close_quotes(t_process *process, int *j, int *quote);
 
 #endif

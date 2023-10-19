@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/17 10:14:45 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:32:06 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_print_lst(t_node *temp)
+void	ft_print_lst(t_process *temp)
 {
 	while (temp)
 	{
@@ -21,11 +21,11 @@ void	ft_print_lst(t_node *temp)
 	}
 }
 
-t_node	*ft_lstnew_mshell(char *content)
+t_process	*ft_lstnew_mshell(char *content)
 {
-	t_node	*k;
+	t_process	*k;
 
-	k = malloc(sizeof(t_node));
+	k = malloc(sizeof(t_process));
 	if (k == NULL)
 		return (NULL);
 	k->content = content;
@@ -33,9 +33,9 @@ t_node	*ft_lstnew_mshell(char *content)
 	return (k);
 }
 
-void	ft_lstadd_back_mshell(t_node **lst, t_node *new)
+void	ft_lstadd_back_mshell(t_process **lst, t_process *new)
 {
-	t_node	*aux;
+	t_process	*aux;
 
 	aux = *lst;
 	if (*lst == NULL)
@@ -51,9 +51,9 @@ void	ft_lstadd_back_mshell(t_node **lst, t_node *new)
 	}
 }
 
-void	ft_lstclear_mshell(t_node **lst)
+void	ft_lstclear_mshell(t_process **lst)
 {
-	t_node	*aux;
+	t_process	*aux;
 
 	while (*lst)
 	{

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/17 15:27:31 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:50:37 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,21 @@ static void	ft_disable_ctrl_c_printing_chars(void)
  * @param	t_process *process, int i 
  * @return	int
 */
-int ft_tokens_delimiters(t_process *process, int *i)
+int ft_tokens_delimiters(t_process *process, int i)
 {  
-		if (process->line[*i] == '>' && process->line[*i + 1] == '>')
+		if (process->line[i] == '>' && process->line[i + 1] == '>')
 			return (APPEND);
-		else if (process->line[*i] == '<' && process->line[*i + 1] == '<')
+		else if (process->line[i] == '<' && process->line[i + 1] == '<')
 			return (HEREDOC);
-		else if (process->line[*i] == '>')
+		else if (process->line[i] == '>')
 			return (GREAT);
-		else if (process->line[*i] == '<')
+		else if (process->line[i] == '<')
 			return (LESS);
-		else if (process->line[*i] == '>' && process->line[*i + 1] == '&')
+		else if (process->line[i] == '>' && process->line[i + 1] == '&')
 			return (GREATAMPERSAND);
-		else if (process->line[*i] == '|')
+		else if (process->line[i] == '|')
 			return (PIPE);
-		else if (process->line[*i] == '\0')
+		else if (process->line[i] == '\0')
 			return (END);
 	return (FALSE);
 }
@@ -78,9 +78,9 @@ void	ft_find_open_close_quotes(t_process *process, int *j, int *quote)
 */
 int ft_save_tokens_words(t_process *process, int i)
 {
-	t_node	*temp;
-	int 	j;
-	int 	quote;
+	t_process	*temp;
+	int 		j;
+	int 		quote;
 	
 	temp = ft_lstnew_mshell(NULL);
 	j = i;
@@ -95,8 +95,8 @@ int ft_save_tokens_words(t_process *process, int i)
 	/* if (quote > 0)
 		j++; */
 	temp->content = ft_substr(process->line, i, j - i);
-	ft_lstadd_back_mshell(&process->tokens, temp);
-	ft_print_lst(temp);
+	ft_lstadd_back_mshell(&process, temp);
+	/* ft_print_lst(process); */
 	free(temp);
     return (j);
 }
@@ -106,22 +106,22 @@ int ft_save_tokens_words(t_process *process, int i)
  * @param	t_process *process, t_node *node, int *i
  * @return	int
 */
-void	ft_save_tokens_delimiters(t_process *process, int *i)
+void	ft_save_tokens_delimiters(t_process *process, int i)
 {
-	t_node *temp;
+	t_process *temp;
 	
 	temp = ft_lstnew_mshell(NULL);
 	process->type_tokens = ft_tokens_delimiters(process, i);
 	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
 	{
-		temp->content = ft_substr(process->line, *i, 2);
-		*i = *i + 1;
+		temp->content = ft_substr(process->line, i, 2);
+		i = i + 1;
 	}
 	else
-		temp->content = ft_substr(process->line, *i, 1);
-	*i = *i + 1;
-	ft_lstadd_back_mshell(&process->tokens, temp);
-	ft_print_lst(temp);
+		temp->content = ft_substr(process->line, i, 1);
+	i = i + 1;
+	ft_lstadd_back_mshell(&process, temp);
+	/* ft_print_lst(process); */
 	free(temp);
 }
 
@@ -142,11 +142,12 @@ int ft_tokenize(t_process *process)
 		if (ft_is_space(process->line[i]))
 			i++;
 		else if (ft_what_delimiter(process->line[i]))
-			ft_save_tokens_delimiters(process, &i);
+			ft_save_tokens_delimiters(process, i);
 		else
 			i = ft_save_tokens_words(process, i);
 		i++;
 	}
+	ft_print_lst(process);
 	return (0);
 }
 
