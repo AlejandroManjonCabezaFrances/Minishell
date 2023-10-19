@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/19 11:50:37 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:42:16 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int ft_save_tokens_words(t_process *process, int i)
 		j++; */
 	temp->content = ft_substr(process->line, i, j - i);
 	ft_lstadd_back_mshell(&process, temp);
-	/* ft_print_lst(process); */
 	free(temp);
     return (j);
 }
@@ -115,13 +114,12 @@ void	ft_save_tokens_delimiters(t_process *process, int i)
 	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
 	{
 		temp->content = ft_substr(process->line, i, 2);
-		i = i + 1;
+		i++;
 	}
 	else
 		temp->content = ft_substr(process->line, i, 1);
-	i = i + 1;
+	i++;
 	ft_lstadd_back_mshell(&process, temp);
-	/* ft_print_lst(process); */
 	free(temp);
 }
 
@@ -133,11 +131,9 @@ void	ft_save_tokens_delimiters(t_process *process, int i)
 int ft_tokenize(t_process *process)
 {
 	int i;
-	int len;
 
 	i = 0;
-	len = ft_strlen(&process->line[i]);
-	while (process->line != NULL && process->line[i] && i >= 0 && i < len)
+	while (process->line != NULL && process->line[i])
 	{
 		if (ft_is_space(process->line[i]))
 			i++;
