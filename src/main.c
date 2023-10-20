@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/19 15:42:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:05:46 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,125 +38,127 @@ static void	ft_disable_ctrl_c_printing_chars(void)
 
 /**
  * This function find tokens_delimiters
- * @param	t_process *process, int i 
+ * @param	char *line, int i 
  * @return	int
 */
-int ft_tokens_delimiters(t_process *process, int i)
+int ft_tokens_delimiters(char *line, int i)
 {  
-		if (process->line[i] == '>' && process->line[i + 1] == '>')
+		if (line[i] == '>' && line[i + 1] == '>')
 			return (APPEND);
-		else if (process->line[i] == '<' && process->line[i + 1] == '<')
+		else if (line[i] == '<' && line[i + 1] == '<')
 			return (HEREDOC);
-		else if (process->line[i] == '>')
+		else if (line[i] == '>')
 			return (GREAT);
-		else if (process->line[i] == '<')
+		else if (line[i] == '<')
 			return (LESS);
-		else if (process->line[i] == '>' && process->line[i + 1] == '&')
+		else if (line[i] == '>' && line[i + 1] == '&')
 			return (GREATAMPERSAND);
-		else if (process->line[i] == '|')
+		else if (line[i] == '|')
 			return (PIPE);
-		else if (process->line[i] == '\0')
+		else if (line[i] == '\0')
 			return (END);
 	return (FALSE);
 }
 
 /**
  * This function (iterates when we are inside or outside quotes) and (handles both opening and closing of quotes and how we switch between these states)
- * @param	t_process *process, int *j, int *type_quotes 
+ * @param	char *line, int *j, int *quote 
  * @return	void
 */
-void	ft_find_open_close_quotes(t_process *process, int *j, int *quote)
+void	ft_find_open_close_quotes(char *line, int *j, int *quote)
 {
-	while (process->line[*j] && ft_what_quotes(process->line[*j]) != (*quote) && (*quote) > 0)
+	while (line[*j] && ft_what_quotes(line[*j]) != (*quote) && (*quote) > 0)
 		(*j)++;
 }
 
 /**
  * This function tokenizes words inside/outside quotes, type_quotes = 0 inside, type_quotes = !0 outside
- * @param	t_process *process, int i
+ * @param	t_process *process, char *line, int i
  * @return	int
 */
-int ft_save_tokens_words(t_process *process, int i)
+int ft_save_tokens_words(t_process **process, char *line, int i)
 {
 	t_process	*temp;
 	int 		j;
 	int 		quote;
 	
-	temp = ft_lstnew_mshell(NULL);
+	temp = ft_lstnew_mshell();
 	j = i;
-	quote = ft_what_quotes(process->line[j]); // 0 --> fuera de comillas    1 --> dentro de comillas
+	quote = ft_what_quotes(line[j]); // 0 --> fuera de comillas    1 --> dentro de comillas
 	if(quote != 0)	// salta primera comilla
 		j++;
-	ft_find_open_close_quotes(process, &j, &quote);
-	if (process->line[j] && quote > 0 && !ft_is_space(process->line[j])) // cuando sales de comillas actualizas quote
+	ft_find_open_close_quotes(line, &j, &quote);
+	if (line[j] && quote > 0 && !ft_is_space(line[j])) // cuando sales de comillas actualizas quote
 		quote = 0;
-	while (process->line[j] && !ft_is_space(process->line[j]) && !ft_what_delimiter(process->line[j]))  // itere la comilla cierre
+	while (line[j] && !ft_is_space(line[j]) && !ft_what_delimiter(line[j]))  // itere la comilla cierre
 		j++;
 	/* if (quote > 0)
 		j++; */
-	temp->content = ft_substr(process->line, i, j - i);
-	ft_lstadd_back_mshell(&process, temp);
+	temp->content = ft_substr(line, i, j - i);
+	ft_lstadd_back_mshell(process, temp);
 	free(temp);
     return (j);
 }
 
 /**
  * This function save commands_tokens in list. '<' '<<' '>' '>>' '>&' '|' '/0'
- * @param	t_process *process, t_node *node, int *i
+ * @param	t_process *process, char *line, int i
  * @return	int
 */
-void	ft_save_tokens_delimiters(t_process *process, int i)
+int	ft_save_tokens_delimiters(t_process **process, char *line, int i)
 {
 	t_process *temp;
 	
-	temp = ft_lstnew_mshell(NULL);
-	process->type_tokens = ft_tokens_delimiters(process, i);
-	if (process->type_tokens == HEREDOC || process->type_tokens == APPEND)
+	temp = NULL;
+	temp = ft_lstnew_mshell();
+	temp->type_tokens = ft_tokens_delimiters(line, i);
+	if (temp->type_tokens == HEREDOC || temp->type_tokens == APPEND)
 	{
-		temp->content = ft_substr(process->line, i, 2);
+		temp->content = ft_substr(line, i, 2);
 		i++;
 	}
 	else
-		temp->content = ft_substr(process->line, i, 1);
+		temp->content = ft_substr(line, i, 1);
 	i++;
-	ft_lstadd_back_mshell(&process, temp);
+	ft_lstadd_back_mshell(process, temp);
 	free(temp);
+	return (i);
 }
 
 /**
  * This function determines size of command_token find in the line commands (prompt)
- * @param	t_process *process
- * @return	int / 1.		int = size comand token / 1 = not find command token
+ * @param	t_process *process, char *line
+ * @return	int
 */
-int ft_tokenize(t_process *process)
+int ft_tokenize(t_process **process, char *line)
 {
 	int i;
 
 	i = 0;
-	while (process->line != NULL && process->line[i])
+	while (line != NULL && line[i])
 	{
-		if (ft_is_space(process->line[i]))
+		if (ft_is_space(line[i]))
 			i++;
-		else if (ft_what_delimiter(process->line[i]))
-			ft_save_tokens_delimiters(process, i);
+		else if (ft_what_delimiter(line[i]))
+			i = ft_save_tokens_delimiters(process, line, i);
 		else
-			i = ft_save_tokens_words(process, i);
+			i = ft_save_tokens_words(process, line, i);
 		i++;
 	}
-	ft_print_lst(process);
+	ft_print_lst(*process);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
+	t_process	*process;
+	char *line;
+	int i;
 	(void) argv;
 	(void) env;
-	t_process	process;
-	/* t_node		node; */
-	int i;
 	
-	process.line = NULL;
-	/* node.content */
+	process = NULL;
+	line = NULL;
 	i = 0;
 	ft_disable_ctrl_c_printing_chars();
 	if (argc != 1)
@@ -167,16 +169,16 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		ft_signals();
-		process.line = readline("minishell-3.2$ ");
-		if (process.line == NULL)
+		line = readline("minishell-3.2$ ");
+		if (line == NULL)
 		{
 			printf("function readline don `t open well\n");
 			exit (0);
 		}
-		ft_tokenize(&process);
-		printf("process.line = %s\n", process.line);
+		ft_tokenize(&process, line);
+		printf("line = %s\n", line);
 		tcsetattr(0, 0, &g_info.termios);
 	}
-	free(process.line);
+	free(line);
 	return (0);
 }

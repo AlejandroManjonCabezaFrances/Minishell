@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/19 15:43:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:03:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 
 typedef struct s_process
 {
-	char				*line;
 	int					type_tokens;	// < << > >> | >& \0
 	char				*content;
 	struct s_process	*next;
@@ -61,6 +60,7 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 t_inf					g_info;
 
 /* ------- MACROS ------- */
+#define INIT_INT		-1  // TYPE_TOKENS
 #define FALSE			0
 #define TRUE			1
 #define GREAT			3	//'>'
@@ -89,21 +89,21 @@ t_inf					g_info;
 
 /* ----------------- FUNCTION ----------------- */
 int			main(int argc, char **argv, char **env);
-t_process	*ft_lstnew_mshell(char *content);
+t_process	*ft_lstnew_mshell(void);
 void		ft_lstadd_back_mshell(t_process **lst, t_process *new);
 void		ft_lstclear_mshell(t_process **lst);
 void		ft_signals(void);
 void		ft_signal_interrupt(void);
 void		ft_signal_reset_prompt(int signal);
 void		ft_signal_quit(void);
-void		ft_save_tokens_delimiters(t_process *process, int i);
-int			ft_operators_type(t_process *process, int i);
-int			ft_save_tokens_words(t_process *process, int i);
-int			ft_tokenize(t_process *process);
+int			ft_save_tokens_delimiters(t_process **process, char *line, int i);
+int			ft_save_tokens_words(t_process **process, char *line, int i);
+int			ft_tokens_delimiters(char *line, int i);
+int			ft_tokenize(t_process **process, char *line);
 int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
 void		ft_print_lst(t_process *temp);
-void		ft_find_open_close_quotes(t_process *process, int *j, int *quote);
+void		ft_find_open_close_quotes(char *line, int *j, int *quote);
 
 #endif
