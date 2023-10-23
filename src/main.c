@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/23 10:43:07 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:21:20 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **env)
 	t_process	*process;
 	char *line;
 	int i;
+	g_info.env = NULL;
 	(void) argv;
 	(void) env;
 	
@@ -53,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 		printf("enter only the executable ./minishell, thanks\n");
 		return (1);
 	}
-	// ft_get_env(line, env);
+	ft_get_env(&g_info, env);
 	while (1)
 	{
 		ft_signals();

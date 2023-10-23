@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/23 10:24:32 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:20:31 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 	struct s_node	*next;
 }	t_node; */
 
+typedef struct s_process	t_process;
+typedef struct s_inf		t_inf;
+t_inf						g_info;
+
 typedef struct s_process
 {
 	int					type_tokens;	// < << > >> | >& \0
@@ -52,6 +56,7 @@ typedef struct s_process
 
 typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
+	char				**env;
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;							// variable global con tipo de dato 't_info'
@@ -106,6 +111,6 @@ int			ft_is_space(char c);
 void		ft_print_lst(t_process *temp);
 void		ft_find_open_close_quotes(char *line, int *j, int *quote);
 
-void		ft_get_env(char *line, char **env);
+void		ft_get_env(t_inf *info, char **env);
 
 #endif
