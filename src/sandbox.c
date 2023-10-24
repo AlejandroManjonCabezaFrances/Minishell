@@ -6,11 +6,29 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:20:52 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/17 10:36:21 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/24 08:33:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+//**
+//  * Obtener el PWD --> Current working directory
+// */
+// int main()
+// {
+// 	char cwd[1024];
+
+// 	cwd[0] = '\0';
+// 	if (getcwd(cwd, sizeof(cwd)) != NULL/*  && cwd[0] != '\0' */)
+// 		printf("directorio trabajo actual = %s\n", cwd);
+// 	else
+// 	{
+// 		perror(cwd);
+// 		return (-1);
+// 	}	
+// 	return (0);
+// }
 
 // /**
 //  * This function (iterates when we are inside or outside quotes) and (handles both opening and closing of quotes and how we switch between these states)

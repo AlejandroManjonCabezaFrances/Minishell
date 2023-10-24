@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:21:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/24 08:11:55 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int argc, char **argv, char **env)
 	char *line;
 	int i;
 	g_info.env = NULL;
+	g_info.pwd = NULL;
 	(void) argv;
 	(void) env;
 	
