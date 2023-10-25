@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2023/10/24 08:34:34 by amanjon-         ###   ########.fr        #
+#    Updated: 2023/10/25 17:04:31 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
 DEBUG = -g3 -fsanitize=address
 RM = rm -f
-SRC = main.c lst.c signals.c tokenizer_utils.c tokenizer.c env.c 
+SRC = main.c lst.c signals.c tokenizer_utils.c tokenizer.c env.c
 #SRC = sandbox.c
 
 LIBFT_DIR = libft/

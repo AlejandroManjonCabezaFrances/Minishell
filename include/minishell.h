@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/24 13:00:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:37:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void		ft_print_lst(t_process *temp);
 void		ft_find_open_close_quotes(char *line, int *j, int *quote);
 
 void		ft_get_env(t_inf *info, char **env);
-// void		ft_when_env_is_null(t_inf *info);
+void		ft_when_env_is_null(t_inf *info);
+
+// void		store_env_aux(t_inf *info, char **env);
 
 #endif
