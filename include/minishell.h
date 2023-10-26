@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/25 11:37:11 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:19:33 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	char			**env;
 	char 			*pwd;
+	t_process		*tokens;
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;							// variable global con tipo de dato 't_info'
@@ -112,6 +113,7 @@ int			ft_is_space(char c);
 void		ft_print_lst(t_process *temp);
 void		ft_find_open_close_quotes(char *line, int *j, int *quote);
 
+// void		ft_copy_env(t_inf *info);
 void		ft_get_env(t_inf *info, char **env);
 void		ft_when_env_is_null(t_inf *info);
 

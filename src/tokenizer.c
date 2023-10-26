@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 08:52:08 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/25 17:06:14 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/26 08:56:35 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int ft_tokenize(t_process **process, char *line)
 			i = ft_save_tokens_words(process, line, i);
 		i++;
 	}
+	
 	ft_print_lst(*process);
 	return (0);
 }

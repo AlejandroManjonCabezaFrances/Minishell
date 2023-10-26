@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/25 11:31:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/26 11:06:42 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ int	main(int argc, char **argv, char **env)
 		printf("enter only the executable ./minishell, thanks\n");
 		return (1);
 	}
-	ft_get_env(&g_info, env);
+	ft_copy_env(&g_info, env);
+	// ft_get_env(&g_info, env);
 	while (1)
 	{
 		ft_signals();
 		line = readline("minishell-3.2$ ");
 		if (line == NULL)
 		{
-			printf("function readline don `t open well\n");
+			printf("minishell-3.2$  exit\n");
 			exit (0);
 		}
 		ft_tokenize(&process, line);
@@ -70,6 +71,7 @@ int	main(int argc, char **argv, char **env)
 		printf("line = %s\n", line);
 		tcsetattr(0, 0, &g_info.termios);
 	}
+	printf("process->content = %s\n", process->content);
 	free(line);
 	return (0);
 }
