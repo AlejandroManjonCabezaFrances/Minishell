@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/26 10:19:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:52:01 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@
 # include "../libft/ft_printf/include/ft_printf.h"
 # include "../libft/Gnl/include/get_next_line.h"
 
-/* ------ STRUCT ------ */
-/* typedef struct s_node				//para funciones de listas
+/* ------ STRUCT SANDBOX LINKED LIST ------ */
+typedef struct s_env
 {
-	char			*content;
-	struct s_node	*next;
-}	t_node; */
+	void			*env_item;
+	struct s_env	*next;
+}	t_env;
 
+/* ------ STRUCT ------ */
 typedef struct s_process	t_process;
 typedef struct s_inf		t_inf;
 t_inf						g_info;
@@ -110,13 +111,17 @@ int			ft_tokenize(t_process **process, char *line);
 int			ft_what_delimiter(char c);
 int			ft_what_quotes(char c);
 int			ft_is_space(char c);
-void		ft_print_lst(t_process *temp);
 void		ft_find_open_close_quotes(char *line, int *j, int *quote);
+void		ft_print_lst(t_process *temp);
 
+
+/*-------- SANDBOX --------*/
+
+
+/*---------- TEST ----------*/
 // void		ft_copy_env(t_inf *info);
-void		ft_get_env(t_inf *info, char **env);
-void		ft_when_env_is_null(t_inf *info);
-
+// void		ft_get_env(t_inf *info, char **env);
+// void		ft_when_env_is_null(t_inf *info);
 // void		store_env_aux(t_inf *info, char **env);
 
 #endif
