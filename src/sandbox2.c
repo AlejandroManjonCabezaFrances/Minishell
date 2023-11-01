@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/31 15:38:48 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:02:01 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,16 +107,46 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
+/**
+ * Delete one node of linked list
+ * @param	t_env *lst, void (*del)(void *)
+ * @return	void
+*/
+void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
+{
+	if (env_copy != NULL /* && del != NULL */)
+	{
+		free(env_copy->env_item);
+		free(env_copy);
+	}
+}
 
+/**
+ * find and delete variable environment to builtins unset
+ * @param	t_env **env_copy, const char *var
+ * @return	void
+*/
+void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
+{
+	t_env *aux;
+	t_env *prev;
 
-
-
-
-
-
-
-
-
+	aux = *env_copy;
+	prev = NULL;
+	while (aux)
+	{
+		if (ft_strncmp(var, aux->env_item, ft_strlen(var)) == 0)
+		{
+			if (prev)
+				prev->next = aux->next;
+			ft_lstdelone_mshell(aux);
+			free(prev);
+			return ;
+		}
+		prev = aux;
+		aux = aux->next;
+	}
+}
 
 /**
  * Find variable env and returns the content of this environment variable 
@@ -166,8 +196,6 @@ void	ft_print_double_pointer(char **env_array)
 	}
 }
 
-// no debería usar memoria dinámica porque las modificaciones las haré en la 
-// lista enlazada, y luego o copiaré tal cual en la matriz para pasarla al execve();
 /**
  * Convert linked list in a matrix to ´ll use in execve(third argumment);
  * @param	t_env *env_copy
@@ -192,14 +220,15 @@ char	**ft_convert_linked_list_to_array(t_env *env_copy)
 	aux = env_copy;
 	while (aux)
 	{
-		env_array[i] = /* ft_strdup( */aux->env_item/* ) */;
+		env_array[i] = aux->env_item;
 		i++;
 		aux = aux->next;
 	}
 	env_array[i] = NULL;
-	ft_print_double_pointer(env_array);
+	// ft_print_double_pointer(env_array);
 	
 	ft_lstclear_mshell_2(&aux);
+	/* free(aux); */
 	
 	return (env_array);
 }
@@ -220,16 +249,18 @@ int main(int argc, char **argv, char **env)
 		return (-1);
 	}	
 	ft_linked_list_env(&env_copy, env);
+	
 	ft_print_lst_2(env_copy);
-	printf("\n\n");
-	printf("return -> %s\n", ft_find_variable_env(env_copy, argv[1]));
-	printf("\n\n");
+	ft_find_and_delete_variable_env(&env_copy, argv[1]);
+	ft_print_lst_2(env_copy);
+	
+	// ft_print_lst_2(env_copy);
+	
+	// printf("\n\n");
+	// printf("return -> %s\n", ft_find_variable_env(env_copy, argv[1]));
+	// printf("\n\n");
+	
 	env_array = ft_convert_linked_list_to_array(env_copy);
-	while (env_array[i])
-	{
-		printf("env_array[%d] = %s\n", i, env_array[i]);
-		i++;
-	}
 	ft_lstclear_mshell_2(&env_copy);
 	return (0);
 }

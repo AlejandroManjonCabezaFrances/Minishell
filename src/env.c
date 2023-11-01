@@ -6,26 +6,34 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:23:02 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/31 13:04:12 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:11:23 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_copy_env(t_inf *info, char **argv)
-{
-	int i;
+// void	ft_copy_env(t_inf *info, char **argv)
+// {
+// 	int i;
 
-	i = 0;
-	while (env[i])
-		i++;
-	info->env = malloc(sizeof(char *) * i + 1);
-	if (info->env == NULL)
-		return ;
-	i = 0;
-	while (env && env[i])
-		i++;
-}
+// 	i = 0;
+// 	while (env[i])
+// 		i++;
+// 	info->env = malloc(sizeof(char *) * i + 1);
+// 	if (info->env == NULL)
+// 		return ;
+// 	i = 0;
+// 	while (env && env[i])
+// 		i++;
+// }
+
+
+
+
+
+
+
+
 
 
 

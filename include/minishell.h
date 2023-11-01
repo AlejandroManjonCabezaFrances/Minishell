@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/31 10:52:01 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/01 10:25:01 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 t_inf					g_info;
 
 /* ------- MACROS ------- */
-#define INIT_INT		-1  // TYPE_TOKENS
-#define FALSE			0
-#define TRUE			1
+#define INIT_INT		-1  // TYPE_TOKENS & OTHERS ERROR
+#define FALSE			0	//BOOLEAN
+#define TRUE			1	//BOOLEAN
 #define GREAT			3	//'>'
 #define	LESS			4	//'<'
 #define	APPEND			5	//'>>'
