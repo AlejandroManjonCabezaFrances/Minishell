@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/11/01 10:25:01 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:42:24 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 /* ------ STRUCT SANDBOX LINKED LIST ------ */
 typedef struct s_env
 {
-	void			*env_item;
+	char			*env_item;
 	struct s_env	*next;
 }	t_env;
 
@@ -95,7 +95,7 @@ t_inf					g_info;
 // 	DOUBLE_QUOTES = 11
 // };
 
-/* ----------------- FUNCTION ----------------- */
+/* ----------------- FUNCTION MINISHELL----------------- */
 int			main(int argc, char **argv, char **env);
 t_process	*ft_lstnew_mshell(void);
 void		ft_lstadd_back_mshell(t_process **lst, t_process *new);
@@ -115,8 +115,22 @@ void		ft_find_open_close_quotes(char *line, int *j, int *quote);
 void		ft_print_lst(t_process *temp);
 
 
-/*-------- SANDBOX --------*/
+/*-------- SANDBOX 2 --------*/
+char	*ft_strjoin_2(char *s1, char *s2);
+void	ft_print_lst_2(t_env *temp);
+void	ft_lstclear_mshell_2(t_env **lst);
+t_env	*ft_lstnew_str_env(char *str_env);
+void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 
+/*-------- SANDBOX 2 GOOD FUNCTION--------*/
+void	ft_replace_SHLVL(t_env **env_copy);
+void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
+char	*ft_find_variable_env(t_env *env_copy, const char *var);
+void	ft_linked_list_env(t_env **env_copy, char **env);
+void	ft_print_double_pointer(char **env_array);
+char	**ft_convert_linked_list_to_array(t_env *env_copy);
 
 /*---------- TEST ----------*/
 // void		ft_copy_env(t_inf *info);
