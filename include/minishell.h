@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/11/02 17:42:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:38:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 /*-------- SANDBOX 2 GOOD FUNCTION--------*/
 void	ft_replace_SHLVL(t_env **env_copy);
 void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
-char	*ft_find_variable_env(t_env *env_copy, const char *var);
+char	*ft_find_var_env(t_env *env_copy, char *var);
 void	ft_linked_list_env(t_env **env_copy, char **env);
 void	ft_print_double_pointer(char **env_array);
 char	**ft_convert_linked_list_to_array(t_env *env_copy);

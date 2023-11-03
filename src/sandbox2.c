@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/11/02 17:42:07 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:56:14 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_strjoin_2(char *s1, char *s2)
 	while (s2[i] != '\0')
 		ptr[j++] = s2[i++];
 	ptr[j] = '\0';
-	// free(s1);
 	return (ptr);
 }
 
@@ -286,6 +285,8 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
 		{
 			if (prev)
 				prev->next = aux->next;
+			else
+				*env_copy = aux->next;
 			ft_lstdelone_mshell(aux);
 			return ;
 		}
@@ -299,18 +300,19 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
  * @param	t_env *env_copy, const char *var
  * @return	char *
 */
-char	*ft_find_variable_env(t_env *env_copy, const char *var)
+char	*ft_find_var_env(t_env *env_copy, char *var)
 {
 	int	i;
 
 	i = 0;
 	while (env_copy)
 	{
-		if (ft_strncmp(var, env_copy->env_item, ft_strlen(var)) == 0)
+		if (ft_strncmp(var, env_copy->env_item, ft_strlen(var)) == 0 && env_copy->env_item[ft_strlen(var)] == '=')
 			return (env_copy->env_item + (ft_strlen(var) + 1));
 		env_copy = env_copy->next;
 	}
-	return (0);
+	printf("%s: not a valid identifier\n", var);
+	return ("ERROR");
 }
 
 /**
@@ -371,7 +373,7 @@ char	**ft_convert_linked_list_to_array(t_env *env_copy)
 		aux = aux->next;
 	}
 	env_array[i] = NULL;
-	// ft_print_double_pointer(env_array);
+	ft_print_double_pointer(env_array);
 	
 	ft_lstclear_mshell_2(&aux);
 	/* free(aux); */
@@ -392,24 +394,25 @@ int main(int argc, char **argv, char **env)
 	env_copy = NULL;
 	// if (argc != 2)
 	// {
-	// 	printf("error: just one argc");
+	// 	printf("error: just one argc\n");
 	// 	return (-1);
 	// }	
 	ft_linked_list_env(&env_copy, env);
 	
-	ft_print_lst_2(env_copy);
-	ft_replace_SHLVL(&env_copy);
-	ft_print_lst_2(env_copy);
+	// ft_print_lst_2(env_copy);
+	// ft_replace_SHLVL(&env_copy);
+	// ft_print_lst_2(env_copy);
 	
+
 	// ft_print_lst_2(env_copy);
 	// printf("\n\n");
 	// ft_find_and_delete_variable_env(&env_copy, argv[1]);
 	// ft_print_lst_2(env_copy);
 	
-	// ft_print_lst_2(env_copy);
+	ft_print_lst_2(env_copy);
 	
 	// printf("\n\n");
-	// printf("return -> %s\n", ft_find_variable_env(env_copy, argv[1]));
+	// printf("return -> %s\n", ft_find_var_env(env_copy, argv[1]));
 	// printf("\n\n");
 	
 	// env_array = ft_convert_linked_list_to_array(env_copy);
