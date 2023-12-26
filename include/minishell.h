@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/22 12:59:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/26 11:29:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-
 /* ------ ENUMS ------ */
 enum e_boolean {
 	FALSE = 0,
@@ -123,11 +122,6 @@ void	ms_print_lst(t_token *token);
 int		ms_check_lst(t_token *token, int type);
 
 /* ------ UTILS ------ */
-size_t	ft_strlen(const char *str);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strdup(const char	*s1);
-char	*ft_strjoin(char *s1, char *s2);
 char	*ft_join(char *dest, char *s1, char *s2);
 
 /* ------ ERROR ------ */
