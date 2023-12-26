@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 09:59:56 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/10/19 09:36:05 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:26:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <string.h> 
 # include <stdio.h>
 # include <unistd.h>
-# include <xlocale.h>
+// # include <xlocale.h>
 # include <stdlib.h>
 
 typedef struct s_list

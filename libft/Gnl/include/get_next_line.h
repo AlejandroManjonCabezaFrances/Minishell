@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 07:25:54 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/07/11 12:14:12 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:27:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <xlocale.h>
+// # include <xlocale.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../../Libft/include/libft.h"

@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2023/12/26 11:30:19 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/26 14:19:34 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,10 @@ SRC = main.c lexer.c lexer_utils.c lexer_utils_2.c list_utils.c utils.c  error.c
 #SRC = main.c lst.c signals.c tokenizer_utils.c tokenizer.c env.c
 #SRC = sandbox.c sandbox2.c
 
+# CASA #
+RLINE_INC = $(shell brew --prefix readline)
+RLINE_L	=	-lreadline -lhistory -L $(RLINE_INC)/lib
+
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
@@ -30,8 +34,8 @@ OBJ_FILES = $(SRC:.c=.o)
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 # READLINE
-RLINE_INC	= -I/sgoinfre/students/$(USER)/homebrew/opt/readline/include
-RLINE_L		= -lreadline -L /sgoinfre/students/$(USER)/homebrew/opt/readline/lib
+#RLINE_INC	= -I/sgoinfre/students/$(USER)/homebrew/opt/readline/include
+#RLINE_L		= -lreadline -L /sgoinfre/students/$(USER)/homebrew/opt/readline/lib
 
 # COLOURS
 GREEN = \033[0;32m
