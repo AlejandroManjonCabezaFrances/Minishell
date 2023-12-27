@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:45:45 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:31:41 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:44:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	{
 		if (a[i] == cu)
 			return (&a[i]);
-			i++;
+		i++;
 	}
 	return (0);
 }

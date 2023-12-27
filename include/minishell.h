@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/27 11:41:39 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/27 12:54:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 /* ------ STRUCT ------ */
 typedef struct s_token		t_token;
 typedef struct s_inf		t_inf;
-t_inf						g_info;
+// t_inf						g_info;
 
 typedef struct s_token
 {

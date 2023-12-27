@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 12:50:11 by amanjon-          #+#    #+#              #
-#    Updated: 2023/12/27 12:07:18 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/27 12:43:39 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ ft_itoa.c ft_split.c ft_putchar.c
 FT_PRINTF = ft_hexad_len.c ft_itoa_unsg.c ft_itoa.c ft_print_hexad_x.c ft_print_pointer.c ft_printf.c ft_putchar.c ft_putstr.c ft_putstr_free.c ft_putchar_ft_printf.c
 GNL =  get_next_line.c  get_next_line_utils.c
 
-SRC1_DIR	=	./libft/src/
+SRC1_DIR	=	./Libft/src/
 SRC2_DIR	=	./ft_printf/src/
-SRC3_DIR	=	./gnl/src/
+SRC3_DIR	=	./Gnl/src/
 
 SRC1	=	$(addprefix $(SRC1_DIR), $(LIBFT))
 SRC2	=	$(addprefix $(SRC2_DIR), $(FT_PRINTF))
@@ -44,11 +44,11 @@ all: $(OBJ_DIR) $(NAME)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-$(OBJ_DIR)%.o:$(SRC1_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC1_DIR)%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-$(OBJ_DIR)%.o:$(SRC2_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC2_DIR)%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-$(OBJ_DIR)%.o:$(SRC3_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC3_DIR)%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ)

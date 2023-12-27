@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/27 11:38:23 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/27 13:25:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
  * @param	void
  * @return	void
 */
-static void	ft_disable_ctrl_c_printing_chars(void)
+static void	ft_disable_ctrl_c_printing_chars(t_inf inf)
 {
 	int rc;
 
-	rc = tcgetattr(0, &g_info.termios);
+	rc = tcgetattr(0, &inf.termios);
 	if (rc != 0)
 	{
 		perror("tcgetattr");
 		exit (1);
 	}
-	g_info.termios.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(0, 0, &g_info.termios);
+	inf.termios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &inf.termios);
 	if (rc != 0)
 	{
 		perror("tcsetattr");
@@ -59,19 +59,20 @@ char	**copy_env(char **envp)
 
 int	main(int argc, char **argv, char **env)
 {
+	t_inf	inf;
 	t_token	*token_list;
 	char	*cmd_line;
 	char	**env_cpy;
 	int		err;
 	
-	g_info.env = NULL;
-	g_info.pwd = NULL;
+	inf.env = NULL;
+	inf.pwd = NULL;
 	token_list = NULL;
 	cmd_line = NULL;
 	env_cpy = copy_env(env);
 	(void) argv;
 	(void) env;
-	ft_disable_ctrl_c_printing_chars();
+	ft_disable_ctrl_c_printing_chars(inf);
 	if (argc != 1)
 	{
 		printf("enter only the executable ./minishell, thanks\n");
@@ -90,7 +91,7 @@ int	main(int argc, char **argv, char **env)
 		if (err != 1)
 			panic (err, NULL, NULL);
 		add_history(cmd_line);
-		tcsetattr(0, 0, &g_info.termios);
+		tcsetattr(0, 0, &inf.termios);
 		ms_print_lst(token_list);
 		free(cmd_line);
 		ms_lstclear(&token_list);

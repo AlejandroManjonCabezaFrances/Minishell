@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 07:46:43 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/07/26 08:21:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:47:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*trim_stash(char *static_line)
 
 char	*get_next_line(int fd)
 {
-	char static		*static_line;
+	static char		*static_line;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
