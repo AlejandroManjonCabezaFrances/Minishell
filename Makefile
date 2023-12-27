@@ -6,13 +6,13 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2023/12/26 14:19:34 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/27 12:10:03 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
+CFLAGS = -Wall -Wextra -Werror #-I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
 DEBUG = -g3 -fsanitize=address
 RM = rm -f
 SRC = main.c lexer.c lexer_utils.c lexer_utils_2.c list_utils.c utils.c  error.c
