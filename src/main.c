@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/22 13:06:54 by amanjon-         ###   ########.fr       */
+/*   Updated: 2023/12/27 11:38:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 	g_info.pwd = NULL;
 	token_list = NULL;
 	cmd_line = NULL;
-	env_cpy = copy_env(envp);
+	env_cpy = copy_env(env);
 	(void) argv;
 	(void) env;
 	ft_disable_ctrl_c_printing_chars();

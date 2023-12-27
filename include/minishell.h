@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/26 11:29:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/27 11:41:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@
 # include "../libft/ft_printf/include/ft_printf.h"
 # include "../libft/Gnl/include/get_next_line.h"
 
-/* -- DECLARATION VARIABLE GOBAL -- */
-t_inf					g_info;
-
 /* ------ STRUCT ------ */
 typedef struct s_token		t_token;
 typedef struct s_inf		t_inf;
@@ -55,7 +52,7 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	char			**env;
 	char 			*pwd;
-	t_process		*tokens;
+	//t_process		*tokens;
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;							// variable global con tipo de dato 't_info'
@@ -127,8 +124,11 @@ char	*ft_join(char *dest, char *s1, char *s2);
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);
 
-
-
+/* ------ SIGNALS ------ */
+void	ft_signals(void);
+void	ft_signal_interrupt(void);
+void	ft_signal_reset_prompt(int signal);
+void	ft_signal_quit(void);
 
 
 /* ------------------------------------- FUNCIONES ANTIGUA MINISHELL---------------------------------- */
