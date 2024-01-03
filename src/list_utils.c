@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst.c                                              :+:      :+:    :+:   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/26 11:23:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/03 15:18:33 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,42 @@ t_token	*ms_lstnew(void)
 	return (new);
 }
 
+t_scmd	*ms_lstnew_cmd(char *content)
+{
+	t_scmd	*new;
+
+	new = NULL;
+	new = malloc(sizeof(t_scmd));
+	if (new == NULL)
+		return (NULL);
+	new->cmd = ft_strdup(content);
+	new->cmd_args = NULL;
+	new->arg_count = 0;
+	new->next = NULL;
+	return (new);
+}
+
 void	ms_lstadd_back(t_token **list, t_token *new)
 {
 	t_token	*aux;
+
+	aux = *list;
+	if (*list == NULL)
+	{
+		*list = new;
+		return ;
+	}
+	else
+	{
+		while (aux->next != NULL)
+			aux = aux->next;
+		aux->next = new;
+	}
+}
+
+void	ms_lstadd_back_smcd(t_scmd **list, t_scmd *new)
+{
+	t_scmd	*aux;
 
 	aux = *list;
 	if (*list == NULL)

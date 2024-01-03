@@ -12,23 +12,43 @@
 
 #include "../include/minishell.h"
 
-// void	parse_cmd(t_token **token_list)
-// {
-// }
-
-void	parser(t_token **token_list)
+void	parse(t_token *token, t_scmd **scmds_list)
 {
+	t_scmd	*simple_cmd;
 	t_token	*aux;
 
-	aux = *token_list;
-	while (aux->next)
+	simple_cmd = NULL;
+	while (token)
 	{
-		if (aux->type == PIPE)
+		if (token->type == PIPE)
+			token = token->next;
+		else
 		{
-			parse_pipe(token_list);
-			return ;
+			simple_cmd = ms_lstnew_cmd(token->content);
+			ms_lstadd_back_smcd(scmds_list, simple_cmd);
+			token = token->next;
+			aux = token;
+			while (aux->type != PIPE || aux->type != IN_REDIR ||
+			aux->type != OUT_REDIR || aux->type != HEREDOC ||
+			aux->type != APPEND)
+			{
+				simple_cmd->arg_count++;
+				aux = aux->next;
+			}
+			if (simple_cmd->arg_count != 0)
+			{
+				simple_cmd->cmd_args = malloc(sizeof(char *) * (simple_cmd->arg_count + 1));
+				// if (simple_cmd->cmd_args == NULL)
+				// 	return (NULL);
+				simple_cmd->cmd_args[simple_cmd->arg_count] = NULL;
+				simple_cmd->arg_count--;
+				while (simple_cmd->arg_count >= 0)
+				{
+					simple_cmd->cmd_args[simple_cmd->arg_count] = ft_strdup(token->content);
+					simple_cmd->arg_count--;
+					token = token->next;
+				}
+			}
 		}
-		aux = aux->next;
 	}
-	parse_cmd(token_list);
 }

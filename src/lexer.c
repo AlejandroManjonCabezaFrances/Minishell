@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 08:52:08 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/26 11:14:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/03 15:39:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,11 @@ int	handle_quotes(t_token **token_list, char *input, int i, char **env)
 	if (is_quote(input[i]) == SINGLE_QUOTE)
 		token->content = str;
 	else if (is_quote(input[i]) == DOUBLE_QUOTE)
+	{
+		printf("funcion handle_quotes_1, si quito este printf, SEGV\n");
 		token->content = quoted_dsign(str, env);
-	token->type = WORD;
+	}
+	token->type = QUOTED_WORD;
 	ms_lstadd_back(token_list, token);
 	return (end);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/27 12:54:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/03 15:44:34 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@
 
 /* ------ STRUCT ------ */
 typedef struct s_token		t_token;
-typedef struct s_inf		t_inf;
+typedef struct s_scmd		t_scmd;
+// typedef struct s_inf		t_inf;
 // t_inf						g_info;
 
 typedef struct s_token
@@ -47,6 +48,14 @@ typedef struct s_token
 	char			*content;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_scmd
+{
+	char			*cmd;
+	char			**cmd_args;
+	int				arg_count;
+	struct s_scmd	*next;
+}	t_scmd;
 
 typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
@@ -76,16 +85,17 @@ enum e_tokens {
 	HEREDOC,
 	APPEND,
 	PIPE,
-	WORD
+	WORD,
+	QUOTED_WORD
 };
 
 enum e_quotes {
-	SINGLE_QUOTE = 8,
+	SINGLE_QUOTE = 9,
 	DOUBLE_QUOTE,
 };
 
 enum e_error {
-	INIT_INT = 10,
+	INIT_INT = 11,
 	QUOTING_ERR,
 	READLINE_ERR
 };
@@ -108,12 +118,15 @@ char	*quoted_dsign(char *str, char **env);
 char	*find_var(char *var, char **env);
 
 /* ------ PARSER ------ */
-void	parser(t_token **token_list);
-void	parse_cmd(t_token **token_list);
+void	parse(t_token *token, t_scmd **scmds_list);
+// void	parser(t_token **token_list);
+// void	parse_cmd(t_token **token_list);
 
 /* ------ LISTS ------ */
 t_token	*ms_lstnew(void);
+t_scmd	*ms_lstnew_cmd(char *content);
 void	ms_lstadd_back(t_token **list, t_token *new);
+void	ms_lstadd_back_smcd(t_scmd **list, t_scmd *new);
 void	ms_lstclear(t_token **list);
 void	ms_print_lst(t_token *token);
 int		ms_check_lst(t_token *token, int type);
