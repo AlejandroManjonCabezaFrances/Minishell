@@ -12,56 +12,75 @@
 
 #include "../include/minishell.h"
 
-char	*find_var(char *var, char **env)
+char	*find_var(char *varname, char **env)
 {
 	int	i;
 
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(var, env[i], ft_strlen(var)) &&
-			env[i][ft_strlen(var)] == '=')
-			return (env[i] + (ft_strlen(var) + 1));
+		if (!ft_strncmp(varname, env[i], ft_strlen(varname)) &&
+			env[i][ft_strlen(varname)] == '=')
+			return (env[i] + (ft_strlen(varname) + 1));
 		i++;
 	}
 	return ("");
 }
 
+char	*expand(char *source, int start, int end, char **env)
+{
+	char	*expand;
+	char	*varname;
+	char	*var;
+	int		i;
+	int		j;
+	
+	varname = ft_substr(source, start, end - start);
+	var = find_var(varname, env);
+	free (varname);
+	expand = malloc(sizeof(char) * (ft_strlen(source) + ft_strlen(var) + 1));
+	if (expand == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (j < start - 1)
+	{
+		expand[j] = source[j];
+		j++;
+	}
+	while (var[i])
+		expand[j++] = var[i++];
+	while (source[end])
+		expand[j++] = source[end++];
+	expand[j] = '\0';
+	return (expand);
+}
+
 char	*quoted_dsign(char *str, char **env)
 {
 	char	*expanded;
-	char	*varname;
-	char	*var;
+	char	*temp;
 	int		start;
-	int		i;
-	int		j;
+	int		end;
 
-	i = 0;
-	j = 0;
-	while (str[i])
+	expanded = ft_strdup(str);
+	start = 0;
+	while (expanded[start])
 	{
-		if (is_dsign(str[i]))
+		if (is_dsign(expanded[start]))
 		{
-			i++;
-			start = i;
-			while (str[i] && !is_space(str[i]) && !is_operator(str[i])
-				&& !is_quote(str[i]) && !is_dsign(str[i]))
-				i++;
-			varname = ft_substr(str, start, i - start);
-			var = find_var(varname, env);
-			if (var != NULL)
-			{
-				expanded = ft_strjoin(expanded, var);
-				j += ft_strlen(var);
-			}
+			start++;
+			end = start;
+			while (expanded[end] && !is_space(expanded[end]) && !is_operator(expanded[end])
+				&& !is_quote(expanded[end]) && !is_dsign(expanded[end]))
+				end++;
+			temp = expand(expanded, start, end, env);
+			free(expanded);
+			expanded = temp;
+			start--;
 		}
 		else
-		{
-			expanded[j] = str[i];
-			j++;
-			i++;
-		}
+			start++;
 	}
-	expanded[j] = '\0';
 	return (expanded);
 }

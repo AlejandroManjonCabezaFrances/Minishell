@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/03 15:45:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:39:04 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param	void
  * @return	void
 */
-// static void	ft_disable_ctrl_c_printing_chars(t_inf inf)
+// void	ft_disable_ctrl_c_printing_chars(t_inf inf)
 // {
 // 	int rc;
 

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/03 15:44:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:37:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ enum e_error {
 };
 
 /* ------ MAIN ------ */
+void	ft_disable_ctrl_c_printing_chars(t_inf inf);
 char	**copy_env(char **envp);
 
 /* ------ LEXER ------ */
@@ -119,8 +120,6 @@ char	*find_var(char *var, char **env);
 
 /* ------ PARSER ------ */
 void	parse(t_token *token, t_scmd **scmds_list);
-// void	parser(t_token **token_list);
-// void	parse_cmd(t_token **token_list);
 
 /* ------ LISTS ------ */
 t_token	*ms_lstnew(void);
@@ -131,9 +130,6 @@ void	ms_lstclear(t_token **list);
 void	ms_print_lst(t_token *token);
 int		ms_check_lst(t_token *token, int type);
 
-/* ------ UTILS ------ */
-char	*ft_join(char *dest, char *s1, char *s2);
-
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);
 
@@ -142,51 +138,5 @@ void	ft_signals(void);
 void	ft_signal_interrupt(void);
 void	ft_signal_reset_prompt(int signal);
 void	ft_signal_quit(void);
-
-
-/* ------------------------------------- FUNCIONES ANTIGUA MINISHELL---------------------------------- */
-
-/* ----------------- FUNCTION MINISHELL----------------- */
-// int			main(int argc, char **argv, char **env);
-// t_process	*ft_lstnew_mshell(void);
-// void		ft_lstadd_back_mshell(t_process **lst, t_process *new);
-// void		ft_lstclear_mshell(t_process **lst);
-// void		ft_signals(void);
-// void		ft_signal_interrupt(void);
-// void		ft_signal_reset_prompt(int signal);
-// void		ft_signal_quit(void);
-// int			ft_save_tokens_delimiters(t_process **process, char *line, int i);
-// int			ft_save_tokens_words(t_process **process, char *line, int i);
-// int			ft_tokens_delimiters(char *line, int i);
-// int			ft_tokenize(t_process **process, char *line);
-// int			ft_what_delimiter(char c);
-// int			ft_what_quotes(char c);
-// int			ft_is_space(char c);
-// void		ft_find_open_close_quotes(char *line, int *j, int *quote);
-// void		ft_print_lst(t_process *temp);
-
-
-// /*-------- SANDBOX 2 --------*/
-// char	*ft_strjoin_2(char *s1, char *s2);
-// void	ft_print_lst_2(t_env *temp);
-// void	ft_lstclear_mshell_2(t_env **lst);
-// t_env	*ft_lstnew_str_env(char *str_env);
-// void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
-// int		ft_strncmp(const char *s1, const char *s2, size_t n);
-// void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
-
-// /*-------- SANDBOX 2 GOOD FUNCTION--------*/
-// void	ft_replace_SHLVL(t_env **env_copy);
-// void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
-// char	*ft_find_var_env(t_env *env_copy, char *var);
-// void	ft_linked_list_env(t_env **env_copy, char **env);
-// void	ft_print_double_pointer(char **env_array);
-// char	**ft_convert_linked_list_to_array(t_env *env_copy);
-
-/*---------- TEST ----------*/
-// void		ft_copy_env(t_inf *info);
-// void		ft_get_env(t_inf *info, char **env);
-// void		ft_when_env_is_null(t_inf *info);
-// void		store_env_aux(t_inf *info, char **env);
 
 #endif
