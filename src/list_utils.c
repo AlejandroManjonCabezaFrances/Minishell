@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:48:57 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/03 15:18:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/08 11:25:40 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ms_check_lst(t_token *token, int type)
+int	check_lst_ms(t_token *token, int type)
 {
 	while (token)
 	{
@@ -23,7 +23,7 @@ int	ms_check_lst(t_token *token, int type)
 	return (printf("requested type NOT found\n"));
 }
 
-void	ms_print_lst(t_token *token)
+void	print_lst_ms(t_token *token)
 {
 	while (token)
 	{
@@ -32,7 +32,7 @@ void	ms_print_lst(t_token *token)
 	}
 }
 
-t_token	*ms_lstnew(void)
+t_token	*lstnew_ms(void)
 {
 	t_token	*new;
 
@@ -46,7 +46,7 @@ t_token	*ms_lstnew(void)
 	return (new);
 }
 
-t_scmd	*ms_lstnew_cmd(char *content)
+t_scmd	*lstnew_ms_cmd(char *content)
 {
 	t_scmd	*new;
 
@@ -61,7 +61,7 @@ t_scmd	*ms_lstnew_cmd(char *content)
 	return (new);
 }
 
-void	ms_lstadd_back(t_token **list, t_token *new)
+void	lstadd_back_ms(t_token **list, t_token *new)
 {
 	t_token	*aux;
 
@@ -79,7 +79,7 @@ void	ms_lstadd_back(t_token **list, t_token *new)
 	}
 }
 
-void	ms_lstadd_back_smcd(t_scmd **list, t_scmd *new)
+void	lstadd_back_ms_smcd(t_scmd **list, t_scmd *new)
 {
 	t_scmd	*aux;
 
@@ -97,7 +97,7 @@ void	ms_lstadd_back_smcd(t_scmd **list, t_scmd *new)
 	}
 }
 
-void	ms_lstclear(t_token **list)
+void	lstclear_ms(t_token **list)
 {
 	t_token	*aux;
 

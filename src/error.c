@@ -19,7 +19,7 @@ void	panic(int err, t_token **list, t_token *token)
 	else if (err == READLINE_ERR)
 		printf("readline error\n");
 	if (list)
-		ms_lstclear(list);
+		lstclear_ms(list);
 	if (token)
 		free(token);
 }

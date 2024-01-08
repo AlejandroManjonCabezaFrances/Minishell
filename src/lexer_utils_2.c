@@ -12,6 +12,13 @@
 
 #include "../include/minishell.h"
 
+/**
+ * Compares the possible environment variable found with the environment variables of the environment
+ * and returns a pointer to the start of the value of the environment variable found. Ex: USER
+ * If not, returns an empty string
+ * @param	char *varname, char **env
+ * @return	char
+*/
 char	*find_var(char *varname, char **env)
 {
 	int	i;
@@ -35,7 +42,7 @@ char	*expand(char *source, int start, int end, char **env)
 	int		i;
 	int		j;
 	
-	varname = ft_substr(source, start, end - start);
+	varname = ft_substr(source, start, end - start); // source[start] = USER "sin $" : se mete en strinh USER
 	var = find_var(varname, env);
 	free (varname);
 	expand = malloc(sizeof(char) * (ft_strlen(source) + ft_strlen(var) + 1));

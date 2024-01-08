@@ -24,8 +24,8 @@ void	parse(t_token *token, t_scmd **scmds_list)
 			token = token->next;
 		else
 		{
-			simple_cmd = ms_lstnew_cmd(token->content);
-			ms_lstadd_back_smcd(scmds_list, simple_cmd);
+			simple_cmd = lstnew_ms_cmd(token->content);
+			lstadd_back_ms_smcd(scmds_list, simple_cmd);
 			token = token->next;
 			aux = token;
 			while (aux->type != PIPE || aux->type != IN_REDIR ||

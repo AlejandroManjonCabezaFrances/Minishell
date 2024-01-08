@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/04 15:37:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:22:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@
 /* ------ STRUCT ------ */
 typedef struct s_token		t_token;
 typedef struct s_scmd		t_scmd;
-// typedef struct s_inf		t_inf;
-// t_inf						g_info;
+typedef struct s_inf		t_inf;
 
 typedef struct s_token
 {
-	int				type;				// < << > >> | >& \0
+	int				type;				// < << > >> | WORD, QUOTED_WORD
 	char			*content;
 	struct s_token	*next;
 }	t_token;
@@ -61,7 +60,6 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	char			**env;
 	char 			*pwd;
-	//t_process		*tokens;
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;							// variable global con tipo de dato 't_info'
@@ -102,7 +100,9 @@ enum e_error {
 
 /* ------ MAIN ------ */
 void	ft_disable_ctrl_c_printing_chars(t_inf inf);
-char	**copy_env(char **envp);
+char	**copy_env(char **env);
+void	init_struct(t_inf *inf);
+int		check_argc(int argc);
 
 /* ------ LEXER ------ */
 int		lexer(t_token **token_list, char *input, char **env);
@@ -122,13 +122,13 @@ char	*find_var(char *var, char **env);
 void	parse(t_token *token, t_scmd **scmds_list);
 
 /* ------ LISTS ------ */
-t_token	*ms_lstnew(void);
-t_scmd	*ms_lstnew_cmd(char *content);
-void	ms_lstadd_back(t_token **list, t_token *new);
-void	ms_lstadd_back_smcd(t_scmd **list, t_scmd *new);
-void	ms_lstclear(t_token **list);
-void	ms_print_lst(t_token *token);
-int		ms_check_lst(t_token *token, int type);
+t_token	*lstnew_ms(void);
+t_scmd	*lstnew_ms_cmd(char *content);
+void	lstadd_back_ms(t_token **list, t_token *new);
+void	lstadd_back_ms_smcd(t_scmd **list, t_scmd *new);
+void	lstclear_ms(t_token **list);
+void	print_lst_ms(t_token *token);
+int		check_lst_ms(t_token *token, int type);
 
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);

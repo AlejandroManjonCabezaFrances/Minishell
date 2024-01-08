@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/12/27 13:35:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/08 12:53:00 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	ft_signal_quit(void)
 
 void	ft_signal_reset_prompt(int signal)
 {
-	// t_inf inf;
+	t_inf inf;
 	(void) signal;
     
-	// inf.signal_code = 130;
+	inf.signal_code = 130;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
