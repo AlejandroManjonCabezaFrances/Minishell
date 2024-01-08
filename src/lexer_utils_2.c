@@ -50,6 +50,9 @@ char	*expand(char *source, int start, int end, char **env)
 		return (NULL);
 	i = 0;
 	j = 0;
+	printf("**** var = %s\n", var);
+	printf("**** source = %s\n", source);
+	printf("**** start = %d\n", start);
 	while (j < start - 1)
 	{
 		expand[j] = source[j];
@@ -60,6 +63,7 @@ char	*expand(char *source, int start, int end, char **env)
 	while (source[end])
 		expand[j++] = source[end++];
 	expand[j] = '\0';
+	printf("**** expand = %s\n", expand);
 	return (expand);
 }
 
