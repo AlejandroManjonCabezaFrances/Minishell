@@ -6,12 +6,18 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 08:52:08 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/08 15:34:31 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/08 18:47:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/**
+ * We save in a linked list the expansion of variables found in the prompt when
+ * they are outside double quotes
+ * @param	t_token **token_list, char *input, int i, char **env
+ * @return	int
+*/
 int	handle_dsign(t_token **token_list, char *input, int i, char **env)
 {
 	t_token	*token;
@@ -30,6 +36,11 @@ int	handle_dsign(t_token **token_list, char *input, int i, char **env)
 	return (end);
 }
 
+/**
+ * We save the words found in the promtp in a linked list.
+ * @param	t_token **token_list, char *input, int i
+ * @return	int
+*/
 int	handle_words(t_token **token_list, char *input, int i)
 {
 	t_token	*token;
@@ -47,8 +58,9 @@ int	handle_words(t_token **token_list, char *input, int i)
 }
 
 /**
- * This function save commands_tokens in list. '<' '<<' '>' '>>' '>&' '|' '/0'
- * @param	t_process *process, char *line, int i
+ * We save the different operators found in the prompt in a linked list.
+ *  '<' '<<' '>' '>>' '|'
+ * @param	t_token **token_list, char *input, int i
  * @return	int
 */
 int	handle_operators(t_token **token_list, char *input, int i)
@@ -69,6 +81,13 @@ int	handle_operators(t_token **token_list, char *input, int i)
 	return (i);
 }
 
+/**
+ * We control what type of quotes are in the promt and tokenize what is in
+ * inside it, saving it in a linked list. We also control the expansion of variables
+ * when enclosed in double quotes
+ * @param	t_token **token_list, char *input, int i, char **env
+ * @return	int
+*/
 int	handle_quotes(t_token **token_list, char *input, int i, char **env)
 {
 	t_token	*token;								
@@ -76,15 +95,15 @@ int	handle_quotes(t_token **token_list, char *input, int i, char **env)
 	int		end;
 	int		quote;
 
-	token = lstnew_ms();	
-	quote = is_quote(input[i]); 				//quote = 10;
-	end = i;									//end = 6;
+	token = lstnew_ms();
+	quote = is_quote(input[i]);
+	end = i;
 	while (input[end++] && quote != 0)
-		if (quote == is_quote(input[end]))		//quote = 0;
-			quote = 0;							//end = 11;
+		if (quote == is_quote(input[end]))
+			quote = 0;
 	if (quote)
 		return (QUOTING_ERR);
-	str = ft_substr(input, i, end - i); 		//convierte en string inside ""
+	str = ft_substr(input, i, end - i);
 	if (is_quote(input[i]) == SINGLE_QUOTE)
 		token->content = str;
 	else if (is_quote(input[i]) == DOUBLE_QUOTE)

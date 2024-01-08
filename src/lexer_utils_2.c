@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 
 /**
- * Compares the possible environment variable found with the environment variables of the environment
+ * Compares the possible environment variable found with the environment variables
  * and returns a pointer to the start of the value of the environment variable found. Ex: USER
  * If not, returns an empty string
  * @param	char *varname, char **env
@@ -34,6 +34,13 @@ char	*find_var(char *varname, char **env)
 	return ("");
 }
 
+/**
+ * Receives expansion of variable, indexes and the environment.
+ * This function replaces the found environment variable with its value
+ * correspondent
+ * @param	char *source, int start, int end, char **env
+ * @return	char
+*/
 char	*expand(char *source, int start, int end, char **env)
 {
 	char	*expand;
@@ -42,7 +49,7 @@ char	*expand(char *source, int start, int end, char **env)
 	int		i;
 	int		j;
 	
-	varname = ft_substr(source, start, end - start); // source[start] = USER "sin $" : se mete en strinh USER
+	varname = ft_substr(source, start, end - start);
 	var = find_var(varname, env);
 	free (varname);
 	expand = malloc(sizeof(char) * (ft_strlen(source) + ft_strlen(var) + 1));
@@ -50,9 +57,6 @@ char	*expand(char *source, int start, int end, char **env)
 		return (NULL);
 	i = 0;
 	j = 0;
-	printf("**** var = %s\n", var);
-	printf("**** source = %s\n", source);
-	printf("**** start = %d\n", start);
 	while (j < start - 1)
 	{
 		expand[j] = source[j];
@@ -63,10 +67,16 @@ char	*expand(char *source, int start, int end, char **env)
 	while (source[end])
 		expand[j++] = source[end++];
 	expand[j] = '\0';
-	printf("**** expand = %s\n", expand);
 	return (expand);
 }
 
+/**
+ * It 's goal is to find and expand environment variables preceded by the dollar
+ * sign ($) in str.
+ * Returns the content of the expanded variable
+ * @param	char *str, char **env
+ * @return	char
+*/
 char	*quoted_dsign(char *str, char **env)
 {
 	char	*expanded;
