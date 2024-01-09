@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/08 15:22:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:12:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ enum e_error {
 };
 
 /* ------ MAIN ------ */
-void	ft_disable_ctrl_c_printing_chars(t_inf inf);
+void	disable_ctrl_c_printing_chars(t_inf inf);
 char	**copy_env(char **env);
 void	init_struct(t_inf *inf);
 int		check_argc(int argc);
@@ -134,9 +134,11 @@ int		check_lst_ms(t_token *token, int type);
 void	panic(int err, t_token **list, t_token *token);
 
 /* ------ SIGNALS ------ */
-void	ft_signals(void);
-void	ft_signal_interrupt(void);
-void	ft_signal_reset_prompt(int signal);
-void	ft_signal_quit(void);
+void	signals(void);
+void	signal_interrupt(void);
+void	signal_reset_prompt(int signal);
+void	signal_quit(void);
+void	set_signals_noninteractive(void); // new
+void	signal_print_newline(int signal); // new
 
 #endif

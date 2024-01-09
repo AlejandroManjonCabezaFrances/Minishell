@@ -16,8 +16,8 @@ void	panic(int err, t_token **list, t_token *token)
 {
 	if (err == QUOTING_ERR)
 		printf("no closing quotes found\n");
-	else if (err == READLINE_ERR)
-		printf("readline error\n");
+	// else if (err == READLINE_ERR)
+	// 	printf("readline error\n");
 	if (list)
 		lstclear_ms(list);
 	if (token)

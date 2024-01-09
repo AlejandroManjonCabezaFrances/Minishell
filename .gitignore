@@ -1,0 +1,5 @@
+.vscode/
+*.o
+*.a
+DS_Store
+minishell

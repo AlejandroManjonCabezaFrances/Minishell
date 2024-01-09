@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/08 13:18:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:12:32 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	check_argc(int argc)
 	return (0);
 }
 
+/**
+ * Structure is initialized for signals
+ * @param	t_inf *inf
+ * @return	void
+*/
 void	init_struct(t_inf *inf)
 {
 	inf->env = NULL;
@@ -33,7 +38,7 @@ void	init_struct(t_inf *inf)
  * @param	void
  * @return	void
 */
-void	ft_disable_ctrl_c_printing_chars(t_inf inf)
+void	disable_ctrl_c_printing_chars(t_inf inf)
 {
 	int rc;
 
@@ -87,17 +92,17 @@ int	main(int argc, char **argv, char **env)
 	cmd_line = NULL;
 	env_cpy = copy_env(env);
 	init_struct(&inf);
-	ft_disable_ctrl_c_printing_chars(inf);
+	disable_ctrl_c_printing_chars(inf);
 	check_argc(argc);
 	// ft_copy_env(&g_info, env);
-	// ft_get_env(&g_info, env);
 	while (1)
 	{
-		ft_signals();
+		signals();
 		cmd_line = readline("minishell-0.2$ ");
+		set_signals_noninteractive();
 		if (!cmd_line)
 			panic(READLINE_ERR, NULL, NULL);
-		cmd_line[ft_strlen(cmd_line)] = '\0';
+		// cmd_line[ft_strlen(cmd_line)] = '\0';
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)
 			panic (err, NULL, NULL);

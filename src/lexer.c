@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 08:52:08 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/08 18:47:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:11:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	handle_quotes(t_token **token_list, char *input, int i, char **env)
 	while (input[end++] && quote != 0)
 		if (quote == is_quote(input[end]))
 			quote = 0;
-	if (quote)
+	if (quote != 0)
 		return (QUOTING_ERR);
 	str = ft_substr(input, i, end - i);
 	if (is_quote(input[i]) == SINGLE_QUOTE)
@@ -112,6 +112,7 @@ int	handle_quotes(t_token **token_list, char *input, int i, char **env)
 	lstadd_back_ms(token_list, token);
 	return (end);
 }
+
 
 /**
  * This function determines what is in the prompt: spaces, quotes, operators
