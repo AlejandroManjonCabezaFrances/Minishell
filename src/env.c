@@ -6,42 +6,38 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:23:02 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/11/02 17:25:00 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:43:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// void	ft_copy_env(t_inf *info, char **argv)
-// {
-// 	int i;
+char	**copy_env(char **env)	// Función repetida, está en el main
+{
+	char	**env_cpy;
+	int		i;
 
-// 	i = 0;
-// 	while (env[i])
-// 		i++;
-// 	info->env = malloc(sizeof(char *) * i + 1);
-// 	if (info->env == NULL)
-// 		return ;
-// 	i = 0;
-// 	while (env && env[i])
-// 		i++;
-// }
-
-
-
-
-
-
-
-
-
-
+	i = 0;
+	while (env[i])
+		i++;
+	env_cpy = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!env_cpy)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		env_cpy[i] = ft_strdup(env[i]);
+		i++;
+	}
+	env_cpy[i] = NULL;
+	return (env_cpy);
+}
 
 // ################ Como hacer que el env sea null? ######################
 void	ft_when_env_is_null(t_inf *info)
 {
 	info->env = malloc(sizeof(char *) * (3));
-	info->env[0] = ft_strjoin("PWD=", getcwd(info->pwd, sizeof(info->pwd)));
+	info->env[0] = ft_strjoin_2("PWD=", getcwd(info->pwd, sizeof(info->pwd)));
 	info->env[1] = ft_strdup("SHLVL=1");
 	info->env[2] = ft_strdup("_=/usr/bin/env");
 	// printf("info->env[0] = %s\n", info->env[0]);
@@ -81,7 +77,7 @@ void	ft_get_env(t_inf *info, char **env)
 			if (ft_atoi(env[i] + 6) > 0)
 			{
 				temp = ft_itoa(ft_atoi((env[i]) + 6) + 1);
-				info->env[j] = ft_strjoin("SHLVL=", temp);
+				info->env[j] = ft_strjoin_2("SHLVL=", temp);
 				j++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/09 09:09:17 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:51:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ char	*ft_strjoin_2(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
 	ptr = malloc(sizeof(char) * (ft_strlen((char *)s1)
 				+ft_strlen((char *)s2)) + 1);
 	if (ptr == NULL)
@@ -237,8 +234,9 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
 
 
 /* ###############   #################    ######################   ############# */
-
-
+/* ###############   #################    ######################   ############# */
+/* ###############   #################    ######################   ############# */
+/* ###############   #################    ######################   ############# */
 
 /**
  * Change contained of SHLVL 
@@ -421,4 +419,4 @@ int main(int argc, char **argv, char **env)
 	ft_lstclear_mshell_2(&env_copy);
 	return (0);
 }
-// gcc -Wall -Werror -Wextra env.c -o run_env && ./run_env PATH
+// gcc -Wall -Werror -Wextra env.c sandbox2.c -o run_env && ./run_env PATH

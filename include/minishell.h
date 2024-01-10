@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/09 11:12:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/10 16:30:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 	char 			*pwd;
 	int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
-}	t_inf;							// variable global con tipo de dato 't_info'
+}	t_inf;
 
 /* ------ STRUCT SANDBOX LINKED LIST ------ */
 typedef struct s_env
@@ -140,5 +140,32 @@ void	signal_reset_prompt(int signal);
 void	signal_quit(void);
 void	set_signals_noninteractive(void); // new
 void	signal_print_newline(int signal); // new
+
+/* ------ ENV ------ */
+char	**copy_env(char **env);
+void	ft_when_env_is_null(t_inf *info);
+void	ft_get_env(t_inf *info, char **env);
+
+/* ------ SANDBOX2 ------ */
+char	*ft_strjoin_2(char *s1, char *s2);
+void	ft_print_lst_2(t_env *temp);
+void		ft_lstclear_mshell_2(t_env **lst);
+t_env	*ft_lstnew_str_env(char *str_env);
+void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
+void	ft_replace_SHLVL(t_env **env_copy);
+void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
+char	*ft_find_var_env(t_env *env_copy, char *var);
+void	ft_linked_list_env(t_env **env_copy, char **env);
+void	ft_print_double_pointer(char **env_array);
+char	**ft_convert_linked_list_to_array(t_env *env_copy);
+
+// static int	ft_size_mem(long n);char		*ft_copy_in_mem(int k, char	*ptr, long n1);
+char		*ft_itoa(int nbr);
+int			ft_atoi(const char *str);
+size_t		ft_strlen(const char *str);
+char		*ft_strdup(const char	*s1);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
+int 	main(int argc, char **argv, char **env);
 
 #endif
