@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/11 16:41:48 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/12 11:17:56 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,12 +221,12 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
  * @param	t_env *lst, void (*del)(void *)
  * @return	void
 */
-void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
+void	ft_lstdelone_mshell(t_env *envi/* , void (*del)(void *) */)
 {
-	if (env_copy != NULL /* && del != NULL */)
+	if (envi != NULL /* && del != NULL */)
 	{
-		free(env_copy->content);
-		free(env_copy);
+		free(envi->content);
+		free(envi);
 	}
 }
 
@@ -240,15 +240,15 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
 
 /**
  * Change contained of SHLVL +1
- * @param	t_env **env_copy
+ * @param	t_env **t_env
  * @return	void
 */
-void	ft_replace_SHLVL(t_env **env_copy)
+void	ft_replace_SHLVL(t_env **envi)
 {
 	t_env	*aux;
 	char	*temp;
 	
-	aux = *env_copy;
+	aux = *envi;
 	temp = NULL;
 	while (aux)
 	{
@@ -267,16 +267,16 @@ void	ft_replace_SHLVL(t_env **env_copy)
 
 /**
  * find and delete variable environment to builtins unset
- * @param	t_env **env_copy, const char *var
+ * @param	t_env **t_env, const char *var
  * @return	void
 */
-void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
+void	ft_find_and_delete_variable_env(t_env **envi, const char *var)
 {
 	t_env *aux;
 	t_env *prev;
 	size_t var_len;
 
-	aux = *env_copy;
+	aux = *envi;
 	prev = NULL;
 	var_len = ft_strlen(var);
 	while (aux)
@@ -286,7 +286,7 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
 			if (prev)
 				prev->next = aux->next;
 			else
-				*env_copy = aux->next;
+				*envi = aux->next;
 			ft_lstdelone_mshell(aux);
 			return ;
 		}
@@ -297,19 +297,19 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
 
 /**
  * Find variable env and returns the content of this variable env 
- * @param	t_env *env_copy, const char *var
+ * @param	t_env *t_env, const char *var
  * @return	char *
 */
-char	*ft_find_content_var_env(t_env *env_copy, char *var)
+char	*ft_find_content_var_env(t_env *envi, char *var)
 {
 	int	i;
 
 	i = 0;
-	while (env_copy)
+	while (envi)
 	{
-		if (ft_strncmp(var, env_copy->content, ft_strlen(var)) == 0 && env_copy->content[ft_strlen(var)] == '=')
-			return (env_copy->content + (ft_strlen(var) + 1));
-		env_copy = env_copy->next;
+		if (ft_strncmp(var, envi->content, ft_strlen(var)) == 0 && envi->content[ft_strlen(var)] == '=')
+			return (envi->content + (ft_strlen(var) + 1));
+		envi = envi->next;
 	}
 	printf("%s: not a valid identifier\n", var);
 	return ("ERROR");
@@ -317,17 +317,17 @@ char	*ft_find_content_var_env(t_env *env_copy, char *var)
 
 /**
  * Create linked list of environment
- * @param	t_env **env_copy, char **env
+ * @param	t_env **t_env, char **env
  * @return	void
 */
-void	ft_linked_list_env(t_env **t_env, char **env)
+void	ft_linked_list_env(t_env **envi, char **env)
 {
 	int i;
 
 	i = 0;
 	while (env[i])
 	{
-		ft_lstadd_back_str_env(t_env, ft_lstnew_str_env(env[i]));
+		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
 		i++;	
 	}
 }
@@ -346,17 +346,17 @@ void	ft_print_double_pointer(char **env_array)
 
 /**
  * Convert linked list in a matrix to ´ll use in execve(third argumment);
- * @param	t_env *env_copy
+ * @param	t_env *t_env
  * @return	char **
 */
-char	**ft_convert_linked_list_to_array(t_env *env_copy)
+char	**ft_convert_linked_list_to_array(t_env *envi)
 {
 	t_env 	*aux;
 	char	**env_array;
 	int 	env_count;
 	int 	i;
 	
-	aux = env_copy;
+	aux = envi;
 	env_count = 0;
 	i = 0;
 	while (aux)
@@ -365,7 +365,7 @@ char	**ft_convert_linked_list_to_array(t_env *env_copy)
 		aux = aux->next;
 	}
 	env_array = (char **)malloc(sizeof(char *) * (env_count + 1));
-	aux = env_copy;
+	aux = envi;
 	while (aux)
 	{
 		env_array[i] = aux->content;
@@ -386,36 +386,35 @@ int main(int argc, char **argv, char **env)
 	(void) 	env;
 	(void) 	argv;
 	(void)	argc;
-	t_env	*t_env;
-	char **env_array;
+	t_env	*envi;
+	// char **env_array;
 
-	env_copy = NULL;
 	// if (argc != 2)
 	// {
 	// 	printf("error: just one argc\n");
 	// 	return (-1);
 	// }
 	
-	ft_linked_list_env(&t_env, env);		// 1, 2, 3, 4
+	ft_linked_list_env(&envi, env);		// 1, 2, 3, 4
 	
-	// ft_print_lst_2(env_copy);			// 2,
-	// ft_replace_SHLVL(&env_copy);
-	// ft_print_lst_2(env_copy);
+	ft_print_lst_2(envi);			// 2,
+	ft_replace_SHLVL(&envi);
+	ft_print_lst_2(envi);
 	
 
-	// ft_print_lst_2(env_copy);			// 3
+	// ft_print_lst_2(envi);			// 3
 	// printf("\n\n");
-	// ft_find_and_delete_variable_env(&env_copy, argv[1]);
-	// ft_print_lst_2(env_copy);
+	// ft_find_and_delete_variable_env(&envi, argv[1]);
+	// ft_print_lst_2(envi);
 	
-	// ft_print_lst_2(env_copy);			// 1,
+	// ft_print_lst_2(envi);			// 1,
 	
 	// printf("\n\n");						// 4
-	// printf("return -> %s\n", ft_find_content_var_env(env_copy, argv[1]));
+	// printf("return -> %s\n", ft_find_content_var_env(envi, argv[1]));
 	// printf("\n\n");
 	
-	env_array = ft_convert_linked_list_to_array(env_copy);
-	ft_lstclear_mshell_2(&env_copy);		// 1, 2, 3
+	// env_array = ft_convert_linked_list_to_array(envi);		//5
+	ft_lstclear_mshell_2(&envi);		// 1, 2, 3
 	
 	return (0);
 }
