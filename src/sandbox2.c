@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/10 17:51:36 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:41:48 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ft_print_lst_2(t_env *temp)
 {
 	while (temp)
 	{
-		printf("temp = %s\n", temp->env_item);
+		printf("temp = %s\n", temp->content);
 		temp = temp->next;
 	}
 }
@@ -179,7 +179,7 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	node = malloc(sizeof(t_env));
 	if (node == NULL)
 		return (NULL);
-	node->env_item = ft_strdup(str_env);
+	node->content = ft_strdup(str_env);
 	node->next = NULL;
 	return (node);
 }
@@ -225,7 +225,7 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
 {
 	if (env_copy != NULL /* && del != NULL */)
 	{
-		free(env_copy->env_item);
+		free(env_copy->content);
 		free(env_copy);
 	}
 }
@@ -239,7 +239,7 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */)
 /* ###############   #################    ######################   ############# */
 
 /**
- * Change contained of SHLVL 
+ * Change contained of SHLVL +1
  * @param	t_env **env_copy
  * @return	void
 */
@@ -252,13 +252,13 @@ void	ft_replace_SHLVL(t_env **env_copy)
 	temp = NULL;
 	while (aux)
 	{
-		if (ft_strncmp("SHLVL=", aux->env_item, 6) == 0)
+		if (ft_strncmp("SHLVL=", aux->content, 6) == 0)
 		{
-			if (ft_atoi(aux->env_item + 6) > 0)
+			if (ft_atoi(aux->content + 6) > 0)
 			{
-				temp = ft_itoa(ft_atoi(aux->env_item + 6) + 1);
+				temp = ft_itoa(ft_atoi(aux->content + 6) + 1);
 				printf("temp ft_itoaft_atoi = %s\n\n\n", temp);
-				aux->env_item = ft_strjoin_2("SHLVL=", temp);
+				aux->content = ft_strjoin_2("SHLVL=", temp);
 			}
 		}	
 		aux = aux->next;
@@ -281,7 +281,7 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
 	var_len = ft_strlen(var);
 	while (aux)
 	{
-		if (ft_strncmp(var, aux->env_item, var_len) == 0)
+		if (ft_strncmp(var, aux->content, var_len) == 0)
 		{
 			if (prev)
 				prev->next = aux->next;
@@ -300,15 +300,15 @@ void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var)
  * @param	t_env *env_copy, const char *var
  * @return	char *
 */
-char	*ft_find_var_env(t_env *env_copy, char *var)
+char	*ft_find_content_var_env(t_env *env_copy, char *var)
 {
 	int	i;
 
 	i = 0;
 	while (env_copy)
 	{
-		if (ft_strncmp(var, env_copy->env_item, ft_strlen(var)) == 0 && env_copy->env_item[ft_strlen(var)] == '=')
-			return (env_copy->env_item + (ft_strlen(var) + 1));
+		if (ft_strncmp(var, env_copy->content, ft_strlen(var)) == 0 && env_copy->content[ft_strlen(var)] == '=')
+			return (env_copy->content + (ft_strlen(var) + 1));
 		env_copy = env_copy->next;
 	}
 	printf("%s: not a valid identifier\n", var);
@@ -320,14 +320,14 @@ char	*ft_find_var_env(t_env *env_copy, char *var)
  * @param	t_env **env_copy, char **env
  * @return	void
 */
-void	ft_linked_list_env(t_env **env_copy, char **env)
+void	ft_linked_list_env(t_env **t_env, char **env)
 {
 	int i;
 
 	i = 0;
 	while (env[i])
 	{
-		ft_lstadd_back_str_env(env_copy, ft_lstnew_str_env(env[i]));
+		ft_lstadd_back_str_env(t_env, ft_lstnew_str_env(env[i]));
 		i++;	
 	}
 }
@@ -368,7 +368,7 @@ char	**ft_convert_linked_list_to_array(t_env *env_copy)
 	aux = env_copy;
 	while (aux)
 	{
-		env_array[i] = aux->env_item;
+		env_array[i] = aux->content;
 		i++;
 		aux = aux->next;
 	}
@@ -386,37 +386,37 @@ int main(int argc, char **argv, char **env)
 	(void) 	env;
 	(void) 	argv;
 	(void)	argc;
-	t_env	*env_copy;
-	// char	**env_array;
-	int 	i;
-	
-	i = 0;
+	t_env	*t_env;
+	char **env_array;
+
 	env_copy = NULL;
 	// if (argc != 2)
 	// {
 	// 	printf("error: just one argc\n");
 	// 	return (-1);
-	// }	
-	ft_linked_list_env(&env_copy, env);
+	// }
 	
-	// ft_print_lst_2(env_copy);
+	ft_linked_list_env(&t_env, env);		// 1, 2, 3, 4
+	
+	// ft_print_lst_2(env_copy);			// 2,
 	// ft_replace_SHLVL(&env_copy);
 	// ft_print_lst_2(env_copy);
 	
 
-	// ft_print_lst_2(env_copy);
+	// ft_print_lst_2(env_copy);			// 3
 	// printf("\n\n");
 	// ft_find_and_delete_variable_env(&env_copy, argv[1]);
 	// ft_print_lst_2(env_copy);
 	
-	ft_print_lst_2(env_copy);
+	// ft_print_lst_2(env_copy);			// 1,
 	
-	// printf("\n\n");
-	// printf("return -> %s\n", ft_find_var_env(env_copy, argv[1]));
+	// printf("\n\n");						// 4
+	// printf("return -> %s\n", ft_find_content_var_env(env_copy, argv[1]));
 	// printf("\n\n");
 	
-	// env_array = ft_convert_linked_list_to_array(env_copy);
-	ft_lstclear_mshell_2(&env_copy);
+	env_array = ft_convert_linked_list_to_array(env_copy);
+	ft_lstclear_mshell_2(&env_copy);		// 1, 2, 3
+	
 	return (0);
 }
 // gcc -Wall -Werror -Wextra env.c sandbox2.c -o run_env && ./run_env PATH
