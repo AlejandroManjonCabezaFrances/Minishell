@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   envi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:23:02 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/10 15:43:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:40:28 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	**copy_env(char **env)	// Función repetida, está en el main
-{
-	char	**env_cpy;
-	int		i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	env_cpy = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!env_cpy)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		env_cpy[i] = ft_strdup(env[i]);
-		i++;
-	}
-	env_cpy[i] = NULL;
-	return (env_cpy);
-}
 
 // ################ Como hacer que el env sea null? ######################
 void	ft_when_env_is_null(t_inf *info)
@@ -45,96 +24,51 @@ void	ft_when_env_is_null(t_inf *info)
 	// printf("info->env[2] = %s\n", info->env[2]);
 }
 
+void	store_env_aux(t_inf *info, char **env)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = -1;
+	j = 0;
+	while (env[++i])
+	{
+		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+		{
+			if (ft_atoi(env[i] + 6) < 0)
+				info->env[j++] = ft_strdup("SHLVL=0");
+			else
+			{
+				tmp = ft_itoa(ft_atoi(env[i] + 6) + 1);
+				info->env[j++] = ft_strjoin("SHLVL=", tmp);
+				if (tmp != NULL)
+					free(tmp);
+			}
+		}
+		else if (ft_strncmp(env[i], "OLDPWD=", 7))
+			info->env[j++] = ft_strdup(env[i]);
+	}
+	info->env[j] = NULL;
+}
+
 void	ft_get_env(t_inf *info, char **env)
 {
 	int		i;
-	int 	j;
-	char 	*temp;
 
-	temp = NULL;
 	i = 0;
-	if (env[i] == NULL)
+	if (env[0] == NULL)
 	{
 		ft_when_env_is_null(info);
 		return ;
 	}
 	while (env[i])
-		i++;
-	info->env = (char **)malloc(sizeof(char *) * (i + 1));
-	if (info->env == NULL)
-		return;
-	i = 0;
-	while (info->env[i])
 	{
-		printf("info->env[i] = %s\n", info->env[i]);
-	}
-	i = 0;
-	j = 0;
-	while (env[i])
-	{
-		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
-		{
-			if (ft_atoi(env[i] + 6) > 0)
-			{
-				temp = ft_itoa(ft_atoi((env[i]) + 6) + 1);
-				info->env[j] = ft_strjoin_2("SHLVL=", temp);
-				j++;
-			}
-		}
-		if (ft_strncmp("OLDPWD=", env[i], 7) == 0)
-		{
-				info->env[j] = ft_strdup(env[i]);
-				j++;
-		}
+		printf("env = %s\n", env[i]);
 		i++;
 	}
+	info->env = (char **)malloc(sizeof(char *) * (i));
+	if (! info->env)
+		return ;
+	store_env_aux(info, env);
 }
-
-// void	store_env_aux(t_inf *info, char **env)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*tmp;
-
-// 	i = -1;
-// 	j = 0;
-// 	while (env[++i])
-// 	{
-// 		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
-// 		{
-// 			if (ft_atoi(env[i] + 6) < 0)
-// 				info->env[j++] = ft_strdup("SHLVL=0");
-// 			else
-// 			{
-// 				tmp = ft_itoa(ft_atoi(env[i] + 6) + 1);
-// 				info->env[j++] = ft_strjoin("SHLVL=", tmp);
-// 				if (tmp != NULL)
-// 					free(tmp);
-// 			}
-// 		}
-// 		else if (ft_strncmp(env[i], "OLDPWD=", 7))
-// 			info->env[j++] = ft_strdup(env[i]);
-// 	}
-// 	info->env[j] = NULL;
-// }
-
-// void	ft_get_env(t_inf *info, char **env)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (env[0] == NULL)
-// 	{
-// 		ft_when_env_is_null(info);
-// 		return ;
-// 	}
-// 	while (env[i])
-// 	{
-// 		printf("env = %s\n", env[i]);
-// 		i++;
-// 	}
-// 	info->env = (char **)malloc(sizeof(char *) * (i));
-// 	if (! info->env)
-// 		return ;
-// 	store_env_aux(info, env);
-// }

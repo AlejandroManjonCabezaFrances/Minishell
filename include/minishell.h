@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/11 13:05:15 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/15 15:45:16 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,17 @@ void	set_signals_noninteractive(void); // new
 void	signal_print_newline(int signal); // new
 
 /* ------ ENV ------ */
+t_env	*ft_lstnew_str_env(char *str_env);
+void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
+void	ft_linked_list_env(t_env **envi, char **env);
+
+/* ------ ENVI ------ */
 char	**copy_env(char **env);
 void	ft_when_env_is_null(t_inf *info);
 void	ft_get_env(t_inf *info, char **env);
 
 /* ------ SANDBOX2 ------ */
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin_2(char *s1, char *s2);
 void	ft_print_lst_2(t_env *temp);
 void	ft_lstclear_mshell_2(t_env **lst);
