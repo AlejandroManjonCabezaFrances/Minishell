@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/12 11:17:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/15 08:29:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ void	ft_replace_SHLVL(t_env **envi)
 }
 
 /**
- * find and delete variable environment to builtins unset
+ * find and delete variable environment to builtins unset.
  * @param	t_env **t_env, const char *var
  * @return	void
 */
@@ -283,7 +283,7 @@ void	ft_find_and_delete_variable_env(t_env **envi, const char *var)
 	{
 		if (ft_strncmp(var, aux->content, var_len) == 0)
 		{
-			if (prev)
+			if (prev != NULL)
 				prev->next = aux->next;
 			else
 				*envi = aux->next;
