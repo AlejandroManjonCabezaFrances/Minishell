@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/16 15:26:14 by amanjon-         ###   ########.fr       */
+/*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
+/*   Updated: 2024/01/16 10:45:26 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-// void	ft_echo(t_cmd *cmd)
-// {
-// 	int i;
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
 
-// 	i = 0;
-// 	while (cmd->command[i])
-// 	{
-// 		ft_putstr_fd(cmd->command[i], 1);		// stdout
-// 		i++;
-// 		if (cmd->command[i])
-// 			write(1, " ", 1);
-// 	}
-// }
+	i = 0;
+	while ((s1[i] != '\0' || s2[i] != '\0'))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

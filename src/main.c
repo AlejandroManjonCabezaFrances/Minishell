@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/09 11:12:32 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:55:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	main(int argc, char **argv, char **env)
 	int		err;
 	(void) argv;
 	
+	// cmd = NULL;
 	token_list = NULL;
 	cmd_line = NULL;
 	env_cpy = copy_env(env);
@@ -102,10 +103,11 @@ int	main(int argc, char **argv, char **env)
 		set_signals_noninteractive();
 		if (!cmd_line)
 			panic(READLINE_ERR, NULL, NULL);
-		// cmd_line[ft_strlen(cmd_line)] = '\0';
+		cmd_line[ft_strlen(cmd_line)] = '\0';
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)
 			panic (err, NULL, NULL);
+		// ft_builtins(&cmd_line);
 		add_history(cmd_line);
 		// parse(token_list, &scmds_list);
 		// tcsetattr(0, 0, &inf.termios);

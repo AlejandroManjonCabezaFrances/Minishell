@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:57:46 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:32:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:13:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ void	ft_putstr_fd(char *str, int fd)
 	}
 }
 
-/* int main(void)
-{
-	char	str[] = "monster";
-	int	fd;
+// int main(void)
+// {
+// 	char	str[] = "monster que tal";
 
-	
-	ft_putstr_fd(str, 1);
-	return (0);
-}  */
+// 	ft_putstr_fd(str, 2);
+// 	return (0);
+// }

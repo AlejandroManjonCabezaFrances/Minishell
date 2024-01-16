@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/15 15:45:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:16:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ typedef struct s_env
 	char			*content;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_cmd
+{
+	char 			**command;
+	char			*prompt;
+}	t_cmd;
 
 /* ------ ENUMS ------ */
 enum e_boolean {
@@ -173,5 +179,18 @@ char	*ft_strdup(const char	*s1);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 int 	main(int argc, char **argv, char **env);
+
+/* ------ BUILTINS ------ */
+void	ft_builtins(char **cmd_line);
+void	ft_echo(t_cmd *cmd);
+
+/* ------ UTILS ------ */
+int	ft_strcmp(const char *s1, const char *s2);
+
+
+
+
+
+
 
 #endif
