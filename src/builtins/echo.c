@@ -6,15 +6,15 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/17 13:53:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/17 14:35:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../utils.c echo.c -o echo && ./echo
+// gcc -Wall -Werror -Wextra ../utils.c builtins.c echo.c -o echo && ./echo
 
-void ft_epur_str(char *str)
+static void    ft_epur_str(char *str)
 {
 	int i;
 	int j;
@@ -71,22 +71,6 @@ void	ft_echo(char **cmd)
 	}
 	if (flag == TRUE)
 		write(1, "\n", 1);
-}
-
-void	ft_builtins(char **cmd)
-{
-	if (ft_strcmp(*cmd, "echo") == 0)
-		ft_echo(cmd);
-	// else if (ft_strcmp(*cmd, "cd") == 0)
-	// 	ft_cd(cmd);
-	// else if (ft_strcmp(*cmd, "pwd") == 0)
-	// 	ft_pwd(cmd);
-	// else if (ft_strcmp(*cmd, "unset") == 0)
-	// 	ft_unset(cmd);
-	// else if (ft_strcmp(*cmd, "export") == 0)
-	// 	ft_export(cmd);
-	// else if (ft_strcmp(*cmd, "exit") == 0)
-	// 	ft_exit(cmd);
 }
 
 int main() 
