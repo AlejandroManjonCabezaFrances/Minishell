@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/15 15:45:37 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/17 09:23:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,6 +395,40 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 	
 	return (env_array);
 }
+
+/**
+ * Obtener el PWD --> Current working directory
+*/
+// int main()
+// {
+// 	char cwd[1024];
+
+// 	cwd[0] = '\0';
+// 	if (getcwd(cwd, sizeof(cwd)) != NULL/*  && cwd[0] != '\0' */)
+// 		printf("directorio trabajo actual = %s\n", cwd);
+// 	else
+// 	{
+// 		perror(cwd);
+// 		return (-1);
+// 	}	
+// 	return (0);
+// }
+
+// // ######## getcwd();--> obtiene/muestra directorio dnde trabaja tu programa. Para el PWD######
+// int main() 
+// {
+//     char cwd[1024]; // Búfer para almacenar la ruta
+	
+//     if (getcwd(cwd, sizeof(cwd)) != NULL) 
+//         printf("Directorio de trabajo actual: %s\n", cwd); 
+// 	else 
+// 	{
+//         perror("Error al obtener el directorio de trabajo actual\n");
+//         return (1);
+//     }
+//     return (0);
+// }
+
 
 int main(int argc, char **argv, char **env)
 {

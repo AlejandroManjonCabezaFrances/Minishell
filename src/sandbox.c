@@ -3,125 +3,194 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:20:52 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/15 13:01:13 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:25:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/**
- * Obtener el PWD --> Current working directory
-*/
-int main()
+void	ft_putstr_fd(char *str, int fd)
 {
-	char cwd[1024];
+	int	i;
 
-	cwd[0] = '\0';
-	if (getcwd(cwd, sizeof(cwd)) != NULL/*  && cwd[0] != '\0' */)
-		printf("directorio trabajo actual = %s\n", cwd);
-	else
+	i = 0;
+	while (str[i] != '\0')
 	{
-		perror(cwd);
-		return (-1);
-	}	
-	return (0);
+		write(fd, &str[i], 1);
+		i++;
+	}
 }
 
-// ######## getcwd();--> obtiene/muestra directorio dnde trabaja tu programa. Para el PWD######
+int	ft_isspace(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+
+
+
+// static void	ft_echo_writing(char **list, int idx)
+// {
+// 	while (list[idx])
+// 	{
+// 		ft_putstr_fd(list[idx++], 1);
+// 	}
+// }
+
+// static int	check_for_flag(char *str)
+// {
+// 	int	loc;
+
+// 	loc = 1;
+// 	if (str[0] != '-')
+// 		return (0);
+// 	while (str[loc] == 'n')
+// 		loc++;
+// 	if (ft_isspace(str[loc]) || !str[loc])
+// 		return (1);
+// 	return (0);
+// }
+
+// /**
+//  * * This should recreate the bash funtion "echo".
+//  * @param list	vector of arguments containing records to echoed
+// */
+// void	ft_echo(char **argv)
+// {
+// 	int		n_flag;
+// 	int		idx;
+
+// 	n_flag = 0;
+// 	idx = 1;
+// 	if (argv[idx] == NULL)
+// 	{
+// 		write(1, "\n", 1);
+// 		return ;
+// 	}
+// 	while (1)
+// 	{
+// 		if (!check_for_flag(argv[idx]))
+// 			break ;
+// 		idx++;
+// 		n_flag = 1;
+// 		if (!argv[idx])
+// 			break ;
+// 	}
+// 	ft_echo_writing(argv, idx);
+// 	if (!n_flag)
+// 		write(1, "\n", 1);
+// }
+
+
+
+
+// static void	ft_echo_writing(char **cmd, int len)
+// {
+// 	while (cmd[len])
+// 	{
+// 		ft_epur_str(cmd[len]);
+// 		len++;
+// 	}
+// }
+
+void ft_epur_str(char *str)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while(str[k] != '\0')
+		k++;
+	k--;
+	while(str[k] == ' ' || str[k] == '\t')
+		k--;
+	while(str[j] == ' ' || str[j] == '\t')
+		j++;
+	while(/* str[i] != '\0' &&  */i <=k)
+	{
+		while(str[i] == ' ' || str[i] == '\t')
+			i++;
+		if(str[i - 1] == ' ' && i > j)
+			write(1, " ", 1);
+		write(1, &str[i], 1);
+		i++;
+	}
+	// write(1, "\n", 1);
+}
+
+static int	ft_flag_n(char *str/* , int len */)
+{
+	char *ptr;
+	
+	ptr = str;
+	if (ptr[0] != '-')
+		return (0);
+	while (*ptr == 'n')
+		ptr++;
+	str = ptr;
+	return (1);
+}
+
+void	ft_echo(char **cmd)
+{
+	int len;
+	int flag;
+
+	len = 1;
+	flag = 0;
+	if (cmd[len] == NULL)
+	{
+		write(1,"\n", 1);
+		return ;		
+	}
+	if (ft_flag_n(cmd[len]/* , len */) == 1)
+		flag = 1;
+	while (cmd[len])
+	{
+		ft_epur_str(cmd[len]);
+		len++;
+	}
+	if (flag == 1)
+		write(1, "\n", 1);
+	// ft_echo_writing(cmd, len);
+	
+}
+
+void	ft_builtins(char **cmd)
+{
+	if (ft_strcmp(*cmd, "echo") == 0)
+		ft_echo(cmd);
+	// else if (ft_strcmp(*cmd, "cd") == 0)
+	// 	ft_cd(cmd);
+	// else if (ft_strcmp(*cmd, "pwd") == 0)
+	// 	ft_pwd(cmd);
+	// else if (ft_strcmp(*cmd, "unset") == 0)
+	// 	ft_unset(cmd);
+	// else if (ft_strcmp(*cmd, "export") == 0)
+	// 	ft_export(cmd);
+	// else if (ft_strcmp(*cmd, "exit") == 0)
+	// 	ft_exit(cmd);
+}
+
 int main() 
 {
-    char cwd[1024]; // Búfer para almacenar la ruta
+    char *cmd[] = {"echo","-n", "   hola          chicos", NULL};
+    char **cmdPtr = cmd;
 	
-    if (getcwd(cwd, sizeof(cwd)) != NULL) 
-        printf("Directorio de trabajo actual: %s\n", cwd); 
-	else 
-	{
-        perror("Error al obtener el directorio de trabajo actual\n");
-        return (1);
-    }
+    ft_builtins(cmdPtr);
+
+	// char *cmd[3];
+
+	// cmd[0] = "echo";
+	// cmd[1] = "lo que diga el papi";
+	// cmd[2] = NULL;
+
+	// ft_builtins(cmd);
     return (0);
 }
-
-char *ft_strtok(char *restrict str, const char *restrict sep)
-{
-	char		*tokenStart;
-	static char	*nextToken;
-
-	tokenStart = NULL;
-	if (str != NULL)
-		nextToken = str;
-	while (*nextToken)
-	{
-		if (ft_is_delimiter(sep, *nextToken) == 0)
-		{
-			tokenStart = nextToken;
-			while (*nextToken && ft_is_delimiter(sep, *nextToken) == 0)
-				nextToken++;
-			if (*nextToken)
-			{
-				*nextToken = '\0';
-				nextToken++;
-			}
-			return (tokenStart);
-		}
-		nextToken++;
-	}
-	return (NULL);
-}
-
-int main()
-{
-	char str[] = "hola \"que\" tal";
-	const char sep[] = ",";
-	char *token;
-	
-	token = ft_strtok(str, sep);
-	while (token != NULL)
-	{
-		printf("token = %s\n", token);
-		token = ft_strtok(NULL, sep);
-	}
-	return (0);
-}
-
-
-
-/* ######################### VERSION LARGA ######################### */
-char *ft_strtok(char *restrict str, const char *restrict sep)
-{
-    static char *nextToken;
-    char *tokenStart;
-    char *delimiters;
-
-    tokenStart = NULL;
-    if (str != NULL)
-        nextToken = str;
-    while (*nextToken != '\0')
-    {
-        delimiters = (char *) sep;
-        while (*delimiters != '\0')
-        {
-            if (*nextToken == *delimiters)
-            {
-                if (tokenStart != NULL)
-                {
-                    *nextToken = '\0';
-                    nextToken++;
-                    return (tokenStart);
-                }
-                else
-                    nextToken++;
-            }
-            delimiters++;
-        }
-        if (tokenStart == NULL)
-            tokenStart = nextToken;
-        nextToken++;
-    }
-    if (tokenStart == NULL || *tokenStart == '\0')
-        return (NULL);
-    return (tokenStart);
-}
+// gcc -Wall -Werror -Wextra utils.c sandbox.c -o sandbox && ./sandbox

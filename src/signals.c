@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/09 11:11:51 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/17 09:19:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	signal_reset_prompt(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		// printf("Signal code: %d\n", inf.signal_code);
+		printf("Signal code: %d\n", inf.signal_code);
 	}
 	else if (signal == SIGQUIT)	// new else if();
 		SIG_IGN ;
