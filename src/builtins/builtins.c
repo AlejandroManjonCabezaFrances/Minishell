@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/18 11:39:40 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:04:27 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,4 @@ void	ft_builtins(char **cmd)
 	// 	ft_exit(cmd);
     // else if (ft_strcmp(*cmd, "env") == 0)
 	// 	ft_env(cmd);
-}
+} 
