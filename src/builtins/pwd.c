@@ -39,11 +39,11 @@ void    ft_pwd(char **cmd)
 	
 //     ft_builtins(cmdPtr);
 
-// 	// char *cmd[3];
+// 	char *cmd[3];
 
-// 	// cmd[0] = "pwd";
-// 	// cmd[1] = NULL;
+// 	cmd[0] = "pwd";
+// 	cmd[1] = NULL;
 
-// 	// ft_builtins(cmd);
+// 	ft_builtins(cmd);
 //     return (0);
 // }
