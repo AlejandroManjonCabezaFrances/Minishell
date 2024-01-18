@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/17 14:35:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/18 11:54:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h> 
 # include <sys/stat.h>
 # include <errno.h>
+# include <limits.h>
 
 /* ---------- NEW ---------- */
 #include <readline/readline.h>	//función readline -prompt-
@@ -184,11 +185,13 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 void		ft_builtins(char **cmd);
 
 			/* ------ ECHO ------ */
-void		ft_echo(char **cmd);
+void	ft_echo(char **cmd);
+			/* ------ PWD ------ */
+void	ft_pwd(char **cmd);
 
 
 /* ------ UTILS ------ */
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 
 
 
