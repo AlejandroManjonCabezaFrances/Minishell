@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/17 09:19:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/19 10:08:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,16 @@ void	signal_quit(void)
 
 void	signal_reset_prompt(int signal)
 {
-	t_inf inf;
 	(void) signal;
     
 	if (signal == SIGINT)   // new if ();
 	{
-		inf.signal_code = 130;
+		g_signal_code = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		printf("Signal code: %d\n", inf.signal_code);
+		printf("Signal code: %d\n", g_signal_code);
 	}
 	else if (signal == SIGQUIT)	// new else if();
 		SIG_IGN ;

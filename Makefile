@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/01/17 14:26:56 by marvin           ###   ########.fr        #
+#    Updated: 2024/01/19 09:38:40 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include
 DEBUG = -g3 -fsanitize=address
 RM = rm -f
 SRC = main.c lexer.c lexer_utils.c lexer_utils_2.c list_utils.c error.c signals.c parser.c \
-utils.c envi.c \
+utils.c #envi.c \
 builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export.c builtins/unset.c builtins/builtins.c builtins/pwd.c \
 #SRC = sandbox2.c sandbox.c
 

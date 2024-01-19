@@ -34,16 +34,17 @@ void    ft_pwd(char **cmd)
 
 // int main() 
 // {
+
 //     char *cmd[] = {"pwd",/*  " <  builtins.c", */ NULL};
 //     char **cmdPtr = cmd;
-	
 //     ft_builtins(cmdPtr);
 
 // 	char *cmd[3];
 
 // 	cmd[0] = "pwd";
-// 	cmd[1] = NULL;
-
+// 	cmd[1] = "!";
+// 	cmd[2] = NULL;
 // 	ft_builtins(cmd);
+
 //     return (0);
 // }

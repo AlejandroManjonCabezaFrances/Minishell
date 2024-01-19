@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/18 11:54:19 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:04:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 typedef struct s_token		t_token;
 typedef struct s_scmd		t_scmd;
 typedef struct s_inf		t_inf;
+extern int 					g_signal_code;
+
 
 typedef struct s_token
 {
@@ -61,7 +63,7 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	char			**env;
 	char 			*pwd;
-	int				signal_code;
+	// int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;
 
@@ -192,11 +194,5 @@ void	ft_pwd(char **cmd);
 
 /* ------ UTILS ------ */
 int		ft_strcmp(const char *s1, const char *s2);
-
-
-
-
-
-
 
 #endif

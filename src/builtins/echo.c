@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/18 18:35:01 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/19 09:00:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_echo(char **cmd)
 	{
 		if (ft_flag_n(cmd[len]) == TRUE)
 		{
-			flag = 1;
+			flag = TRUE;
 			len++;
 		}
 		else
@@ -61,23 +61,23 @@ void	ft_echo(char **cmd)
 		write(1, "\n", 1);
 }
 
-int main() 
-{
-	/* char *cmd[4];			// sin flag -n
-	cmd[0] = "echo";
-	cmd[1] = "lo        que diga el papi";
-	cmd[2] = "alex que tal";
-	cmd[3] = NULL; */
+// int main() 
+// {
+// 	/* char *cmd[4];			// sin flag -n
+// 	cmd[0] = "echo";
+// 	cmd[1] = "lo        que diga el papi";
+// 	cmd[2] = "alex que tal";
+// 	cmd[3] = NULL; */
 	
-	char *cmd[7];		// con flag -n
-	cmd[0] = "echo";
-	cmd[1] = "-nnn";
-	cmd[2] = "-nnnn";
-	cmd[3] = "-nnnn";
-	cmd[4] = "lo        que diga el papi";
-	cmd[5] = "alex que tal";
-	cmd[6] = NULL;
+// 	char *cmd[7];		// con flag -n
+// 	cmd[0] = "echo";
+// 	cmd[1] = "-nnn";
+// 	cmd[2] = "-nnnn";
+// 	cmd[3] = "-nnnn";
+// 	cmd[4] = "lo        que diga el papi";
+// 	cmd[5] = "alex que tal";
+// 	cmd[6] = NULL;
 
-	ft_builtins(cmd);
-    return (0);
-}
+// 	ft_builtins(cmd);
+//     return (0);
+// }

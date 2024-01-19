@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/16 15:55:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:08:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int g_signal_code = 0;
 
 int	check_argc(int argc)
 {
@@ -31,7 +33,6 @@ void	init_struct(t_inf *inf)
 {
 	inf->env = NULL;
 	inf->pwd = NULL;
-	inf->signal_code = 0;
 }
 /**
  * This function disable chars printed by ctrl+c '^C'
@@ -88,7 +89,6 @@ int	main(int argc, char **argv, char **env)
 	int		err;
 	(void) argv;
 	
-	// cmd = NULL;
 	token_list = NULL;
 	cmd_line = NULL;
 	env_cpy = copy_env(env);
@@ -107,7 +107,6 @@ int	main(int argc, char **argv, char **env)
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)
 			panic (err, NULL, NULL);
-		// ft_builtins(&cmd_line);
 		add_history(cmd_line);
 		// parse(token_list, &scmds_list);
 		// tcsetattr(0, 0, &inf.termios);
