@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:14 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/19 11:46:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/22 07:29:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c sandbox2.c builtins.c echo.c pwd.c export.c -o export && ./export
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c builtins.c echo.c pwd.c export.c -o export && ./export
 
 /**
  * Create linked list of environment
@@ -26,7 +26,6 @@ void ft_linked_list_env(t_env **envi, char **env)
 	i = 0;
 	while (env[i])
 	{
-        printf("linked_list_1\n");
 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
 		i++;	
 	}
@@ -46,11 +45,10 @@ void    ft_export(char **cmd, char **env)
     t_env *envi;
     
     *cmd = NULL;
-    printf("check_1\n");
     ft_linked_list_env(&envi, env);
-    printf("check_2\n");
-    ft_print_lst_2(envi);
-    printf("check_3\n");
+    // ft_print_lst_2(envi);
+	ft_lstadd_penultimate_str_env(&envi, ft_lstnew_penultimate_str_env(cmd[1]));
+	ft_print_lst_2(envi);
 }
 
 int main(int argc, char **argv, char **env) 
