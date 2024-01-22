@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/19 10:04:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/22 07:43:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,9 @@ char	*ft_find_content_var_env(t_env *env_copy, char *var);
 void	ft_linked_list_env(t_env **env_copy, char **env);
 void	ft_print_double_pointer(char **env_array);
 char	**ft_convert_linked_list_to_array(t_env *env_copy);
+void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
+t_env	*ft_lstnew_penultimate_str_env(char *str_env);
+t_env	*ft_lstlast_ms(t_env *lst);
 
 // static int	ft_size_mem(long n);char		*ft_copy_in_mem(int k, char	*ptr, long n1);
 char	*ft_itoa(int nbr);
@@ -184,12 +187,14 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 // int 	main(int argc, char **argv, char **env);
 
 /* ----------- BUILTINS ----------- */
-void		ft_builtins(char **cmd);
+void		ft_builtins(char **cmd, char **env);
 
 			/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
 			/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
+			/* ------ EXPORT ------ */
+void	ft_export(char **cmd, char **env);
 
 
 /* ------ UTILS ------ */

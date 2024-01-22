@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/18 18:37:23 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/22 07:45:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ int	ft_atoi(const char *str)
 	return ((int)(c * m));
 }
 
-void	ft_print_lst_2(t_env *temp)
-{
-	while (temp)
-	{
-		printf("temp = %s\n", temp->content);
-		temp = temp->next;
-	}
-}
+// void	ft_print_lst_2(t_env *temp)
+// {
+// 	while (temp)
+// 	{
+// 		printf("temp = %s\n", temp->content);
+// 		temp = temp->next;
+// 	}
+// }
 
 void	ft_lstclear_mshell_2(t_env **lst)
 {
@@ -184,6 +184,21 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	return (node);
 }
 
+t_env	*ft_lstnew_penultimate_str_env(char *str_env)
+{
+	t_env	*node;
+
+	node = NULL;
+	node = malloc(sizeof(t_env));
+	if (node == NULL)
+		return (NULL);
+	node->content = ft_strdup(str_env);
+	node->next = NULL;
+	return (node);
+}
+
+
+
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 {
 	t_env	*aux;
@@ -202,6 +217,38 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 	}
 }
 
+t_env	*ft_lstlast_ms(t_env *lst)
+{
+	while (lst != NULL)
+	{
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
+{
+	t_env	*aux;
+	t_env	*last;
+
+	aux = *envi;
+	last = ft_lstlast_ms(*envi);
+	if (*envi == NULL)
+	{
+		*envi = node;
+		return ;
+	}
+	else
+	{
+		while (aux->next->next != NULL)
+			aux = aux->next;
+		aux->next = node;
+		node->next = last;
+	}
+}
+
 // ESTA EN LA LIBRERIA
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -217,19 +264,19 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int i;
+// int	ft_strcmp(const char *s1, const char *s2)
+// {
+// 	int i;
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0'))
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while ((s1[i] != '\0' || s2[i] != '\0'))
+// 	{
+// 		if (s1[i] != s2[i])
+// 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 /**
  * Delete one node of linked list
@@ -317,9 +364,9 @@ void	ft_find_and_delete_variable_env(t_env **envi, const char *var)
 */
 char	*ft_find_content_var_env(t_env *envi, char *var)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	while (envi)
 	{
 		if (ft_strncmp(var, envi->content, ft_strlen(var)) == 0 && envi->content[ft_strlen(var)] == '=')
@@ -335,17 +382,17 @@ char	*ft_find_content_var_env(t_env *envi, char *var)
  * @param	t_env **t_env, char **env
  * @return	void
 */
-void	ft_linked_list_env(t_env **envi, char **env)
-{
-	int i;
+// void	ft_linked_list_env(t_env **envi, char **env)
+// {
+// 	int i;
 
-	i = 0;
-	while (env[i])
-	{
-		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-		i++;	
-	}
-}
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
+// 		i++;	
+// 	}
+// }
 
 void	ft_print_double_pointer(char **env_array)
 {
@@ -429,41 +476,41 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 //     return (0);
 // }
 
-int main(int argc, char **argv, char **env)
-{
-	(void) 	env;
-	(void) 	argv;
-	(void)	argc;
-	t_env	*envi;
-	// char **env_array;
+// int main(int argc, char **argv, char **env)
+// {
+// 	(void) 	env;
+// 	(void) 	argv;
+// 	(void)	argc;
+// 	t_env	*envi;
+// 	// char **env_array;
 
-	// if (argc != 2)
-	// {
-	// 	printf("error: just one argc\n");
-	// 	return (-1);
-	// }
+// 	// if (argc != 2)
+// 	// {
+// 	// 	printf("error: just one argc\n");
+// 	// 	return (-1);
+// 	// }
 	
-	ft_linked_list_env(&envi, env);		// 1, 2, 3, 4
+// 	ft_linked_list_env(&envi, env);		// 1, 2, 3, 4
 	
-	ft_print_lst_2(envi);			// 2,
-	ft_replace_SHLVL(&envi);
-	ft_print_lst_2(envi);
+// 	ft_print_lst_2(envi);			// 2,
+// 	ft_replace_SHLVL(&envi);
+// 	ft_print_lst_2(envi);
 	
 
-	// ft_print_lst_2(envi);			// 3
-	// printf("\n\n");
-	// ft_find_and_delete_variable_env(&envi, argv[1]);
-	// ft_print_lst_2(envi);
+// 	// ft_print_lst_2(envi);			// 3
+// 	// printf("\n\n");
+// 	// ft_find_and_delete_variable_env(&envi, argv[1]);
+// 	// ft_print_lst_2(envi);
 	
-	// ft_print_lst_2(envi);			// 1,
+// 	// ft_print_lst_2(envi);			// 1,
 	
-	// printf("\n\n");						// 4
-	// printf("return -> %s\n", ft_find_content_var_env(envi, argv[1]));
-	// printf("\n\n");
+// 	// printf("\n\n");						// 4
+// 	// printf("return -> %s\n", ft_find_content_var_env(envi, argv[1]));
+// 	// printf("\n\n");
 	
-	// env_array = ft_convert_linked_list_to_array(envi);		//5
-	ft_lstclear_mshell_2(&envi);		// 1, 2, 3
+// 	// env_array = ft_convert_linked_list_to_array(envi);		//5
+// 	ft_lstclear_mshell_2(&envi);		// 1, 2, 3
 	
-	return (0);
-}
+// 	return (0);
+// }
 // gcc -Wall -Werror -Wextra env.c sandbox2.c -o run_env && ./run_env PATH
