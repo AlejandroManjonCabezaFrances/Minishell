@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/22 07:45:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/24 15:01:49 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ char	*ft_strdup(const char	*s1)
 	return (ptr);
 }
 
-
 t_env	*ft_lstnew_str_env(char *str_env)
 {
 	t_env	*node;
@@ -180,24 +179,24 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	if (node == NULL)
 		return (NULL);
 	node->content = ft_strdup(str_env);
+	free(str_env); // puesto por export
 	node->next = NULL;
 	return (node);
 }
 
-t_env	*ft_lstnew_penultimate_str_env(char *str_env)
-{
-	t_env	*node;
+// t_env	*ft_lstnew_penultimate_str_env(char *str_env)
+// {
+// 	t_env	*node;
 
-	node = NULL;
-	node = malloc(sizeof(t_env));
-	if (node == NULL)
-		return (NULL);
-	node->content = ft_strdup(str_env);
-	node->next = NULL;
-	return (node);
-}
-
-
+// 	node = NULL;
+// 	node = malloc(sizeof(t_env));
+// 	if (node == NULL)
+// 		return (NULL);
+// 	node->content = ft_strdup(str_env);
+// 	free(str_env); // puesto por export
+// 	node->next = NULL;
+// 	return (node);
+// }
 
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 {

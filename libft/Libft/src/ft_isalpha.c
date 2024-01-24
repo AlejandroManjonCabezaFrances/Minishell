@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:42:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:23:45 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:02:31 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	ft_isalpha(int c)
 	return (0);
 }
 
-/*int	main(void)
-{
-	int	c;
+// int	main(void)
+// {
+// 	int	c;
 
-	c = '4'
-	printf("%d", ft_isalpha(c));
-	return (0);
-}*/
+// 	c = 'a';
+// 	printf("%d", ft_isalpha(c));
+// 	return (0);
+// }

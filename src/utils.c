@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/22 16:03:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/24 09:03:16 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,25 @@ int	ft_isalpha(int c)
 		return (1);
 	return (0);
 }
+
+// t_env	**sort_list(t_env **envi)
+// {
+// 	int aux;
+// 	t_env *temp;
+
+// 	temp = *envi;
+// 	while(envi->next != '\0')
+// 	{
+// 		if(((envi->content, envi->next->content)) == 0)
+// 		{
+// 			aux = envi->content;
+// 			envi->content = envi->next->content;
+// 			envi->next->content = aux;
+// 			envi = temp;
+// 		}
+// 		else
+// 			envi = envi->next;
+// 	}
+// 	envi = temp;
+// 	return (envi);
+// }
