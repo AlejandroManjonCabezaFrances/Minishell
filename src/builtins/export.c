@@ -49,7 +49,7 @@ void ft_print_lst_2_declare_x(t_env *temp)
 	}
 }
 
-void	ft_export_with_flag(char *cmd, char **env_cpy)
+void	ft_export_parsed_variable(char *cmd, char **env_cpy)
 {
     t_env *envi;
 	
@@ -111,28 +111,48 @@ char	*ft_parser_arguments(char **cmd, char *aux, int *fail)
 	return (aux);
 }
 
+int	ft_check_env_var_exists(char **cmd, char **env_cpy)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = 0;
+	while (cmd[1][len] != '=' && cmd[1])
+		len++;
+	printf("len = %d\n", len);
+	while (env_cpy[i])
+	{
+		if (ft_strncmp(cmd[1], env_cpy[i], len) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void    ft_export(char **cmd, char **env_cpy)
 {
 
 	t_env	*envi;
 	char	*aux;
 	int		fail;
-	// int		j;
-	// int		k;
 
 	envi = NULL;
 	aux = NULL;
-	// j = 1;
 	fail = 0;
 	if (cmd[1] == NULL)
 		ft_export_without_argv_sort(envi, env_cpy);
+	else if (ft_check_env_var_exists(cmd, env_cpy) == 1)
+	{
+		printf("cmd[1] variable = que env_cpy****\n");
+	}
 	else
 	{
 		aux = ft_parser_arguments(cmd, aux, &fail);
 		if (fail == 0)
 			printf("arguments not founds");
 		else
-			ft_export_with_flag(aux, env_cpy);
+			ft_export_parsed_variable(aux, env_cpy);
 	}
 }
 // copia del env (esta función habrá que quitarla, está en el main)
@@ -170,7 +190,8 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "A LEX=alex";
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
-	cmd[1] = NULL;
+	// cmd[1] = NULL;
+	cmd[1] = "USER";
 	cmd[2] = NULL;
 	ft_builtins(cmd, env_cpy);
 
