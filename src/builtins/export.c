@@ -55,7 +55,6 @@ void	ft_export_parsed_variable(char *cmd, char **env_cpy)
 	
 	envi = NULL;
     ft_linked_list_env(&envi, env_cpy);
-    // ft_print_lst_2(envi);
 	ft_lstadd_penultimate_str_env(&envi, ft_lstnew_str_env(cmd));
 	ft_print_lst_2(envi);
 }
@@ -130,6 +129,29 @@ int	ft_check_env_var_exists(char **cmd, char **env_cpy)
 	return (0);
 }
 
+void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
+{
+	char	*position_replace;
+	int		len;
+
+	position_replace = NULL;
+	len = 0;
+	while (cmd[len] != '=' && cmd[len])
+		len++;
+	ft_linked_list_env(&envi, env_cpy);
+	while (envi)
+	{
+		if (ft_strncmp(cmd, envi->content, len) == 0)
+		{
+			printf("envi->content = %s\n", envi->content);
+			position_replace = envi->content + len + 1;
+		}
+		envi = envi->next;
+	}
+	// printf("position_replace = %s\n", position_replace);
+	ft_strjoin();
+}
+
 void    ft_export(char **cmd, char **env_cpy)
 {
 
@@ -144,7 +166,7 @@ void    ft_export(char **cmd, char **env_cpy)
 		ft_export_without_argv_sort(envi, env_cpy);
 	else if (ft_check_env_var_exists(cmd, env_cpy) == 1)
 	{
-		printf("cmd[1] variable = que env_cpy****\n");
+		ft_replace_var_content(envi, cmd[1], env_cpy);
 	}
 	else
 	{
@@ -191,7 +213,7 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
 	// cmd[1] = NULL;
-	cmd[1] = "USER";
+	cmd[1] = "USER=ALEXXXXXXXXXXX";
 	cmd[2] = NULL;
 	ft_builtins(cmd, env_cpy);
 
