@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/01/26 13:29:21 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/26 13:44:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,21 +164,15 @@ void	ft_add_new_node_replaced(t_env *envi, char *node,char *left_element, int le
 	}
 	printf("aux->content = %s\n", aux->content);
 	node_free = aux;
-	printf("*****check_1\n");
 	aux = aux->prev;
-	printf("*****check_2\n");
 	aux_start = aux;
-	printf("*****check_3\n");
-	aux_end = aux->next->next;
-	printf("*****check_4\n");
-	ft_lstdelone_ms(node_free, &del);
-	printf("*****check_5\n");
+	printf("aux->content_1 = %s\n", aux->content);
+	printf("aux_start->content = %s\n", aux_start->content);
+	aux_end = aux->next->next;		// no pasa de aqui
+	ft_lstdelone_ms(node_free, &del);;
 	aux_start->next = node_new;
-	printf("*****check_6\n");
 	node_new->next = aux_end;
-	printf("*****check_7\n");
 	ft_print_lst_2(envi);
-	printf("*****check_8\n");
 }
 
 void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
