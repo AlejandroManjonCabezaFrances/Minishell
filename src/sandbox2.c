@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/24 15:01:49 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:56:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,6 @@ int	ft_atoi(const char *str)
 	return ((int)(c * m));
 }
 
-// void	ft_print_lst_2(t_env *temp)
-// {
-// 	while (temp)
-// 	{
-// 		printf("temp = %s\n", temp->content);
-// 		temp = temp->next;
-// 	}
-// }
-
 void	ft_lstclear_mshell_2(t_env **lst)
 {
 	t_env	*aux;
@@ -179,31 +170,17 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	if (node == NULL)
 		return (NULL);
 	node->content = ft_strdup(str_env);
-	free(str_env); // puesto por export
+	// free(str_env); 	// puesto por export, error linux munmap_chunk(): invalid pointer
 	node->next = NULL;
 	return (node);
 }
-
-// t_env	*ft_lstnew_penultimate_str_env(char *str_env)
-// {
-// 	t_env	*node;
-
-// 	node = NULL;
-// 	node = malloc(sizeof(t_env));
-// 	if (node == NULL)
-// 		return (NULL);
-// 	node->content = ft_strdup(str_env);
-// 	free(str_env); // puesto por export
-// 	node->next = NULL;
-// 	return (node);
-// }
 
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 {
 	t_env	*aux;
 
 	aux = *envi;
-	if (*envi == NULL)
+	if (*envi == NULL || envi == NULL)
 	{
 		*envi = node;
 		return ;
@@ -214,17 +191,6 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 			aux = aux->next;
 		aux->next = node;
 	}
-}
-
-t_env	*ft_lstlast_ms(t_env *lst)
-{
-	while (lst != NULL)
-	{
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	return (lst);
 }
 
 void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
@@ -248,34 +214,16 @@ void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 	}
 }
 
-// ESTA EN LA LIBRERIA
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+t_env	*ft_lstlast_ms(t_env *lst)
 {
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
+	while (lst != NULL)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
 	}
-	return (0);
+	return (lst);
 }
-
-// int	ft_strcmp(const char *s1, const char *s2)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while ((s1[i] != '\0' || s2[i] != '\0'))
-// 	{
-// 		if (s1[i] != s2[i])
-// 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 /**
  * Delete one node of linked list
@@ -376,23 +324,6 @@ char	*ft_find_content_var_env(t_env *envi, char *var)
 	return ("ERROR");
 }
 
-/**
- * Create linked list of environment
- * @param	t_env **t_env, char **env
- * @return	void
-*/
-// void	ft_linked_list_env(t_env **envi, char **env)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-// 		i++;	
-// 	}
-// }
-
 void	ft_print_double_pointer(char **env_array)
 {
 	int i;
@@ -443,6 +374,33 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 }
 
 /**
+ * Create linked list of environment
+ * @param	t_env **t_env, char **env
+ * @return	void
+*/
+// void ft_linked_list_env(t_env **envi, char **env)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	printf("ft_linked_1\n");
+// 	while (env[i])
+// 	{
+// 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
+// 		i++;	
+// 	}
+// }
+
+// void ft_print_lst_2(t_env *temp)
+// {
+// 	while (temp)
+// 	{
+// 		printf("temp = %s\n", temp->content);
+// 		temp = temp->next;
+// 	}
+// }
+
+/**
  * Obtener el PWD --> Current working directory
 */
 // int main()
@@ -481,15 +439,18 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 // 	(void) 	argv;
 // 	(void)	argc;
 // 	t_env	*envi;
+
+// 	envi = NULL;
 // 	// char **env_array;
 
-// 	// if (argc != 2)
-// 	// {
-// 	// 	printf("error: just one argc\n");
-// 	// 	return (-1);
-// 	// }
-	
-// 	ft_linked_list_env(&envi, env);		// 1, 2, 3, 4
+	// if (argc != 2)
+	// {
+	// 	printf("error: just one argc\n");
+	// 	return (-1);
+	// }
+	// ft_linked_list_env(&envi, env);		// 1, 2, 3, 4
+	// ft_print_lst_2(envi);
+	// printf("emtra aqui\n");
 	
 // 	ft_print_lst_2(envi);			// 2,
 // 	ft_replace_SHLVL(&envi);
@@ -503,13 +464,13 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 	
 // 	// ft_print_lst_2(envi);			// 1,
 	
-// 	// printf("\n\n");						// 4
-// 	// printf("return -> %s\n", ft_find_content_var_env(envi, argv[1]));
-// 	// printf("\n\n");
+	// printf("\n\n");						// 4
+	// printf("return -> %s\n", ft_find_content_var_env(envi, argv[1]));
+	// printf("\n\n");
 	
 // 	// env_array = ft_convert_linked_list_to_array(envi);		//5
 // 	ft_lstclear_mshell_2(&envi);		// 1, 2, 3
 	
 // 	return (0);
 // }
-// gcc -Wall -Werror -Wextra env.c sandbox2.c -o run_env && ./run_env PATH
+// gcc -Wall -Werror -Wextra sandbox2.c -o run_env && ./run_env PATH

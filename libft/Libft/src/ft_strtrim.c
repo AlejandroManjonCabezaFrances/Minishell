@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:55:01 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:33:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:05:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ char	*ft_strtrim(char	const *s1, char	const *set)
 	return (ft_fill(i, k, s1, ptr));
 }
 
-/*int main(void)
-{
-    char    s1[] = "  ssshola  ";
-    char    set[] = "ol";
+// int main(void)
+// {
+//     char    s1[] = "USER=holaaaaaa";
+//     char    set[] = "holaaaaaa";
 
-    printf("%s", ft_strtrim(s1, set));
-    return(0);
-} */
+//     printf("%s", ft_strtrim(s1, set));
+//     return(0);
+// }

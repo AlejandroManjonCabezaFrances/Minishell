@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:16:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:33:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:22:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	*ft_strrchr(const char *s, int c)
 	return (NULL);
 }
 
-/* int	main(void)
-{
-	char	s[] = "automovil";
+// int	main(void)
+// {
+// 	char	s[] = "ALEX=hola";
 
-	printf("original %s\n", strrchr(s, 'm')); 
-	printf("mia %s", ft_strrchr(s, 'm')); 
-	return (0);
-} */
+// 	printf("original %s\n", strrchr(s, '=')); 
+// 	printf("mia %s", ft_strrchr(s, '=')); 
+// 	return (0);
+// }

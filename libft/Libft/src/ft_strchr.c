@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:27:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/22 16:53:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/25 11:38:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-int	main(void)
-{
-	char s[] = "ALEX=hola";
+// int	main(void)
+// {
+// 	char s[] = "ALEX=hola";
 
-	printf("Mi funcion %s\n", ft_strchr(s, '='));
-	printf("Original %s", strchr(s, '='));
-	return (0);
-}
+// 	printf("Mi funcion %s\n", ft_strchr(s, '='));
+// 	printf("Original %s", strchr(s, '='));
+// 	return (0);
+// }

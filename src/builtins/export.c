@@ -1,18 +1,18 @@
-         /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 09:13:14 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/24 09:40:35 by amanjon-         ###   ########.fr       */
+/*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
+/*   Updated: 2024/01/26 13:29:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c builtins.c echo.c pwd.c export.c -o export && ./export
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o export && ./export
 // falta usar una copia del enviroment (yo estoy cogiendo el env del sistema)
 /**
  * Create linked list of environment
@@ -129,27 +129,91 @@ int	ft_check_env_var_exists(char **cmd, char **env_cpy)
 	return (0);
 }
 
+void	del(void *content)
+{
+	free(content);
+}
+
+void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
+{
+	if (lst != NULL && del != NULL)
+	{
+		(*del)(lst->content);
+		free(lst);
+	}
+}
+
+void	ft_add_new_node_replaced(t_env *envi, char *node,char *left_element, int len)
+{
+	t_env	*node_free;
+	t_env	*aux_start;
+	t_env	*aux_end;
+	t_env	*node_new;
+	t_env	*aux;
+
+	aux = envi;
+	while (aux)
+	{
+		if (ft_strncmp(left_element, aux->content, len) == 0)
+		{
+			node_new = ft_lstnew_str_env(node);
+			break;
+			printf("node->result = %s\n", node_new->content);
+		}
+		aux = aux->next;
+	}
+	printf("aux->content = %s\n", aux->content);
+	node_free = aux;
+	printf("*****check_1\n");
+	aux = aux->prev;
+	printf("*****check_2\n");
+	aux_start = aux;
+	printf("*****check_3\n");
+	aux_end = aux->next->next;
+	printf("*****check_4\n");
+	ft_lstdelone_ms(node_free, &del);
+	printf("*****check_5\n");
+	aux_start->next = node_new;
+	printf("*****check_6\n");
+	node_new->next = aux_end;
+	printf("*****check_7\n");
+	ft_print_lst_2(envi);
+	printf("*****check_8\n");
+}
+
 void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 {
-	char	*position_replace;
+	char	*right_element;
+	char	*left_element;
+	char	*result;
 	int		len;
+	t_env	*aux;
 
-	position_replace = NULL;
+	ft_linked_list_env(&envi, env_cpy);
+	aux = envi;
+	right_element = NULL;
+	left_element = NULL;
 	len = 0;
 	while (cmd[len] != '=' && cmd[len])
 		len++;
-	ft_linked_list_env(&envi, env_cpy);
-	while (envi)
+	while (aux)
 	{
-		if (ft_strncmp(cmd, envi->content, len) == 0)
+		if (ft_strncmp(cmd, aux->content, len) == 0)
 		{
-			printf("envi->content = %s\n", envi->content);
-			position_replace = envi->content + len + 1;
+			printf("envi->content = %s\n", aux->content);
+			right_element = aux->content + len + 1;
+			break;
 		}
-		envi = envi->next;
+		aux = aux->next;
 	}
-	// printf("position_replace = %s\n", position_replace);
-	ft_strjoin();
+	left_element = ft_strtrim(aux->content, right_element); //cmd -->  USER=ALEXXXXXXXXXXX
+														// envi->content --> USER=amanjon
+	printf("right_element = %s\n", right_element);	
+	printf("left_element = %s\n", left_element);
+	result = ft_strjoin(left_element, cmd + len + 1);
+	printf("result = %s\n", result);
+	// ft_print_lst_2(envi);
+	ft_add_new_node_replaced(envi, result, left_element, len);
 }
 
 void    ft_export(char **cmd, char **env_cpy)
@@ -213,7 +277,7 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
 	// cmd[1] = NULL;
-	cmd[1] = "USER=ALEXXXXXXXXXXX";
+	cmd[1] = "USER=ALEXXXXXXXXXXX";		// sustituir var existente
 	cmd[2] = NULL;
 	ft_builtins(cmd, env_cpy);
 
