@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/01/26 17:34:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/29 08:41:40 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,20 +150,30 @@ void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int l
 	t_env	*node_new;
 	t_env	*aux;
 
+	node_free = NULL;
+	aux_start = NULL;
+	aux_end = NULL;
+	node_new = NULL;
+	aux = NULL;
 	aux = envi;
+	printf("aux->content = %s\n", aux->content);
+	printf("left_element = %s y len = %d\n", left_element, len);
 	while (aux)
 	{
-		if (ft_strncmp(left_element, aux->content, len) == 0)
+		if (ft_strncmp(left_element, aux->content, len + 1) == 0)
 		{
 			node_new = ft_lstnew_str_env(node);
 			break;
 		}
 		aux = aux->next;
 	}
+	printf("node_new = %s\n", node_new->content);
+	printf("aux->content*** = %s\n", aux->content);
 	node_free = aux;
+	printf("node_free = %s\n", node_free->content);
 	aux = aux->prev;
 	aux_start = aux;
-	aux_end = aux->next->next;
+	aux_end = aux->next->next;		// peta aqui.
 	ft_lstdelone_ms(node_free, &del);;
 	aux_start->next = node_new;
 	node_new->next = aux_end;
@@ -185,10 +195,12 @@ void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 	len = 0;
 	while (cmd[len] != '=' && cmd[len])
 		len++;
+	printf("len_2 = %d\n", len);
 	while (aux)
 	{
-		if (ft_strncmp(cmd, aux->content, len) == 0)
+		if (ft_strncmp(cmd, aux->content, len + 1) == 0)
 		{
+			printf("cmd = %s y aux->content = %s\n", cmd, aux->content);
 			right_element = aux->content + len + 1;
 			break;
 		}
