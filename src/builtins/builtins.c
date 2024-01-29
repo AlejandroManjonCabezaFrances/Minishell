@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/24 09:24:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/29 08:55:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	ft_builtins(char **cmd, char **env_cpy)
 		ft_pwd(cmd);
 	else if (ft_strcmp(*cmd, "export") == 0)
 		ft_export(cmd, env_cpy);
+	else if (ft_strcmp(*cmd, "unset") == 0)
+		ft_unset(cmd, env_cpy);
 	// else if (ft_strcmp(*cmd, "cd") == 0)
 	// 	ft_cd(cmd);
-	// else if (ft_strcmp(*cmd, "unset") == 0)
-	// 	ft_unset(cmd);
 	// else if (ft_strcmp(*cmd, "exit") == 0)
 	// 	ft_exit(cmd);
     // else if (ft_strcmp(*cmd, "env") == 0)

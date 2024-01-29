@@ -6,14 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/01/29 08:41:40 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:56:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o export && ./export
-// falta usar una copia del enviroment (yo estoy cogiendo el env del sistema)
 /**
  * Create linked list of environment
  * @param	t_env **t_env, char **env
@@ -128,20 +127,6 @@ int	ft_check_env_var_exists(char **cmd, char **env_cpy)
 	return (0);
 }
 
-void	del(void *content)
-{
-	free(content);
-}
-
-void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
-{
-	if (lst != NULL && del != NULL)
-	{
-		(*del)(lst->content);
-		free(lst);
-	}
-}
-
 void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int len)
 {
 	t_env	*node_free;
@@ -156,8 +141,6 @@ void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int l
 	node_new = NULL;
 	aux = NULL;
 	aux = envi;
-	printf("aux->content = %s\n", aux->content);
-	printf("left_element = %s y len = %d\n", left_element, len);
 	while (aux)
 	{
 		if (ft_strncmp(left_element, aux->content, len + 1) == 0)
@@ -167,14 +150,11 @@ void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int l
 		}
 		aux = aux->next;
 	}
-	printf("node_new = %s\n", node_new->content);
-	printf("aux->content*** = %s\n", aux->content);
 	node_free = aux;
-	printf("node_free = %s\n", node_free->content);
 	aux = aux->prev;
 	aux_start = aux;
-	aux_end = aux->next->next;		// peta aqui.
-	ft_lstdelone_ms(node_free, &del);;
+	aux_end = aux->next->next;
+	ft_lstdelone_ms(node_free, &dele);;
 	aux_start->next = node_new;
 	node_new->next = aux_end;
 	ft_print_lst_2(envi);
@@ -195,12 +175,10 @@ void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 	len = 0;
 	while (cmd[len] != '=' && cmd[len])
 		len++;
-	printf("len_2 = %d\n", len);
 	while (aux)
 	{
 		if (ft_strncmp(cmd, aux->content, len + 1) == 0)
 		{
-			printf("cmd = %s y aux->content = %s\n", cmd, aux->content);
 			right_element = aux->content + len + 1;
 			break;
 		}
@@ -213,7 +191,6 @@ void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 
 void    ft_export(char **cmd, char **env_cpy)
 {
-
 	t_env	*envi;
 	char	*aux;
 	int		fail;
@@ -225,12 +202,10 @@ void    ft_export(char **cmd, char **env_cpy)
 		ft_export_without_argv_sort(envi, env_cpy);
 	else if (ft_check_env_var_exists(cmd, env_cpy) == 1)
 	{
-		printf("ft_replace_1\n");
 		ft_replace_var_content(envi, cmd[1], env_cpy);
 	}
 	else
 	{
-		printf("ft_replace_2\n");
 		aux = ft_parser_arguments(cmd, aux, &fail);
 		if (fail == 0)
 			printf("arguments not founds");
@@ -260,27 +235,27 @@ char	**copy_env(char **env)
 	return (env_cpy);
 }
 
-int main(int argc, char **argv, char **env) 
-{
-	char *cmd[3];
-	char	**env_cpy;
-    (void) argc;
-    (void) argv;
+// int main(int argc, char **argv, char **env) 
+// {
+// 	char *cmd[3];
+// 	char	**env_cpy;
+//     (void) argc;
+//     (void) argv;
     
-	env_cpy = NULL;
-	env_cpy = copy_env(env);
-	cmd[0] = "export";
-	// cmd[1] = "A LEX=alex";
-	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";
-	// cmd[1] = NULL;
-	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-	cmd[1] = "TERM=SE_VIENEN_COSITAS";
-	cmd[2] = NULL;
-	ft_builtins(cmd, env_cpy);
+// 	env_cpy = NULL;
+// 	env_cpy = copy_env(env);
+// 	cmd[0] = "export";
+// 	// cmd[1] = "A LEX=alex";
+// 	// cmd[1] = "LEX= alex";
+// 	// cmd[1] = "ALEX=alex";
+// 	// cmd[1] = NULL;
+// 	cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+// 	// cmd[1] = "TERM=SE_VIENEN_COSITAS";
+// 	cmd[2] = NULL;
+// 	ft_builtins(cmd, env_cpy);
 
-	// habría que probar que ft_export devuelva un doble puntero
-	// y guardar la lista --> env_cpy = char **ft_export(). 
-	// antes de esto, hacer free a env_cpy por los leaks.
-    return (0);
-}
+// 	// habría que probar que ft_export devuelva un doble puntero
+// 	// y guardar la lista --> env_cpy = char **ft_export(). 
+// 	// antes de esto, hacer free a env_cpy por los leaks.
+//     return (0);
+// }
