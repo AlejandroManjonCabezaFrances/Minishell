@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/30 08:20:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/30 08:52:04 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ void	ft_unset(char **cmd, char **env_cpy)
 		printf("not a valid identifier");
 }
 
-int main(int argc, char **argv, char **env)
-{
-	char *cmd[3];
-	char	**env_cpy;
-    (void) argc;
-    (void) argv;
+// int main(int argc, char **argv, char **env)
+// {
+// 	char *cmd[3];
+// 	char	**env_cpy;
+//     (void) argc;
+//     (void) argv;
     
-	env_cpy = NULL;
-	env_cpy = copy_env(env);
-	cmd[0] = "unset";
-	cmd[1] = "PWD";
-	// cmd[1] = "__CF_USER_TEXT_ENCODING";
-	// cmd[1] = "4";
-	// cmd[1] = "";
-	ft_builtins(cmd, env_cpy);
+// 	env_cpy = NULL;
+// 	env_cpy = copy_env(env);
+// 	cmd[0] = "unset";
+// 	cmd[1] = "PWD";
+// 	// cmd[1] = "__CF_USER_TEXT_ENCODING";
+// 	// cmd[1] = "4";
+// 	// cmd[1] = "";
+// 	ft_builtins(cmd, env_cpy);
 	
-	return (0);
-}
+// 	return (0);
+// }
