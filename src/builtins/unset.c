@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/29 15:24:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/30 08:20:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c unset.c ../utils.c export.c -o unset && ./unset
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o unset && ./unset
 
 void	ft_delete_node(t_env **envi, char *cmd)
 {
@@ -52,15 +52,14 @@ void	ft_unset(char **cmd, char **env_cpy)
 	envi = NULL;
 	i = 0;
 	ft_linked_list_env(&envi, env_cpy);
-	if (*cmd == NULL)
+	if (*cmd == NULL || cmd == NULL)
 		return ;
-	while (cmd[1][i])
-	{
-		if (ft_isalpha(cmd[1][i]) == 1)
-			ft_delete_node(&envi, cmd[1]);
-		break;
-		i++;
-	}
+	else if (cmd[1][0] == 0)
+		return ;
+	else if (ft_isalpha(cmd[1][0]) == 1 || cmd[1][0] == '_')
+		ft_delete_node(&envi, cmd[1]);
+	else
+		printf("not a valid identifier");
 }
 
 int main(int argc, char **argv, char **env)
@@ -74,6 +73,7 @@ int main(int argc, char **argv, char **env)
 	env_cpy = copy_env(env);
 	cmd[0] = "unset";
 	cmd[1] = "PWD";
+	// cmd[1] = "__CF_USER_TEXT_ENCODING";
 	// cmd[1] = "4";
 	// cmd[1] = "";
 	ft_builtins(cmd, env_cpy);
