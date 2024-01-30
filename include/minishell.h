@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/26 12:00:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/29 11:55:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,15 @@ void	ft_echo(char **cmd);
 void	ft_pwd(char **cmd);
 			/* ------ EXPORT ------ */
 void	ft_export(char **cmd, char **env);
+			/* ------ UNSET ------ */
+void	ft_unset(char **cmd, char **env_cpy);
 
 
 /* ------ UTILS ------ */
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_isalpha(int c);
+void	dele(void *content);
+void	ft_lstdelone_ms(t_env *lst, void (*del)(void *));
 
 #endif

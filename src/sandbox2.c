@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/25 12:56:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/29 08:49:05 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	node->content = ft_strdup(str_env);
 	// free(str_env); 	// puesto por export, error linux munmap_chunk(): invalid pointer
 	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -190,6 +191,7 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 		while (aux->next != NULL)
 			aux = aux->next;
 		aux->next = node;
+		node->prev = aux;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/25 11:25:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/30 07:55:27 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,18 @@ int	ft_isalpha(int c)
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
+}
+
+void	dele(void *content)
+{
+	free(content);
+}
+
+void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
+{
+	if (lst != NULL && del != NULL)
+	{
+		(*del)(lst->content);
+		free(lst);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 09:15:27 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/25 13:05:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/29 10:45:13 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int main(void)
-{
-	char s1[] = "USER=ALEXXXXXXXXXXX";
-	char s2[] = "USER=amanjon";
+// int main(void)
+// {
+// 	char s1[] = "USER=ALEXXXXXXXXXXX";
+// 	char s2[] = "USER=amanjon";
 
-	printf("%d\n", strncmp(s1, s2, 5));
-	printf("%d", ft_strncmp(s1, s2, 5));
-	return (0);
-}
+// 	printf("%d\n", strncmp(s1, s2, 5));
+// 	printf("%d", ft_strncmp(s1, s2, 5));
+// 	return (0);
+// }
