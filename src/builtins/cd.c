@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/30 15:32:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:40:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,18 @@
 */
 void	ft_change_directory(char *path, char **env_cpy)
 {
-	int result;
-	// cmd = NULL;
-	env_cpy = NULL;
+	int change;
+	char cwd[PATH_MAX];
+	(void) env_cpy;
 	
-	result = chdir(path);
-	printf("result = %d\n", result);
-	if (result != 0)
-		perror(path);
+	change = chdir(path);
+	printf("change = %d\n", change);
+	
+	getcwd(cwd, sizeof(cwd));
+    printf("%s\n", cwd); 
+	
+	// if (change != 0)
+	// 	perror(path);
 }
 
 void	ft_cd(char **cmd, char **env_cpy)
@@ -47,9 +51,11 @@ int main(int argc, char **argv, char **env)
 	env_cpy = NULL;
 	env_cpy = copy_env(env);
 	cmd[0] = "cd";
-	cmd[1] = "..";
-	cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
+	// cmd[1] = "..";
+	// cmd[2] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	// cmd[2] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
+	// cmd[2] = "/home/amanjon/minishell_github/src/builtins/";		//Linux
+	cmd[2] = "/home/amanjon/minishell_github/";		//Linux
 	
 	ft_builtins(cmd, env_cpy);
 	return (0);

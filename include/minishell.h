@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/29 11:55:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:42:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ void	ft_pwd(char **cmd);
 void	ft_export(char **cmd, char **env);
 			/* ------ UNSET ------ */
 void	ft_unset(char **cmd, char **env_cpy);
+			/* ------ CD ------ */
+void	ft_cd(char **cmd, char **env_cpy);
 
 
 /* ------ UTILS ------ */

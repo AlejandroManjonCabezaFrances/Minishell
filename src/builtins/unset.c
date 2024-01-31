@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/30 08:52:04 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:37:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	ft_delete_node(t_env **envi, char *cmd)
 void	ft_unset(char **cmd, char **env_cpy)
 {
 	t_env *envi;
-	int i;
 
 	envi = NULL;
-	i = 0;
 	ft_linked_list_env(&envi, env_cpy);
 	if (*cmd == NULL || cmd == NULL)
 		return ;
