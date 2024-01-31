@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/31 13:33:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/31 17:22:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,54 +19,78 @@
  * @param	char *path, char **env_cpy
  * @return	void
 */
-void	ft_change_directory(char *path, char **env_cpy)
+int	ft_change_directory(char *path)
 {
 	int change;
 	char cwd[PATH_MAX];
-	(void) env_cpy;
 	
 	change = chdir(path);
 	printf("change = %d\n", change);
 	
 	getcwd(cwd, sizeof(cwd));
-    printf("PWD current = %s\n", cwd);
+    printf("PWD al cambiar  = %s\n", cwd);
 	
 	if (change != 0)
 		perror(path);
+	return (change);
 }
 
-char	*ft_without_arguments(char **env_cpy)
+char	*ft_find_path_env(t_env *envi, char *str)
 {
-	int 	i;
-	char	*str;
-	int len;
+	t_env	*aux;
+	int 	len;
 
-	i = 0;
-	str = "HOME=";
+	aux = envi;
 	len = ft_strlen(str);
-	while (env_cpy[i])
+	while (aux)
 	{
-		if (ft_strncmp(env_cpy[i], str, len) == 0)
+		if (ft_strncmp(aux->content, str, len) == 0)
 		{
-			return (env_cpy[i] + len);
+			return (aux->content + len);
 		}
-		i++;	
+		aux = aux->next;	
 	}
 	return (NULL);
 }
 
+void	ft_update_env_pwd(t_env *envi, char *pwd, char *old_pwd)
+{
+	// t_env	*aux;
+
+	// aux = envi;
+	printf("PWD=%s\n", pwd);
+	printf("OLDPWD=%s\n", old_pwd);
+	if (old_pwd == NULL)
+		old_pwd = ft_find_path_env(envi, "OLDPWD=");
+	if (old_pwd != NULL)
+	{
+		ft_print_lst_2(envi);
+	}
+}
+
 void	ft_cd(char **cmd, char **env_cpy)
 {
+	t_env	*envi;
 	char	*path_no_argv;
+	int		no_change_dir;
+
+	envi = NULL;
+	ft_linked_list_env(&envi, env_cpy);
 	if (cmd[1] != NULL)
 	{
-		ft_change_directory(cmd[1], env_cpy);
+		no_change_dir = ft_change_directory(cmd[1]);
 	}
 	else
 	{
-		path_no_argv = ft_without_arguments(env_cpy);
-		ft_change_directory(path_no_argv, env_cpy);
+		path_no_argv = ft_find_path_env(envi, "HOME=");
+		ft_change_directory(path_no_argv);
 	}
+	if (!no_change_dir)
+	{
+		ft_update_env_pwd(envi, ft_find_path_env(envi, "PWD="),
+			ft_find_path_env(envi, "OLDPWD="));
+	}
+	
 }
 
 int main(int argc, char **argv, char **env)
@@ -83,8 +107,8 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
 	// cmd[1] = "/home/amanjon/";	 //esta es la direccion con solo "cd"	//Linux
-	// cmd[1] = "/home/amanjon/minishell_github/";		//Linux
-	cmd[1] = NULL;
+	cmd[1] = "/home/amanjon/minishell_github/";	//Linux
+	// cmd[1] = NULL;
 	
 	ft_builtins(cmd, env_cpy);
 	return (0);
