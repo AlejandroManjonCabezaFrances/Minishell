@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/31 10:37:39 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/01 11:02:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,28 @@ void	ft_delete_node(t_env **envi, char *cmd)
 	ft_print_lst_2(*envi);
 }
 
-void	ft_unset(char **cmd, char **env_cpy)
+void	ft_unset(char **cmd, t_env **envi)
 {
-	t_env *envi;
+	// t_env *envi;
 
-	envi = NULL;
-	ft_linked_list_env(&envi, env_cpy);
+	// envi = NULL;
+	// ft_linked_list_env(&envi, env_cpy);
 	if (*cmd == NULL || cmd == NULL)
 		return ;
 	else if (cmd[1][0] == 0)
 		return ;
 	else if (ft_isalpha(cmd[1][0]) == 1 || cmd[1][0] == '_')
-		ft_delete_node(&envi, cmd[1]);
+		ft_delete_node(envi, cmd[1]);
 	else
 		printf("not a valid identifier");
 }
 
 // int main(int argc, char **argv, char **env)
 // {
+// 	t_env *envi;
+
+// 	envi = NULL;
+// 	ft_linked_list_env(&envi, env);
 // 	char *cmd[3];
 // 	char	**env_cpy;
 //     (void) argc;
@@ -74,7 +78,7 @@ void	ft_unset(char **cmd, char **env_cpy)
 // 	// cmd[1] = "__CF_USER_TEXT_ENCODING";
 // 	// cmd[1] = "4";
 // 	// cmd[1] = "";
-// 	ft_builtins(cmd, env_cpy);
+// 	ft_builtins(cmd, &envi);
 	
 // 	return (0);
 // }

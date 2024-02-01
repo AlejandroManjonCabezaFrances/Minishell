@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/01/30 08:05:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:06:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,20 +189,20 @@ void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 	ft_add_new_node_replaced(envi, result, left_element, len);
 }
 
-void    ft_export(char **cmd, char **env_cpy)
+void    ft_export(char **cmd, t_env **envi)
 {
-	t_env	*envi;
+	// t_env	*envi;
 	char	*aux;
 	int		fail;
 
-	envi = NULL;
+	// envi = NULL;
 	aux = NULL;
 	fail = 0;
 	if (cmd[1] == NULL)
-		ft_export_without_argv_sort(envi, env_cpy);
-	else if (ft_check_env_var_exists(cmd, env_cpy) == 1)
+		ft_export_without_argv_sort(envi, envi);
+	else if (ft_check_env_var_exists(cmd, envi) == 1)
 	{
-		ft_replace_var_content(envi, cmd[1], env_cpy);
+		ft_replace_var_content(envi, cmd[1], envi);
 	}
 	else
 	{
@@ -210,7 +210,7 @@ void    ft_export(char **cmd, char **env_cpy)
 		if (fail == 0)
 			printf("arguments not founds");
 		else
-			ft_export_parsed_variable(aux, env_cpy);
+			ft_export_parsed_variable(aux, envi);
 	}
 }
 // copia del env (esta función habrá que quitarla, está en el main)
@@ -235,27 +235,28 @@ char	**copy_env(char **env)
 	return (env_cpy);
 }
 
-// int main(int argc, char **argv, char **env) 
-// {
-// 	char *cmd[3];
-// 	char	**env_cpy;
-//     (void) argc;
-//     (void) argv;
+int main(int argc, char **argv, char **env) 
+{
+	t_env	*envi;
+	char 	*cmd[3];
+	char	**env_cpy;
+    (void) 	argc;
+    (void) 	argv;
     
-// 	env_cpy = NULL;
-// 	env_cpy = copy_env(env);
-// 	cmd[0] = "export";
-// 	// cmd[1] = "A LEX=alex";
-// 	// cmd[1] = "LEX= alex";
-// 	// cmd[1] = "ALEX=alex";
-// 	// cmd[1] = NULL;
-// 	cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-// 	// cmd[1] = "TERM=SE_VIENEN_COSITAS";
-// 	cmd[2] = NULL;
-// 	ft_builtins(cmd, env_cpy);
+	envi = NULL;
+	ft_linked_list_env(&envi, env);
+	cmd[0] = "export";
+	// cmd[1] = "A LEX=alex";
+	// cmd[1] = "LEX= alex";
+	// cmd[1] = "ALEX=alex";
+	// cmd[1] = NULL;
+	cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+	// cmd[1] = "TERM=SE_VIENEN_COSITAS";
+	cmd[2] = NULL;
+	ft_builtins(cmd, &envi);
 
-// 	// habría que probar que ft_export devuelva un doble puntero
-// 	// y guardar la lista --> env_cpy = char **ft_export(). 
-// 	// antes de esto, hacer free a env_cpy por los leaks.
-//     return (0);
-// }
+	// habría que probar que ft_export devuelva un doble puntero
+	// y guardar la lista --> env_cpy = char **ft_export(). 
+	// antes de esto, hacer free a env_cpy por los leaks.
+    return (0);
+}

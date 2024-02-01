@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/31 17:22:37 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/01 10:49:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,35 @@ void	ft_update_env_pwd(t_env *envi, char *pwd, char *old_pwd)
 	}
 }
 
-void	ft_cd(char **cmd, char **env_cpy)
+void	ft_cd(char **cmd, t_env **envi)
 {
-	t_env	*envi;
+	// t_env	*envi;
 	char	*path_no_argv;
 	int		no_change_dir;
 
 	envi = NULL;
-	ft_linked_list_env(&envi, env_cpy);
+	no_change_dir = 0;
+	// ft_linked_list_env(&envi, env_cpy);
 	if (cmd[1] != NULL)
 	{
-		no_change_dir = ft_change_directory(cmd[1]);
+		no_change_dir = ft_change_directory(cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
 	}
 	else
 	{
-		path_no_argv = ft_find_path_env(envi, "HOME=");
+		path_no_argv = ft_find_path_env(envi, "HOME=");		//	cd NULL --> cambio al HOME=/Users/amanjon-
 		ft_change_directory(path_no_argv);
 	}
 	if (!no_change_dir)
 	{
-		ft_update_env_pwd(envi, ft_find_path_env(envi, "PWD="),
-			ft_find_path_env(envi, "OLDPWD="));
+		ft_update_env_pwd(envi, ft_find_path_env(envi, "PWD="),		// Si se ha podido cambiar de drectorio,
+			ft_find_path_env(envi, "OLDPWD="));						// actualizo el PWD y el OLDPWD.
 	}
 	
 }
 
 int main(int argc, char **argv, char **env)
 {
+	t_env	envi;
 	char	*cmd[3];
 	char	**env_cpy;
     (void) 	argc;
@@ -102,15 +104,16 @@ int main(int argc, char **argv, char **env)
 
 	env_cpy = NULL;
 	env_cpy = copy_env(env);
+	ft_linked_list_env(&envi, env);
 	cmd[0] = "cd";
 	// cmd[1] = "..";
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
 	// cmd[1] = "/home/amanjon/";	 //esta es la direccion con solo "cd"	//Linux
-	cmd[1] = "/home/amanjon/minishell_github/";	//Linux
+	// cmd[1] = "/home/amanjon/minishell_github/";		//Linux
 	// cmd[1] = NULL;
 	
-	ft_builtins(cmd, env_cpy);
+	ft_builtins(cmd, &envi);
 	return (0);
 }
 
