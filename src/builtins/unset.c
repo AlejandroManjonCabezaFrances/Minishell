@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/01 11:02:11 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:05:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_delete_node(t_env **envi, char *cmd)
 	ft_print_lst_2(*envi);
 }
 
-void	ft_unset(char **cmd, t_env **envi)
+void	ft_unset(char **cmd, t_env *envi)
 {
 	// t_env *envi;
 
@@ -55,7 +55,7 @@ void	ft_unset(char **cmd, t_env **envi)
 	else if (cmd[1][0] == 0)
 		return ;
 	else if (ft_isalpha(cmd[1][0]) == 1 || cmd[1][0] == '_')
-		ft_delete_node(envi, cmd[1]);
+		ft_delete_node(&envi, cmd[1]);
 	else
 		printf("not a valid identifier");
 }

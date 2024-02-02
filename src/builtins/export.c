@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/01 11:06:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:24:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,24 @@ void ft_print_lst_2_declare_x(t_env *temp)
 	}
 }
 
-void	ft_export_parsed_variable(char *cmd, char **env_cpy)
+void	ft_export_parsed_variable(char *cmd, t_env *envi)
 {
-    t_env *envi;
-	
-	envi = NULL;
-    ft_linked_list_env(&envi, env_cpy);
 	ft_lstadd_penultimate_str_env(&envi, ft_lstnew_str_env(cmd));
 	ft_print_lst_2(envi);
 }
 
-void	ft_export_without_argv_sort(t_env *envi, char **env_cpy)
+/**
+ * When "export" has not argument, this function sorts the environment
+ * alphabetically with the "bubble sort".
+ * @param	t_env *envi
+ * @return	void
+*/
+void	ft_export_without_argv_sort(t_env *envi)
 {
 	t_env	*temp;
 	t_env	*head;
 	char	*aux;
 
-	ft_linked_list_env(&envi, env_cpy);
 	head = envi;
 	temp = envi;
 	while (/* temp != NULL &&  */temp->next != NULL)
@@ -82,6 +83,12 @@ void	ft_export_without_argv_sort(t_env *envi, char **env_cpy)
 	ft_print_lst_2_declare_x(envi);
 }
 
+/**
+ * Dynamic memory will be reserved, and the non-existing variable to be
+ * exported will be parsed.
+ * @param	char **cmd, char *aux, int *fail
+ * @return	Parsed mallocated string
+*/
 char	*ft_parser_arguments(char **cmd, char *aux, int *fail)
 {
 	int	j;
@@ -109,20 +116,25 @@ char	*ft_parser_arguments(char **cmd, char *aux, int *fail)
 	return (aux);
 }
 
-int	ft_check_env_var_exists(char **cmd, char **env_cpy)
+/**
+ * This function searches to see if the variable you want to export exists.
+ * @param	char **cmd, t_env *envi
+ * @return	(1) --> env var exists
+*/
+int	ft_check_env_var_exists(char **cmd, t_env *envi)
 {
-	int i;
+	t_env	*aux;
 	int len;
 
-	i = 0;
-	while (env_cpy[i])
+	aux = envi;
+	while (aux)
 	{
 		len = 0;
-		while (env_cpy[i][len] != '=')
+		while (aux->content[len] != '=')
 			len++;
-		if (ft_strncmp(cmd[1], env_cpy[i], len) == 0)
-			return (1);
-		i++;
+		if (ft_strncmp(cmd[1], aux->content, len) == 0)
+			return (TRUE);
+		aux = aux->next;
 	}
 	return (0);
 }
@@ -160,20 +172,20 @@ void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int l
 	ft_print_lst_2(envi);
 }
 
-void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
+void	ft_replace_var_content(t_env *envi, char *cmd)
 {
+	t_env	*aux;
 	char	*right_element;
 	char	*left_element;
 	char	*result;
 	int		len;
-	t_env	*aux;
 
-	ft_linked_list_env(&envi, env_cpy);
 	aux = envi;
 	right_element = NULL;
 	left_element = NULL;
+	result = NULL;
 	len = 0;
-	while (cmd[len] != '=' && cmd[len])
+	while (cmd[len] != '=')
 		len++;
 	while (aux)
 	{
@@ -189,20 +201,18 @@ void	ft_replace_var_content(t_env *envi, char *cmd, char **env_cpy)
 	ft_add_new_node_replaced(envi, result, left_element, len);
 }
 
-void    ft_export(char **cmd, t_env **envi)
+void    ft_export(char **cmd, t_env *envi)
 {
-	// t_env	*envi;
 	char	*aux;
 	int		fail;
 
-	// envi = NULL;
 	aux = NULL;
 	fail = 0;
 	if (cmd[1] == NULL)
-		ft_export_without_argv_sort(envi, envi);
-	else if (ft_check_env_var_exists(cmd, envi) == 1)
+		ft_export_without_argv_sort(envi);
+	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
 	{
-		ft_replace_var_content(envi, cmd[1], envi);
+		ft_replace_var_content(envi, cmd[1]); // ****acortar dos funciones
 	}
 	else
 	{
@@ -239,7 +249,6 @@ int main(int argc, char **argv, char **env)
 {
 	t_env	*envi;
 	char 	*cmd[3];
-	char	**env_cpy;
     (void) 	argc;
     (void) 	argv;
     
@@ -250,10 +259,11 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
 	// cmd[1] = NULL;
-	cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO"; // **FALTA CORREGIR: NO EXPORTAR ESPACIOS
 	// cmd[1] = "TERM=SE_VIENEN_COSITAS";
 	cmd[2] = NULL;
-	ft_builtins(cmd, &envi);
+	ft_builtins(cmd, envi);
 
 	// habría que probar que ft_export devuelva un doble puntero
 	// y guardar la lista --> env_cpy = char **ft_export(). 
