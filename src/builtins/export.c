@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/02 11:24:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/02 11:58:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,66 +139,38 @@ int	ft_check_env_var_exists(char **cmd, t_env *envi)
 	return (0);
 }
 
-void	ft_add_new_node_replaced(t_env *envi, char *node, char *left_element, int len)
-{
-	t_env	*node_free;
-	t_env	*aux_start;
-	t_env	*aux_end;
-	t_env	*node_new;
-	t_env	*aux;
-
-	node_free = NULL;
-	aux_start = NULL;
-	aux_end = NULL;
-	node_new = NULL;
-	aux = NULL;
-	aux = envi;
-	while (aux)
-	{
-		if (ft_strncmp(left_element, aux->content, len + 1) == 0)
-		{
-			node_new = ft_lstnew_str_env(node);
-			break;
-		}
-		aux = aux->next;
-	}
-	node_free = aux;
-	aux = aux->prev;
-	aux_start = aux;
-	aux_end = aux->next->next;
-	ft_lstdelone_ms(node_free, &dele);;
-	aux_start->next = node_new;
-	node_new->next = aux_end;
-	ft_print_lst_2(envi);
-}
-
+/**
+ * Replaces the existing environment variable node and prints the list
+ * @param	t_env *envi, char *cmd
+ * @return	void
+*/
 void	ft_replace_var_content(t_env *envi, char *cmd)
 {
 	t_env	*aux;
-	char	*right_element;
-	char	*left_element;
-	char	*result;
+	t_env	*node_free;
+	t_env	*new_node;
 	int		len;
 
 	aux = envi;
-	right_element = NULL;
-	left_element = NULL;
-	result = NULL;
+	node_free = NULL;
 	len = 0;
 	while (cmd[len] != '=')
 		len++;
 	while (aux)
 	{
-		if (ft_strncmp(cmd, aux->content, len + 1) == 0)
+		if (ft_strncmp(aux->content, cmd, len + 1) == 0)
 		{
-			right_element = aux->content + len + 1;
+			node_free = aux;
+			aux = aux->prev;
+			new_node = ft_lstnew_str_env(cmd);
+			new_node->next = aux->next->next;
+			aux->next = new_node;
+			ft_lstdelone_ms(node_free, &dele);
 			break;
 		}
 		aux = aux->next;
 	}
-	left_element = ft_strtrim(aux->content, right_element);
-	result = ft_strjoin(left_element, cmd + len + 1);
-	ft_add_new_node_replaced(envi, result, left_element, len);
+	ft_print_lst_2(envi);
 }
 
 void    ft_export(char **cmd, t_env *envi)
@@ -212,7 +184,7 @@ void    ft_export(char **cmd, t_env *envi)
 		ft_export_without_argv_sort(envi);
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
 	{
-		ft_replace_var_content(envi, cmd[1]); // ****acortar dos funciones
+		ft_replace_var_content(envi, cmd[1]);
 	}
 	else
 	{
