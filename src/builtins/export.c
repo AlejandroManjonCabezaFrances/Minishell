@@ -6,13 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/02 11:58:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/02 13:45:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o export && ./export
+
 /**
  * Create linked list of environment
  * @param	t_env **t_env, char **env
@@ -30,6 +31,11 @@ void ft_linked_list_env(t_env **envi, char **env)
 	}
 }
 
+/**
+ * Print the linked list
+ * @param	t_env *temp
+ * @return	void
+*/
 void ft_print_lst_2(t_env *temp)
 {
 	while (temp)
@@ -39,6 +45,11 @@ void ft_print_lst_2(t_env *temp)
 	}
 }
 
+/**
+ * Print the linked list with the flag declare -x
+ * @param	t_env *temp
+ * @return	void
+*/
 void ft_print_lst_2_declare_x(t_env *temp)
 {
 	while (temp)
@@ -48,6 +59,12 @@ void ft_print_lst_2_declare_x(t_env *temp)
 	}
 }
 
+/**
+ * Exports the variable already parsed and puts it in the
+ * penultimate position as the terminal
+ * @param	char *cmd, t_env *envi
+ * @return	void
+*/
 void	ft_export_parsed_variable(char *cmd, t_env *envi)
 {
 	ft_lstadd_penultimate_str_env(&envi, ft_lstnew_str_env(cmd));
@@ -83,37 +100,49 @@ void	ft_export_without_argv_sort(t_env *envi)
 	ft_print_lst_2_declare_x(envi);
 }
 
+void	ft_parser_string(char *cmd, int *fail)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i] != '=')
+	{
+		if (ft_isalpha(cmd[i]) == 1)
+		{
+			(*fail)++;
+			break;
+		}
+		i++;
+	}
+	
+}
+
 /**
  * Dynamic memory will be reserved, and the non-existing variable to be
  * exported will be parsed.
  * @param	char **cmd, char *aux, int *fail
  * @return	Parsed mallocated string
 */
-char	*ft_parser_arguments(char **cmd, char *aux, int *fail)
+char	*ft_parser_arguments(char *cmd, char *aux, int *fail)
 {
-	int	j;
-	int	k;
+	int	len;
+	int start;
+	char	*var_parsed;
 
-	j = 0;
-	aux = malloc(sizeof(char) * (ft_strlen(cmd[1]) + 1));
+	aux = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (aux == NULL)
 		return (NULL);
-	while (cmd[1][++j])
-	{
-		if ((cmd[1][j] == '=' && ft_isalpha(cmd[1][j - 1])))
-		{
-			(*fail)++;
-			break;
-		}
-	}
-	while (cmd[1][j] != ' ' && j >= 0)
-		j--;
-	j++;
-	k = 0;
-	while (cmd[1][j] != ' ' && cmd[1][j])
-		aux[k++] = cmd[1][j++];	
-	aux[k] = '\0';
-	return (aux);
+	ft_parser_string(cmd, fail);
+	len = 0;
+	while (cmd[len] && cmd[len]  != '=')
+		len++;
+	while (cmd[len] != ' ')
+		len--;
+	start = len + 1;
+	while (cmd[len] && cmd[len] != ' ')
+		len++;
+	var_parsed = ft_substr(cmd, start, len);
+	return (var_parsed);
 }
 
 /**
@@ -188,7 +217,7 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 	else
 	{
-		aux = ft_parser_arguments(cmd, aux, &fail);
+		aux = ft_parser_arguments(cmd[1], aux, &fail);
 		if (fail == 0)
 			printf("arguments not founds");
 		else
@@ -230,10 +259,12 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "A LEX=alex";
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
+	// cmd[1] = "ALEX=alex espacio";
+	// cmd[1] = "a alex=hola que"
+	cmd[1] = "2a=";
 	// cmd[1] = NULL;
 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO"; // **FALTA CORREGIR: NO EXPORTAR ESPACIOS
-	// cmd[1] = "TERM=SE_VIENEN_COSITAS";
+	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
 	cmd[2] = NULL;
 	ft_builtins(cmd, envi);
 
