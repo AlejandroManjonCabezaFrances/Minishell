@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/02 13:45:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/02 14:54:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	ft_parser_string(char *cmd, int *fail)
 		if (ft_isalpha(cmd[i]) == 1)
 		{
 			(*fail)++;
-			break;
 		}
+		break;
 		i++;
 	}
 	
@@ -125,22 +125,28 @@ void	ft_parser_string(char *cmd, int *fail)
 */
 char	*ft_parser_arguments(char *cmd, char *aux, int *fail)
 {
-	int	len;
-	int start;
+	int		i;
+	int		len;
+	int		start;
 	char	*var_parsed;
 
 	aux = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (aux == NULL)
 		return (NULL);
 	ft_parser_string(cmd, fail);
-	len = 0;
-	while (cmd[len] && cmd[len]  != '=')
+	i = 0;
+	while (cmd[i] && cmd[i] != '=')
+		i++;
+	while (cmd[i] != ' ' && i >= 0)
+		i--;
+	i++;
+	start = i;
+	while (cmd[i] && cmd[i] != ' ')
+	{
 		len++;
-	while (cmd[len] != ' ')
-		len--;
-	start = len + 1;
-	while (cmd[len] && cmd[len] != ' ')
-		len++;
+		i++;
+	}
+	printf("len = %d\n", i);
 	var_parsed = ft_substr(cmd, start, len);
 	return (var_parsed);
 }
@@ -219,9 +225,13 @@ void    ft_export(char **cmd, t_env *envi)
 	{
 		aux = ft_parser_arguments(cmd[1], aux, &fail);
 		if (fail == 0)
+		{
 			printf("arguments not founds");
+		}
 		else
+		{
 			ft_export_parsed_variable(aux, envi);
+		}
 	}
 }
 // copia del env (esta función habrá que quitarla, está en el main)
@@ -258,10 +268,10 @@ int main(int argc, char **argv, char **env)
 	cmd[0] = "export";
 	// cmd[1] = "A LEX=alex";
 	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";
+	// cmd[1] = "ALEX=alex";  		// *
 	// cmd[1] = "ALEX=alex espacio";
-	// cmd[1] = "a alex=hola que"
-	cmd[1] = "2a=";
+	cmd[1] = "a alex=hola que"; 	// *
+	// cmd[1] = "2a=";
 	// cmd[1] = NULL;
 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
