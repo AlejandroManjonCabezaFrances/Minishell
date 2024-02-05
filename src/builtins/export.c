@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/02 14:54:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/05 13:35:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_export_without_argv_sort(t_env *envi)
 
 	head = envi;
 	temp = envi;
-	while (/* temp != NULL &&  */temp->next != NULL)
+	while (temp->next != NULL)
 	{
 		if (ft_strcmp(temp->content, temp->next->content) > 0)
 		{
@@ -100,39 +100,140 @@ void	ft_export_without_argv_sort(t_env *envi)
 	ft_print_lst_2_declare_x(envi);
 }
 
-void	ft_parser_string(char *cmd, int *fail)
+/**
+ * Alphabetically sorts the minilist after the first sorted list
+ * @param	t_env *envi, t_env *finish_list
+ * @return	 void
+*/
+void	ft_sort_minilist(t_env *envi, t_env *finish_list)
 {
-	int i;
+	t_env	*temp;
+	t_env	*head;
+	char	*aux;
 
-	i = 0;
-	while (cmd[i] != '=')
+	temp = finish_list->next;
+	head = finish_list->next;
+	aux = NULL;
+	while (temp->next != NULL)
 	{
-		if (ft_isalpha(cmd[i]) == 1)
+		if (ft_strcmp(temp->content, temp->next->content) > 0)
 		{
-			(*fail)++;
+			aux = temp->content;
+			temp->content = temp->next->content;
+			temp->next->content = aux;
+			temp = head;
 		}
-		break;
-		i++;
+		else
+			temp = temp->next;
 	}
-	
+	ft_print_lst_2_declare_x(envi);
 }
 
 /**
- * Dynamic memory will be reserved, and the non-existing variable to be
- * exported will be parsed.
- * @param	char **cmd, char *aux, int *fail
- * @return	Parsed mallocated string
+ * Splits arguments without '=', not numbers and creates two alphabetically
+ * ordered lists
+ * @param	t_env *envi, char *cmd
+ * @return	 void
 */
-char	*ft_parser_arguments(char *cmd, char *aux, int *fail)
+void	ft_export_but_not_in_env(t_env *envi, char *cmd)
+{
+	int i;
+	char	**argum;
+	t_env	*finish_list;
+
+	i = -1;
+	finish_list = envi;
+	while (cmd[++i])
+		if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
+		{
+			printf("minishell: export: '%s' not a valid identifier\n", cmd);
+			return ;
+		}
+	argum = ft_split(cmd, ' ');
+	ft_export_without_argv_sort(envi);
+	while (finish_list->next)
+		finish_list = finish_list->next;
+	ft_linked_list_env(&envi, argum);
+	ft_sort_minilist(envi, finish_list);
+}
+
+/**
+ * The non-existing variable to be exported will be parsed.
+ * @param	char *cmd
+ * @return	 var_parsed. Parsed mallocated string
+*/
+char	*ft_parser_arguments_2(char *cmd)
 {
 	int		i;
 	int		len;
 	int		start;
 	char	*var_parsed;
 
-	aux = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
-	if (aux == NULL)
-		return (NULL);
+	i = 0;
+	len = 0;
+	while (cmd[i] && cmd[i] != '=')
+		i++;
+	while (cmd[i] != ' ' && i >= 0)
+		i--;
+	i++;
+	start = i;
+	while (cmd[i] && cmd[i] != ' ')
+	{
+		len++;
+		i++;
+	}
+	var_parsed = ft_substr(cmd, start, len);
+	return (var_parsed);
+}
+
+/**
+ * checks if the received string is alphabetic
+ * @param	char *cmd, int *fail
+ * @return	 void. By reference a fail flag is returned
+*/
+void	ft_parser_string(char *cmd, int *fail)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i] != '=' && cmd[i] != ' ')	// && != NULL (PRUEBA) argv:
+	{
+		if (ft_isalpha(cmd[i]) == 0)
+		{
+			*fail = 0;
+			break;
+		}
+		*fail = 1;
+		i++;
+	}
+}
+
+int	ft_is_equal(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+/**
+ * The non-existing variable to be exported will be parsed.
+ * @param	char **cmd, char *aux, int *fail
+ * @return	var_parsed. Parsed mallocated string
+*/
+char	*ft_parser_arguments(char *cmd, int *fail)
+{
+	int		i;
+	int		len;
+	int		start;
+	char	*var_parsed;
+
 	ft_parser_string(cmd, fail);
 	i = 0;
 	while (cmd[i] && cmd[i] != '=')
@@ -146,7 +247,6 @@ char	*ft_parser_arguments(char *cmd, char *aux, int *fail)
 		len++;
 		i++;
 	}
-	printf("len = %d\n", i);
 	var_parsed = ft_substr(cmd, start, len);
 	return (var_parsed);
 }
@@ -197,7 +297,7 @@ void	ft_replace_var_content(t_env *envi, char *cmd)
 		{
 			node_free = aux;
 			aux = aux->prev;
-			new_node = ft_lstnew_str_env(cmd);
+			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
 			new_node->next = aux->next->next;
 			aux->next = new_node;
 			ft_lstdelone_ms(node_free, &dele);
@@ -216,44 +316,27 @@ void    ft_export(char **cmd, t_env *envi)
 	aux = NULL;
 	fail = 0;
 	if (cmd[1] == NULL)
+	{
 		ft_export_without_argv_sort(envi);
+		ft_print_lst_2_declare_x(envi);
+	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
 	{
 		ft_replace_var_content(envi, cmd[1]);
 	}
 	else
 	{
-		aux = ft_parser_arguments(cmd[1], aux, &fail);
-		if (fail == 0)
+		if (ft_is_equal(cmd[1]))
 		{
-			printf("arguments not founds");
+			aux = ft_parser_arguments(cmd[1], &fail);
+			if (fail == 0)
+				printf("arguments not founds");
+			else
+				ft_export_parsed_variable(aux, envi);
 		}
 		else
-		{
-			ft_export_parsed_variable(aux, envi);
-		}
+			ft_export_but_not_in_env(envi, cmd[1]);
 	}
-}
-// copia del env (esta función habrá que quitarla, está en el main)
-char	**copy_env(char **env)
-{
-	char	**env_cpy;
-	int		i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	env_cpy = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!env_cpy)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		env_cpy[i] = ft_strdup(env[i]);
-		i++;
-	}
-	env_cpy[i] = NULL;
-	return (env_cpy);
 }
 
 int main(int argc, char **argv, char **env) 
@@ -268,18 +351,23 @@ int main(int argc, char **argv, char **env)
 	cmd[0] = "export";
 	// cmd[1] = "A LEX=alex";
 	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";  		// *
+	// cmd[1] = "ALEX=alex";
 	// cmd[1] = "ALEX=alex espacio";
-	cmd[1] = "a alex=hola que"; 	// *
-	// cmd[1] = "2a=";
-	// cmd[1] = NULL;
+	// cmd[1] = "a alex=hola que";
+	// cmd[1] = "a2a=";
+	cmd[1] = NULL;					// -*-*-*
 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
+	// cmd[1] = "Z B A E";			// -*-*-*
+	// cmd[1] = "1 2 3";
+	// cmd[1] = "PRUEBA";			// -*-*-*
 	cmd[2] = NULL;
 	ft_builtins(cmd, envi);
 
 	// habría que probar que ft_export devuelva un doble puntero
 	// y guardar la lista --> env_cpy = char **ft_export(). 
 	// antes de esto, hacer free a env_cpy por los leaks.
+	// CHEKEAR los argumentos marcados con -*-*-* (una cosa es poner solo export
+	//	y otra poner export PRUEBA o EXPORT Z B A E)
     return (0);
 }
