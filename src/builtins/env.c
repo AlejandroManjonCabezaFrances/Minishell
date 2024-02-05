@@ -6,65 +6,31 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/17 10:19:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/05 14:27:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_print_lst_2(t_env *temp)
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o env && ./env
+
+void	ft_env(t_env *envi)
 {
-	while (temp)
-	{
-		printf("temp = %s\n", temp->content);
-		temp = temp->next;
-	}
+	ft_print_lst_2(envi);
 }
 
-t_env	*ft_lstnew_str_env(char *str_env)
-{
-	t_env	*node;
-
-	node = NULL;
-	node = malloc(sizeof(t_env));
-	if (node == NULL)
-		return (NULL);
-	node->content = ft_strdup(str_env);
-	node->next = NULL;
-	return (node);
-}
-
-void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
-{
-	t_env	*aux;
-
-	aux = *envi;
-	if (*envi == NULL)
-	{
-		*envi = node;
-		return ;
-	}
-	else
-	{
-		while (aux->next != NULL)
-			aux = aux->next;
-		aux->next = node;
-	}
-}
-
-/**
- * Create linked list of environment
- * @param	t_env **t_env, char **env
- * @return	void
-*/
-void	ft_linked_list_env(t_env **envi, char **env)
-{
-	int i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-		i++;	
-	}
-}
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_env	*envi;
+// 	(void) 	argc;
+//     (void) 	argv;
+	
+// 	envi = NULL;
+// 	ft_linked_list_env(&envi, env);
+// 		char *cmd[2];
+// 	cmd[0] = "env";
+// 	cmd[1] = NULL;
+	
+// 	ft_builtins(cmd, envi);
+// 	return (0);
+// }

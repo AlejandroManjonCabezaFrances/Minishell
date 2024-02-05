@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/05 13:35:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/05 14:19:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o export && ./export
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c pwd.c export.c -o export && ./export
 
 /**
  * Create linked list of environment
@@ -339,35 +339,35 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 }
 
-int main(int argc, char **argv, char **env) 
-{
-	t_env	*envi;
-	char 	*cmd[3];
-    (void) 	argc;
-    (void) 	argv;
+// int main(int argc, char **argv, char **env) 
+// {
+// 	t_env	*envi;
+// 	char 	*cmd[3];
+//     (void) 	argc;
+//     (void) 	argv;
     
-	envi = NULL;
-	ft_linked_list_env(&envi, env);
-	cmd[0] = "export";
-	// cmd[1] = "A LEX=alex";
-	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";
-	// cmd[1] = "ALEX=alex espacio";
-	// cmd[1] = "a alex=hola que";
-	// cmd[1] = "a2a=";
-	cmd[1] = NULL;					// -*-*-*
-	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
-	// cmd[1] = "Z B A E";			// -*-*-*
-	// cmd[1] = "1 2 3";
-	// cmd[1] = "PRUEBA";			// -*-*-*
-	cmd[2] = NULL;
-	ft_builtins(cmd, envi);
+// 	envi = NULL;
+// 	ft_linked_list_env(&envi, env);
+// 	cmd[0] = "export";
+// 	// cmd[1] = "A LEX=alex";
+// 	// cmd[1] = "LEX= alex";
+// 	// cmd[1] = "ALEX=alex";
+// 	// cmd[1] = "ALEX=alex espacio";
+// 	// cmd[1] = "a alex=hola que";
+// 	// cmd[1] = "a2a=";
+// 	cmd[1] = NULL;					// -*-*-*
+// 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+// 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
+// 	cmd[1] = "Z B A E";			// -*-*-*
+// 	// cmd[1] = "1 2 3";
+// 	// cmd[1] = "PRUEBA";			// -*-*-*
+// 	cmd[2] = NULL;
+// 	ft_builtins(cmd, envi);
 
-	// habría que probar que ft_export devuelva un doble puntero
-	// y guardar la lista --> env_cpy = char **ft_export(). 
-	// antes de esto, hacer free a env_cpy por los leaks.
-	// CHEKEAR los argumentos marcados con -*-*-* (una cosa es poner solo export
-	//	y otra poner export PRUEBA o EXPORT Z B A E)
-    return (0);
-}
+// 	// habría que probar que ft_export devuelva un doble puntero
+// 	// y guardar la lista --> env_cpy = char **ft_export(). 
+// 	// antes de esto, hacer free a env_cpy por los leaks.
+// 	// CHEKEAR los argumentos marcados con -*-*-* (una cosa es poner solo export
+// 	//	y otra poner export PRUEBA o EXPORT Z B A E)
+//     return (0);
+// }
