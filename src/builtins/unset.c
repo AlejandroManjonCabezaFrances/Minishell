@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/02 11:05:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 08:14:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c pwd.c export.c -o unset && ./unset
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o unset && ./unset
 
 void	ft_delete_node(t_env **envi, char *cmd)
 {
@@ -46,10 +46,6 @@ void	ft_delete_node(t_env **envi, char *cmd)
 
 void	ft_unset(char **cmd, t_env *envi)
 {
-	// t_env *envi;
-
-	// envi = NULL;
-	// ft_linked_list_env(&envi, env_cpy);
 	if (*cmd == NULL || cmd == NULL)
 		return ;
 	else if (cmd[1][0] == 0)
@@ -60,25 +56,29 @@ void	ft_unset(char **cmd, t_env *envi)
 		printf("not a valid identifier");
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env *envi;
+int main(int argc, char **argv, char **env)
+{
+	t_env *envi;
 
-// 	envi = NULL;
-// 	ft_linked_list_env(&envi, env);
-// 	char *cmd[3];
-// 	char	**env_cpy;
-//     (void) argc;
-//     (void) argv;
-    
-// 	env_cpy = NULL;
-// 	env_cpy = copy_env(env);
-// 	cmd[0] = "unset";
-// 	cmd[1] = "PWD";
-// 	// cmd[1] = "__CF_USER_TEXT_ENCODING";
-// 	// cmd[1] = "4";
-// 	// cmd[1] = "";
-// 	ft_builtins(cmd, &envi);
+	envi = NULL;
+	ft_linked_list_env(&envi, env);
+    (void) argc;
+    (void) argv;
 	
-// 	return (0);
-// }
+	char *cmd[3];
+	cmd[0] = "unset";
+	cmd[1] = "HOSTTYPE";
+	cmd[2] = "LANG";
+	// tratado como dos argumentos separados--> unset HOSTTYPE LANG
+	
+	// cmd[1] = "__CF_USER_TEXT_ENCODING";
+	// cmd[1] = "4";
+	// cmd[1] = "";
+	cmd[2] = NULL;
+	ft_builtins(cmd, envi);
+	
+	return (0);
+}
+
+// Checkear el borrado de dos variables de entorno en diferentes argumentos
+// SEGV al intentar borrar dos variables a la vez

@@ -15,6 +15,11 @@
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o pwd && ./pwd
 // bash pwd < builtins.c
 
+/**
+ * Replicate the pwd command
+ * @param	char **cmd
+ * @return	void
+*/
 void    ft_pwd(char **cmd)
 {	
     char cwd[PATH_MAX];
@@ -32,25 +37,24 @@ void    ft_pwd(char **cmd)
     return ;
 }
 
-int main(int argc, char **argv, char **env) 
-{
-	t_env	*envi;
-	(void) 	argc;
- 	(void) 	argv;
+// int main(int argc, char **argv, char **env) 
+// {
+// 	t_env	*envi;
+// 	(void) 	argc;
+//  	(void) 	argv;
 	
-	envi = NULL;
-	ft_linked_list_env(&envi, env);
+// 	envi = NULL;
+// 	ft_linked_list_env(&envi, env);
 
-	char *cmd[3];
+// 	// char *cmd[2];
+// 	// cmd[0] = "pwd";
+// 	// cmd[1] = NULL;
 
-	cmd[0] = "pwd";
-	cmd[1] = NULL;
+// 	char *cmd[3];
+// 	cmd[0] = "pwd";
+// 	cmd[1] = "!";
+// 	cmd[2] = NULL;
+// 	ft_builtins(cmd, envi);
 
-
-	// cmd[0] = "pwd";
-	// cmd[1] = "!";
-	// cmd[2] = NULL;
-	ft_builtins(cmd, envi);
-
-    return (0);
-}
+//     return (0);
+// }

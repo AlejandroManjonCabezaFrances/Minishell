@@ -6,44 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/05 14:19:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 07:48:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c pwd.c export.c -o export && ./export
-
-/**
- * Create linked list of environment
- * @param	t_env **t_env, char **env
- * @return	void
-*/
-void ft_linked_list_env(t_env **envi, char **env)
-{
-	int i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-		i++;	
-	}
-}
-
-/**
- * Print the linked list
- * @param	t_env *temp
- * @return	void
-*/
-void ft_print_lst_2(t_env *temp)
-{
-	while (temp)
-	{
-		printf("temp = %s\n", temp->content);
-		temp = temp->next;
-	}
-}
 
 /**
  * Print the linked list with the flag declare -x
@@ -208,6 +177,11 @@ void	ft_parser_string(char *cmd, int *fail)
 	}
 }
 
+/**
+ * Look for a "=" in the received string
+ * @param	char *str
+ * @return	TRUE, FALSE
+*/
 int	ft_is_equal(char *str)
 {
 	int i;
@@ -216,10 +190,10 @@ int	ft_is_equal(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-			return (1);
+			return (TRUE);
 		i++;
 	}
-	return (0);
+	return (FALSE);
 }
 
 /**
@@ -254,7 +228,7 @@ char	*ft_parser_arguments(char *cmd, int *fail)
 /**
  * This function searches to see if the variable you want to export exists.
  * @param	char **cmd, t_env *envi
- * @return	(1) --> env var exists
+ * @return	(TRUE) --> env var exists
 */
 int	ft_check_env_var_exists(char **cmd, t_env *envi)
 {
@@ -308,6 +282,11 @@ void	ft_replace_var_content(t_env *envi, char *cmd)
 	ft_print_lst_2(envi);
 }
 
+/**
+ * Replicate the export command
+ * @param	char **cmd, t_env *envi
+ * @return	void
+*/
 void    ft_export(char **cmd, t_env *envi)
 {
 	char	*aux;
@@ -321,9 +300,7 @@ void    ft_export(char **cmd, t_env *envi)
 		ft_print_lst_2_declare_x(envi);
 	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
-	{
 		ft_replace_var_content(envi, cmd[1]);
-	}
 	else
 	{
 		if (ft_is_equal(cmd[1]))
