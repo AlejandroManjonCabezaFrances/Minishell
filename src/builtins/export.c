@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/06 07:48:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 09:43:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,10 +341,9 @@ void    ft_export(char **cmd, t_env *envi)
 // 	cmd[2] = NULL;
 // 	ft_builtins(cmd, envi);
 
-// 	// habría que probar que ft_export devuelva un doble puntero
-// 	// y guardar la lista --> env_cpy = char **ft_export(). 
-// 	// antes de esto, hacer free a env_cpy por los leaks.
-// 	// CHEKEAR los argumentos marcados con -*-*-* (una cosa es poner solo export
-// 	//	y otra poner export PRUEBA o EXPORT Z B A E)
+//	// export quiero que reciba el char ** de tal manera que despues de export
+//	// meta todo el string en el primer *
+//	// probar cuando me pasen el string, espacios al primcipio y al final o parsearlo afuera
+
 //     return (0);
 // }

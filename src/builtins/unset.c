@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/06 08:14:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 12:58:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,65 @@
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o unset && ./unset
 
-void	ft_delete_node(t_env **envi, char *cmd)
+			// printf("aux->next = %s\n", aux->next->content);
+			// printf("aux->next->next = %s\n", aux->next->next->content);
+void	ft_handle_list_header(t_env **envi, t_env **aux)
+{
+	if (*aux != *envi)
+		*aux = (*aux)->prev;
+	else
+	{
+		*envi = (*aux)->next;
+		*aux = (*aux)->next;
+	}
+}
+
+void	ft_delete_node(t_env *envi, char *cmd)
 {
 	t_env	*aux;
 	t_env	*node_free;
 	int		len;
-	int		i;
 
-	aux = *envi;
+	aux = envi;
 	node_free = NULL;
-	i = 0;
-	while (cmd[i] == ' ')
-		i++;
 	while (aux)
 	{
 		len = 0;
 		while (aux->content[len] != '=')
 			len++;
+		// printf("aux->content = %s\n", aux->content);
 		if (ft_strncmp(cmd, aux->content, len) == 0)
 		{
 			node_free = aux;
-			aux = aux->prev;
+			printf("check_1 *************\n");
+			ft_handle_list_header(&envi, &aux);
+			printf("check_2 *************\n");
+			// if (aux->next != NULL && aux->next->next != NULL)
 			aux->next = aux->next->next;
+			printf("check_3 *************\n");
 			ft_lstdelone_ms(node_free, &dele);
 		}
 		aux = aux->next;
-		i++;
 	}
-	ft_print_lst_2(*envi);
+	 ft_print_lst_2(envi); // print para checkear
 }
 
 void	ft_unset(char **cmd, t_env *envi)
 {
+	int i;
+
+	i = 1;
 	if (*cmd == NULL || cmd == NULL)
 		return ;
 	else if (cmd[1][0] == 0)
 		return ;
-	else if (ft_isalpha(cmd[1][0]) == 1 || cmd[1][0] == '_')
-		ft_delete_node(&envi, cmd[1]);
-	else
-		printf("not a valid identifier");
+	while (cmd[i])
+	{
+		printf("cmd[%d] = %s\n", i, cmd[i]);
+		ft_delete_node(envi, cmd[i]);
+		printf("ft_unset_1\n");
+		i++;
+	}
 }
 
 int main(int argc, char **argv, char **env)
@@ -65,20 +84,39 @@ int main(int argc, char **argv, char **env)
     (void) argc;
     (void) argv;
 	
+	/* ejemplo --> primer variable env en Linux */
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "HOSTTYPE";
+	// cmd[2] = NULL;
+
+	/* ejemplo --> penúltima variable env en Linux*/
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "INFOPATH";
+	// cmd[2] = NULL;
+
+	/* ejemplo --> última variable env en Linux*/
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "_";
+	// cmd[2] = NULL;
+	
 	char *cmd[3];
 	cmd[0] = "unset";
-	cmd[1] = "HOSTTYPE";
-	cmd[2] = "LANG";
-	// tratado como dos argumentos separados--> unset HOSTTYPE LANG
+	cmd[1] = "PWD";
+	cmd[2] = "OLDPWD";
+	cmd[3] = NULL;
+	// tratado como dos argumentos separados--> unset PWD OLDPWD
 	
-	// cmd[1] = "__CF_USER_TEXT_ENCODING";
 	// cmd[1] = "4";
+	// cmd[2] = NULL;
 	// cmd[1] = "";
-	cmd[2] = NULL;
+	// cmd[2] = NULL;
 	ft_builtins(cmd, envi);
-	
+	// ft_print_lst_2(envi);
 	return (0);
 }
-
+// Recibe doble puntero ya spliteado
 // Checkear el borrado de dos variables de entorno en diferentes argumentos
 // SEGV al intentar borrar dos variables a la vez
