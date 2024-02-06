@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/06 12:58:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 15:52:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o unset && ./unset
 
-			// printf("aux->next = %s\n", aux->next->content);
-			// printf("aux->next->next = %s\n", aux->next->next->content);
+// printf("aux->next = %s\n", aux->next->content);
+// printf("aux->next->next = %s\n", aux->next->next->content);
 void	ft_handle_list_header(t_env **envi, t_env **aux)
 {
 	if (*aux != *envi)
@@ -33,6 +33,7 @@ void	ft_delete_node(t_env *envi, char *cmd)
 	t_env	*node_free;
 	int		len;
 
+	aux = NULL;
 	aux = envi;
 	node_free = NULL;
 	while (aux)
@@ -40,16 +41,12 @@ void	ft_delete_node(t_env *envi, char *cmd)
 		len = 0;
 		while (aux->content[len] != '=')
 			len++;
-		// printf("aux->content = %s\n", aux->content);
 		if (ft_strncmp(cmd, aux->content, len) == 0)
 		{
 			node_free = aux;
-			printf("check_1 *************\n");
 			ft_handle_list_header(&envi, &aux);
-			printf("check_2 *************\n");
 			// if (aux->next != NULL && aux->next->next != NULL)
 			aux->next = aux->next->next;
-			printf("check_3 *************\n");
 			ft_lstdelone_ms(node_free, &dele);
 		}
 		aux = aux->next;
