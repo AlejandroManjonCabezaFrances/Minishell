@@ -375,32 +375,7 @@ char	**ft_convert_linked_list_to_array(t_env *envi)
 	return (env_array);
 }
 
-/**
- * Create linked list of environment
- * @param	t_env **t_env, char **env
- * @return	void
-*/
-// void ft_linked_list_env(t_env **envi, char **env)
-// {
-// 	int i;
 
-// 	i = 0;
-// 	printf("ft_linked_1\n");
-// 	while (env[i])
-// 	{
-// 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-// 		i++;	
-// 	}
-// }
-
-// void ft_print_lst_2(t_env *temp)
-// {
-// 	while (temp)
-// 	{
-// 		printf("temp = %s\n", temp->content);
-// 		temp = temp->next;
-// 	}
-// }
 
 /**
  * Obtener el PWD --> Current working directory
