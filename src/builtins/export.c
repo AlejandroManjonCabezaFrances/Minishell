@@ -275,7 +275,7 @@ void	ft_replace_var_content(t_env *envi, char *cmd)
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
 			new_node->next = aux->next->next;
 			aux->next = new_node;
-			ft_lstdelone_ms(node_free, &del);
+			ft_lstdelone_ms(node_free, &dele);
 			break;
 		}
 		aux = aux->next;

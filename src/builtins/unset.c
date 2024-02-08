@@ -53,11 +53,12 @@ void	ft_delete_node(t_env *envi, char *cmd)
 		{
 			node_free = aux;
 			ft_handle_list_header(&envi, &aux);
-			ft_lstdelone_ms(node_free, &del);
+			ft_lstdelone_ms(node_free, &dele);
 		}
 		aux = aux->next;
 	}
 	ft_print_lst_2(envi); // print para checkear
+	printf("\n\n\n\n");
 }
 
 void	ft_unset(char **cmd, t_env *envi)
@@ -103,11 +104,11 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "_";
 	// cmd[2] = NULL;
 	
-	// char *cmd[4];
-	// cmd[0] = "unset";
-	// cmd[1] = "PWD";
-	// cmd[2] = "OLDPWD";
-	// cmd[3] = NULL;
+	char *cmd[4];
+	cmd[0] = "unset";
+	cmd[1] = "PWD";
+	cmd[2] = "OLDPWD";
+	cmd[3] = NULL;
 	// tratado como dos argumentos separados--> unset PWD OLDPWD
 	
 	// char *cmd[4];
@@ -121,7 +122,7 @@ int main(int argc, char **argv, char **env)
 	// cmd[2] = NULL;
 	// cmd[1] = "";
 	// cmd[2] = NULL;
-	// ft_builtins(cmd, envi);
+	ft_builtins(cmd, envi);
 	// ft_print_lst_2(envi);
 	return (0);
 }
