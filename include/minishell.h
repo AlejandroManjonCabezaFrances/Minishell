@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/01 10:50:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/09 09:54:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,18 +188,20 @@ void	ft_lstdelone_mshell(t_env *env_copy/* , void (*del)(void *) */);
 // int 	main(int argc, char **argv, char **env);
 
 /* ----------- BUILTINS ----------- */
-void		ft_builtins(char **cmd, t_env **envi);
+void		ft_builtins(char **cmd, t_env *envi);
 
 			/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
 			/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
 			/* ------ EXPORT ------ */
-void	ft_export(char **cmd, t_env **envi);
+void	ft_export(char **cmd, t_env *envi);
 			/* ------ UNSET ------ */
-void	ft_unset(char **cmd, t_env **envi);
+void	ft_unset(char **cmd, t_env *envi);
 			/* ------ CD ------ */
-void	ft_cd(char **cmd, t_env **envi);
+void	ft_cd(char **cmd, t_env *envi);
+			/* ------ ENV ------ */
+void	ft_env(t_env *envi);
 
 
 /* ------ UTILS ------ */

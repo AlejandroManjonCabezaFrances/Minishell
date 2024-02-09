@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/30 07:55:27 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:08:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,17 @@ void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
 		(*del)(lst->content);
 		free(lst);
 	}
+}
+
+t_env	*ft_lstlast_ms(t_env *lst)
+{
+	while (lst != NULL)
+	{
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+	return (lst);
 }
 
 // ESTA EN LA LIBRERIA

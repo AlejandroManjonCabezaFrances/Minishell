@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/29 08:49:05 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:09:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,17 +214,6 @@ void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 		aux->next = node;
 		node->next = last;
 	}
-}
-
-t_env	*ft_lstlast_ms(t_env *lst)
-{
-	while (lst != NULL)
-	{
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	return (lst);
 }
 
 /**
