@@ -250,11 +250,11 @@ int	ft_check_env_var_exists(char **cmd, t_env *envi)
 }
 
 /**
- * Replaces the existing environment variable node and prints the list
+ * Replaces the existing environment variable node parsed for builtin export
  * @param	t_env *envi, char *cmd
  * @return	void
 */
-void	ft_replace_var_content(t_env *envi, char *cmd)
+void	ft_replace_node_parsed(t_env *envi, char *cmd)
 {
 	t_env	*aux;
 	t_env	*node_free;
@@ -280,7 +280,7 @@ void	ft_replace_var_content(t_env *envi, char *cmd)
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(envi);
+	ft_print_lst_2(envi); // solo para check
 }
 
 /**
@@ -301,7 +301,7 @@ void    ft_export(char **cmd, t_env *envi)
 		ft_print_lst_2_declare_x(envi);
 	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
-		ft_replace_var_content(envi, cmd[1]);
+		ft_replace_node_parsed(envi, cmd[1]);
 	else
 	{
 		if (ft_is_equal(cmd[1]))
