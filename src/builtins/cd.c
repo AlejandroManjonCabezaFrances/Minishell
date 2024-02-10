@@ -60,16 +60,16 @@ int	ft_change_directory(t_env *envi, char *path)
 	// char cwd[PATH:MAX];
 	char cwd[1024];
 	
-	envi->pwd = getcwd(cwd, sizeof(cwd));
-	printf("PWD antes del cambio  = %s\n", cwd);
-	printf("envi->pwd = %s\n", envi->pwd);
+	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); // PREGUNTAR PORQUE HAY QUE HACER MALLOC PARA QUE SE GUARDE MAS ABAJO
+	// printf("PWD antes del cambio  = %s\n", cwd);
+	// printf("envi->old_pwd = %s\n", envi->old_pwd);
 
 	change = chdir(path);
 	printf("change = %d\n", change);
 	
-	envi->old_pwd = getcwd(cwd, sizeof(cwd));
-    printf("PWD despues del cambio  = %s\n", cwd);
-	printf("envi->old_pwd = %s\n", envi->old_pwd);
+	envi->pwd = getcwd(cwd, sizeof(cwd));
+    // printf("PWD despues del cambio  = %s\n", cwd);
+	// printf("envi->pwd = %s\n", envi->pwd);
 	
 	if (change != 0)
 		perror(path);
@@ -117,13 +117,13 @@ void	ft_cd(char **cmd, t_env *envi)
 	ok_change_dir = 0;
 	if (cmd[1] != NULL)
 	{
-		// printf("envi->old_pwd = %s\n", envi->old_pwd);
 		// getcwd(cwd, sizeof(cwd));
 		// printf("PWD antes del cambio ******* = %s\n", cwd);;
 
 		ok_change_dir = ft_change_directory(envi, cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
 	
-		// printf("envi->pwd = %s\n", envi->pwd);
+		printf("envi->old_pwd = %s\n", envi->old_pwd);
+		printf("envi->pwd = %s\n", envi->pwd);
 		// getcwd(cwd, sizeof(cwd));
    		// printf("PWD despues del cambio******* = %s\n", cwd);
 	}
@@ -157,6 +157,8 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = NULL;
 	
 	ft_builtins(cmd, envi);
+	// printf("envi->old_pwd = %s\n", envi->old_pwd);
+	// printf("envi->pwd = %s\n", envi->pwd);
 	return (0);
 }
 

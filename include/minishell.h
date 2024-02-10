@@ -62,7 +62,7 @@ typedef struct s_scmd
 typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
 	char			**env;
-	char 			*pwd;
+	// char 			*pwd;
 	// int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;
@@ -71,6 +71,8 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 typedef struct s_env
 {
 	char			*content;
+	char			*pwd;
+	char			*old_pwd;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
