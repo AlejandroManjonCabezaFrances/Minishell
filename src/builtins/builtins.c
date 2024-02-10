@@ -24,8 +24,8 @@ void	ft_builtins(char **cmd, t_env *envi)
 		ft_pwd(cmd);
 	else if (ft_strcmp(*cmd, "unset") == 0)
 		ft_unset(cmd, envi);
-	// else if (ft_strcmp(*cmd, "cd") == 0)
-	// 	ft_cd(cmd, envi);
+	else if (ft_strcmp(*cmd, "cd") == 0)
+		ft_cd(cmd, envi);
 	// else if (ft_strcmp(*cmd, "exit") == 0)
 	// 	ft_exit(cmd);
 } 

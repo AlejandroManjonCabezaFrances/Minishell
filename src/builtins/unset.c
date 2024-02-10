@@ -14,8 +14,6 @@
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o unset && ./unset
 
-// printf("aux->next = %s\n", aux->next->content);
-// printf("aux->next->next = %s\n", aux->next->next->content);
 void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 {
 	t_env	*temp;
@@ -121,7 +119,7 @@ void	ft_unset(char **cmd, t_env *envi)
 // 	// cmd[2] = "ZSH";
 // 	// cmd[3] = NULL;
 	
-// 	char *cmd[2];
+// 	// char *cmd[2];
 	
 // 	// cmd[0] = "4";
 // 	// cmd[1] = NULL;
