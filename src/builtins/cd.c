@@ -54,19 +54,22 @@ void	ft_replace_node(t_env *envi, char *str)
  * @return	void
  * 
 */
-int	ft_change_directory(char *path)
+int	ft_change_directory(t_env *envi, char *path)
 {
 	int change;
 	// char cwd[PATH:MAX];
 	char cwd[1024];
 	
-	getcwd(cwd, sizeof(cwd));
+	envi->pwd = getcwd(cwd, sizeof(cwd));
 	printf("PWD antes del cambio  = %s\n", cwd);
+	printf("envi->pwd = %s\n", envi->pwd);
+
 	change = chdir(path);
 	printf("change = %d\n", change);
 	
-	getcwd(cwd, sizeof(cwd));
+	envi->old_pwd = getcwd(cwd, sizeof(cwd));
     printf("PWD despues del cambio  = %s\n", cwd);
+	printf("envi->old_pwd = %s\n", envi->old_pwd);
 	
 	if (change != 0)
 		perror(path);
@@ -94,7 +97,7 @@ char	*ft_find_path_env(t_env *envi, char *str)
 void	ft_update_env_pwd(t_env *envi, char *pwd, char *old_pwd)
 {
 	printf("PWD=%s\n", pwd);
-	printf("OLDPWD*****=%s\n", old_pwd);
+	printf("OLDPWD=%s\n", old_pwd);
 	// if (old_pwd == NULL)
 	// 	old_pwd = ft_find_path_env(envi, "OLDPWD=");
 	if (pwd != NULL)
@@ -108,17 +111,26 @@ void	ft_cd(char **cmd, t_env *envi)
 {
 	char	*path_home;
 	int		ok_change_dir;
+	// char	cwd[1024];
 
 	path_home = NULL;
 	ok_change_dir = 0;
 	if (cmd[1] != NULL)
 	{
-		ok_change_dir = ft_change_directory(cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
+		// printf("envi->old_pwd = %s\n", envi->old_pwd);
+		// getcwd(cwd, sizeof(cwd));
+		// printf("PWD antes del cambio ******* = %s\n", cwd);;
+
+		ok_change_dir = ft_change_directory(envi, cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
+	
+		// printf("envi->pwd = %s\n", envi->pwd);
+		// getcwd(cwd, sizeof(cwd));
+   		// printf("PWD despues del cambio******* = %s\n", cwd);
 	}
 	else
 	{
 		path_home= ft_find_path_env(envi, "HOME=");		//	cd NULL --> cambio al HOME=/Users/amanjon-
-		ft_change_directory(path_home);
+		ft_change_directory(envi, path_home);
 	}
 	if (!ok_change_dir)
 	{
@@ -135,12 +147,14 @@ int main(int argc, char **argv, char **env)
     (void) 	argv;
 
 	ft_linked_list_env(&envi, env);
+	envi->pwd = NULL;
+	envi->old_pwd = NULL;
 	cmd[0] = "cd";
 	// cmd[1] = "..";		// Creo que no hay que hacerlo
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
-	// cmd[1] = "/home/amanjon-/Escritorio/minishell_github";		//Linux
-	cmd[1] = NULL;
+	cmd[1] = "/home/amanjon-/Escritorio";		//Linux
+	// cmd[1] = NULL;
 	
 	ft_builtins(cmd, envi);
 	return (0);
