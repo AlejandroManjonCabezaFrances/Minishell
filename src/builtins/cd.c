@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/02 11:20:21 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/13 12:01:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param	t_env *envi, char *str
  * @return	void
 */
-void	ft_replace_node(t_env *envi, char *str)
+void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
 	t_env	*node_free;
@@ -37,7 +37,8 @@ void	ft_replace_node(t_env *envi, char *str)
 		{
 			node_free = aux;
 			aux = aux->prev;
-			new_node = ft_lstnew_str_env(str);
+			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+			aux->next->next->prev = new_node;
 			new_node->next = aux->next->next;
 			aux->next = new_node;
 			ft_lstdelone_ms(node_free, &dele);
@@ -45,7 +46,7 @@ void	ft_replace_node(t_env *envi, char *str)
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(envi); // solo para check
+	// ft_print_lst_2(envi); // solo para check
 }
 
 /**
@@ -57,19 +58,16 @@ void	ft_replace_node(t_env *envi, char *str)
 int	ft_change_directory(t_env *envi, char *path)
 {
 	int change;
-	// char cwd[PATH:MAX];
-	char cwd[1024];
+	char cwd[PATH_MAX];
 	
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); // PREGUNTAR PORQUE HAY QUE HACER MALLOC PARA QUE SE GUARDE MAS ABAJO
-	// printf("PWD antes del cambio  = %s\n", cwd);
-	// printf("envi->old_pwd = %s\n", envi->old_pwd);
+	printf("envi->old_pwd = %s\n", envi->old_pwd);
 
 	change = chdir(path);
 	printf("change = %d\n", change);
 	
 	envi->pwd = getcwd(cwd, sizeof(cwd));
-    // printf("PWD despues del cambio  = %s\n", cwd);
-	// printf("envi->pwd = %s\n", envi->pwd);
+	printf("envi->pwd = %s\n", envi->pwd);
 	
 	if (change != 0)
 		perror(path);
@@ -94,17 +92,21 @@ char	*ft_find_path_env(t_env *envi, char *str)
 	return (NULL);
 }
 
-void	ft_update_env_pwd(t_env *envi, char *pwd, char *old_pwd)
+void	ft_update_env_pwd(t_env *envi)
 {
-	printf("PWD=%s\n", pwd);
-	printf("OLDPWD=%s\n", old_pwd);
-	// if (old_pwd == NULL)
-	// 	old_pwd = ft_find_path_env(envi, "OLDPWD=");
-	if (pwd != NULL)
-	{
-		ft_replace_node(envi, pwd);
-		ft_print_lst_2(envi);
-	}
+	ft_replace_node(envi, "PWD=", envi->pwd);
+	ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
+	ft_print_lst_2(envi);
+}
+
+void	ft_one_step_back(t_env *envi)
+{
+	char	cwd[PATH_MAX];
+	
+	envi->old_pwd = getcwd(cwd, sizeof(cwd));
+	printf("envi->old_pwd** = %s\n", envi->old_pwd);
+	envi->pwd = ft_strtrim(envi->old_pwd, ft_strrchr(envi->old_pwd, '/'));
+	printf("envi->pwd = %s\n", envi->pwd);
 }
 
 void	ft_cd(char **cmd, t_env *envi)
@@ -117,15 +119,18 @@ void	ft_cd(char **cmd, t_env *envi)
 	ok_change_dir = 0;
 	if (cmd[1] != NULL)
 	{
-		// getcwd(cwd, sizeof(cwd));
-		// printf("PWD antes del cambio ******* = %s\n", cwd);;
-
-		ok_change_dir = ft_change_directory(envi, cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
-	
-		printf("envi->old_pwd = %s\n", envi->old_pwd);
-		printf("envi->pwd = %s\n", envi->pwd);
-		// getcwd(cwd, sizeof(cwd));
-   		// printf("PWD despues del cambio******* = %s\n", cwd);
+		if (ft_strncmp("..", cmd[1], 2) == 0)
+		{
+			printf("entra en el strncmp?******\n");
+			ft_one_step_back(envi);
+		}
+		else
+		{
+			printf("entra en el else******\n");
+			ok_change_dir = ft_change_directory(envi, cmd[1]);		// cd /Users/amanjon-/Desktop/minishell_github/src/ --> 1 argv 
+		}
+		// printf("envi->old_pwd = %s\n", envi->old_pwd);
+		// printf("envi->pwd = %s\n", envi->pwd);
 	}
 	else
 	{
@@ -133,10 +138,7 @@ void	ft_cd(char **cmd, t_env *envi)
 		ft_change_directory(envi, path_home);
 	}
 	if (!ok_change_dir)
-	{
-
-		ft_update_env_pwd(envi, "PWD=", "OLDPWD=");	// Si se ha podido cambiar de drectorio,actualizo el PWD y el OLDPWD.
-	}
+		ft_update_env_pwd(envi);	// Si se ha podido cambiar de drectorio,actualizo el PWD y el OLDPWD.
 }
 
 int main(int argc, char **argv, char **env)
@@ -146,14 +148,15 @@ int main(int argc, char **argv, char **env)
     (void) 	argc;
     (void) 	argv;
 
+	envi = NULL;
 	ft_linked_list_env(&envi, env);
 	envi->pwd = NULL;
 	envi->old_pwd = NULL;
 	cmd[0] = "cd";
-	// cmd[1] = "..";		// Creo que no hay que hacerlo
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	cmd[1] = "..";		// Creo que no hay que hacerlo
+	// cmd[1] = "/home/amanjon/minishell_github/src/";
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
-	cmd[1] = "/home/amanjon-/Escritorio";		//Linux
+	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
 	// cmd[1] = NULL;
 	
 	ft_builtins(cmd, envi);
@@ -164,4 +167,4 @@ int main(int argc, char **argv, char **env)
 
 // cd /Users/amanjon-/Desktop/minishell_github/		(ruta absoluta)
 // cd ..				(ruta relativa)
-// cd builtins.c/		¿(ruta relativa)?
+// cd builtins/		¿(ruta relativa)?

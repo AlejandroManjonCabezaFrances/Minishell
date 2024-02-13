@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/09 10:08:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/13 11:54:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,4 +203,23 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	a[i] = '\0';
 	return (a);
+}
+
+// ESTA EN LA LIBRERIA
+char	*ft_strrchr(const char *s, int c)
+{
+	int		i;
+	char	*a;
+
+	a = (char *)s;
+	i = ft_strlen(a);
+	if (c == '\0')
+		return (&a[i]);
+	while (i >= 0)
+	{
+		if (a[i] == (char)c)
+			return (&a[i]);
+	i--;
+	}
+	return (NULL);
 }
