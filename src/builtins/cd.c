@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/13 12:02:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/13 13:59:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,23 @@ void	ft_update_env_pwd(t_env *envi)
 	ft_print_lst_2(envi);
 }
 
-void	ft_one_step_back(t_env *envi)
+int	ft_one_step_back(t_env *envi)
 {
 	char	cwd[PATH_MAX];
+	int		change;
+	char	*last_ocurrence;
 	
 	envi->old_pwd = getcwd(cwd, sizeof(cwd));
 	printf("envi->old_pwd** = %s\n", envi->old_pwd);
-	envi->pwd = ft_strtrim(envi->old_pwd, ft_strrchr(envi->old_pwd, '/'));  // FALLO envi->pwd la primera / no la escribe
+	last_ocurrence = ft_strrchr(envi->old_pwd, '/') + 1;
+	printf("last_ocurrence = %s\n", last_ocurrence);
+	envi->pwd = ft_strtrim(envi->old_pwd, last_ocurrence);  // FALLO envi->pwd la primera / no la escribe
 	printf("envi->pwd = %s\n", envi->pwd);
+	change = chdir(envi->pwd);
+	if (change != 0)
+		perror(envi->pwd);
+	return (change);
+	
 }
 
 void	ft_cd(char **cmd, t_env *envi)
@@ -155,7 +164,7 @@ int main(int argc, char **argv, char **env)
 	cmd[0] = "cd";
 	cmd[1] = "..";		// Creo que no hay que hacerlo
 	// cmd[1] = "/home/amanjon/minishell_github/src/";
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/sraaac/";
+	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";
 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
 	// cmd[1] = NULL;
 	

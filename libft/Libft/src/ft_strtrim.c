@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:55:01 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/26 11:05:04 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/13 13:58:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,31 @@ char	*ft_strtrim(char	const *s1, char	const *set)
 	return (ft_fill(i, k, s1, ptr));
 }
 
+// char	*ft_strtrim(char const *s1, char const *set)
+// {
+// 	size_t	start;
+// 	size_t	end;
+
+// 	if (!s1 || !set)
+// 		return (NULL);
+// 	start = 0;
+// 	while (s1[start] && ft_strchr(set, s1[start]))
+// 		start++;
+// 	start--;
+	
+// 	end = ft_strlen(&s1[start]);
+// 	if (end)
+// 	{
+// 		while (s1[start + end - 1] && ft_strchr(set, s1[start + end - 1]))
+// 			end--;
+// 	}
+// 	return (ft_substr(s1, start, end));
+// }
+
 // int main(void)
 // {
-//     char    s1[] = "USER=holaaaaaa";
-//     char    set[] = "holaaaaaa";
+//     char    s1[] = "/home/amanjon/minishell_github/src/builtins";
+//     char    set[] = "/builtins";
 
 //     printf("%s", ft_strtrim(s1, set));
 //     return(0);
