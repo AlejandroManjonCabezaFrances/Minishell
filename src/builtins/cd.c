@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/13 12:01:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/13 12:02:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_one_step_back(t_env *envi)
 	
 	envi->old_pwd = getcwd(cwd, sizeof(cwd));
 	printf("envi->old_pwd** = %s\n", envi->old_pwd);
-	envi->pwd = ft_strtrim(envi->old_pwd, ft_strrchr(envi->old_pwd, '/'));
+	envi->pwd = ft_strtrim(envi->old_pwd, ft_strrchr(envi->old_pwd, '/'));  // FALLO envi->pwd la primera / no la escribe
 	printf("envi->pwd = %s\n", envi->pwd);
 }
 
