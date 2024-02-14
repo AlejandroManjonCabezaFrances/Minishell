@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 10:38:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/14 11:24:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	ft_cd(char **cmd, t_env *envi)
 // 	return (0);
 // }
 
+// FALTA QUITAR LAS VARIABLES DE ENTORNO Y JUGR CON EL CD
 // cd /Users/amanjon-/Desktop/minishell_github/		(ruta absoluta)
 // cd ..				(ruta relativa)
 // cd builtins/		¿(ruta relativa)?

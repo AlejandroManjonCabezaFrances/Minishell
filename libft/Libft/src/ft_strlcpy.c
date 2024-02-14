@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:47:55 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:32:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:26:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
 	return (j);
 }
 
-/*int	main(void)
+int	main(void)
 {
-	char	dest[10];	
-	char	src[] = "coche";	
+	char	dest[35];	
+	char	src[] = "/home/amanjon/minishell_github/src/builtins";	
 
-	printf("%zu", ft_strlcpy(dest, src, 3)); 
+	printf("%zu\n", ft_strlcpy(dest, src, 35));
+	printf("%s\n", dest);
 	return (0);
-}*/
+}

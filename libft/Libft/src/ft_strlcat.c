@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 08:45:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/05/12 07:32:51 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/14 08:50:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	return (i + k);
 }
 
-/*int main(void)
-{
-	char	dst[35] = "hola ";
-	char	src[35] = "equipo";
-	char	dst2[35] = "hola ";
-	char	src2[35] = "equipo";
+// int main(void)
+// {
+// 	// char	dst[35] = "hola ";
+// 	// char	src[35] = "equipo";
+// 	char	dst2[35] = "hola como va";
+// 	char	src2[35] = "como";
     
-	printf("%lu\n", strlcat(dst, src, 4));
-	printf("%s \n",dst);
-	printf("%lu\n", ft_strlcat(dst2, src2, 4));
-	printf("%s \n",dst2);
+// 	// printf("%u\n", strlcat(dst, src, 4));
+// 	// printf("%s \n",dst);
+// 	printf("%lu\n", ft_strlcat(dst2, src2, 10));
+// 	printf("%s \n",dst2);
     
-	return(0);
-}*/
+// 	return(0);
+// }

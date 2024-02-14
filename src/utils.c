@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/13 13:59:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/14 10:39:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,92 +75,6 @@ t_env	*ft_lstlast_ms(t_env *lst)
 		lst = lst->next;
 	}
 	return (lst);
-}
-
-static int	ft_start_ms(char	const *s1, char	const *set)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (set[j])
-	{
-		if (s1[i] == set[j])
-		{
-			j = 0;
-			i++;
-		}
-		else
-			j++;
-	}
-	return (i);
-}
-
-static int	ft_end_ms(char	const *s1, char	const *set)
-{
-	int	k;
-	int	j;
-
-	k = ft_strlen(s1);
-	k--;
-	j = 0;
-	while (set[j])
-	{
-		if (s1[k] == set[j])
-		{
-			j = 0;
-			k--;
-		}
-		else
-			j++;
-	}
-	k++;
-	return (k);
-}
-
-static char	*ft_fill_ms(int i, int k, char	const *s1, char	*ptr)
-{
-	int	x;
-
-	if (i > k)
-		ptr = malloc(sizeof(char) * 1);
-	else
-		ptr = malloc(sizeof (char) * (k - i) + 1);
-	if (ptr == NULL)
-		return (NULL);
-	x = 0;
-	while (i < k)
-	{
-		ptr[x] = s1[i];
-		x++;
-		i++;
-	}
-	ptr[x] = '\0';
-	return (ptr);
-}
-
-char	*ft_strtrim_ms(char	const *s1, char	const *set)
-{
-	int		i;
-	int		k;
-	char	*ptr;
-
-	ptr = NULL;
-	if (s1[0] == '\0')
-	{
-		ptr = malloc(sizeof(char) * 1);
-		if (!ptr)
-		{
-			free (ptr);
-			return (0);
-		}
-		ptr[0] = '\0';
-		return (ptr);
-	}
-	i = ft_start_ms(s1, set);
-	k = ft_end_ms(s1, set);
-	return (ft_fill_ms(i, k, s1, ptr));
 }
 
 // ESTA EN LA LIBRERIA
@@ -308,4 +222,25 @@ char	*ft_strrchr(const char *s, int c)
 	i--;
 	}
 	return (NULL);
+}
+
+// ESTA EN LA LIBRERIA
+size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
+{
+	size_t	i;
+	size_t	j;
+	char	*a;
+
+	i = 0;
+	j = ft_strlen(src);
+	a = (char *)src;
+	if (destsize == 0)
+		return (j);
+	while (a[i] != '\0' && i < (destsize - 1))
+	{
+		dest[i] = a[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (j);
 }
