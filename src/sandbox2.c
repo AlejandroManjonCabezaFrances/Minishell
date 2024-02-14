@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/09 10:09:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/14 12:56:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,40 +159,6 @@ char	*ft_strdup(const char	*s1)
 	}
 	ptr[i] = '\0';
 	return (ptr);
-}
-
-t_env	*ft_lstnew_str_env(char *str_env)
-{
-	t_env	*node;
-
-	node = NULL;
-	node = malloc(sizeof(t_env));
-	if (node == NULL)
-		return (NULL);
-	node->content = ft_strdup(str_env);
-	// free(str_env); 	// puesto por export, error linux munmap_chunk(): invalid pointer
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
-}
-
-void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
-{
-	t_env	*aux;
-
-	aux = *envi;
-	if (*envi == NULL || envi == NULL)
-	{
-		*envi = node;
-		return ;
-	}
-	else
-	{
-		while (aux->next != NULL)
-			aux = aux->next;
-		aux->next = node;
-		node->prev = aux;
-	}
 }
 
 void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)

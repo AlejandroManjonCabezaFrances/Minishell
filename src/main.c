@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/19 10:08:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/14 14:01:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ int	main(int argc, char **argv, char **env)
 	// ft_copy_env(&g_info, env);
 	while (1)
 	{
-		signals();
+		ft_signals();
 		cmd_line = readline("minishell-0.2$ ");
-		set_signals_noninteractive();
+		// set_signals_noninteractive();
 		if (!cmd_line)
 			panic(READLINE_ERR, NULL, NULL);
-		cmd_line[ft_strlen(cmd_line)] = '\0';
+		// cmd_line[ft_strlen(cmd_line)] = '\0';
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)
 			panic (err, NULL, NULL);

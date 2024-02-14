@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 10:39:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/14 12:56:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,40 @@ t_env	*ft_lstlast_ms(t_env *lst)
 		lst = lst->next;
 	}
 	return (lst);
+}
+
+t_env	*ft_lstnew_str_env(char *str_env)
+{
+	t_env	*node;
+
+	node = NULL;
+	node = malloc(sizeof(t_env));
+	if (node == NULL)
+		return (NULL);
+	node->content = ft_strdup(str_env);
+	// free(str_env); 	// puesto por export, error linux munmap_chunk(): invalid pointer
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
+}
+
+void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
+{
+	t_env	*aux;
+
+	aux = *envi;
+	if (*envi == NULL || envi == NULL)
+	{
+		*envi = node;
+		return ;
+	}
+	else
+	{
+		while (aux->next != NULL)
+			aux = aux->next;
+		aux->next = node;
+		node->prev = aux;
+	}
 }
 
 // ESTA EN LA LIBRERIA
