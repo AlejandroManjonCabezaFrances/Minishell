@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/09 12:23:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 10:08:01 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,16 +317,16 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 }
 
-// int main(int argc, char **argv, char **env) 
-// {
-// 	t_env	*envi;
-// 	char 	*cmd[3];
-//     (void) 	argc;
-//     (void) 	argv;
+int main(int argc, char **argv, char **env) 
+{
+	t_env	*envi;
+	char 	*cmd[3];
+    (void) 	argc;
+    (void) 	argv;
     
-// 	envi = NULL;
-// 	ft_linked_list_env(&envi, env);
-// 	cmd[0] = "export";
+	envi = NULL;
+	ft_linked_list_env(&envi ,env);
+	cmd[0] = "export";
 // 	// cmd[1] = "A LEX=alex";
 // 	// cmd[1] = "LEX= alex";
 // 	// cmd[1] = "ALEX=alex";
@@ -340,11 +340,11 @@ void    ft_export(char **cmd, t_env *envi)
 // 	// cmd[1] = "1 2 3";
 // 	// cmd[1] = "PRUEBA";			// -*-*-*
 // 	cmd[2] = NULL;
-// 	ft_builtins(cmd, envi);
+	ft_builtins(cmd, envi);
 
 //	// export quiero que reciba el char ** de tal manera que despues de export
 //	// meta todo el string en el primer *
 //	// probar cuando me pasen el string, espacios al primcipio y al final o parsearlo afuera
 
-//     return (0);
-// }
+    return (0);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 14:00:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 09:20:06 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,19 @@ int		check_lst_ms(t_token *token, int type);
 void	panic(int err, t_token **list, t_token *token);
 
 /* ------ SIGNALS ------ */
+// void	ft_signals(void);
+// void	ft_signal_interrupt(void);
+// void	ft_signal_reset_prompt(int signal);
+// void	ft_signal_quit(void);
+// void	ft_set_signals_noninteractive(void); // new
+// void	ft_signal_print_newline(int signal); // new
+
+// BY MATEO
 void	ft_signals(void);
-void	ft_signal_interrupt(void);
+void	ft_signal_print_newline(int signal);
 void	ft_signal_reset_prompt(int signal);
-void	ft_signal_quit(void);
-void	ft_set_signals_noninteractive(void); // new
-void	ft_signal_print_newline(int signal); // new
+void	ft_ignore_sigquit(void);
+void	ft_set_signals_noninteractive(void);
 
 /* ------ ENV ------ */
 t_env	*ft_lstnew_str_env(char *str_env);

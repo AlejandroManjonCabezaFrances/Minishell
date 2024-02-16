@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 11:24:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 10:43:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,9 @@ int	ft_change_directory(t_env *envi, char *path)
 	int change;
 	char cwd[PATH_MAX];
 	
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));	 // PREGUNTAR PORQUE HAY QUE HACER MALLOC PARA QUE SE GUARDE MAS ABAJO
-	printf("envi->old_pwd = %s\n", envi->old_pwd);			// POLTERGEIST
-
+	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	change = chdir(path);
-	printf("change* = %d\n", change);
-	
 	envi->pwd = getcwd(cwd, sizeof(cwd));
-	printf("envi->pwd = %s\n", envi->pwd);
-	
 	if (change != 0)
 		perror(path);
 	return (change);
@@ -94,8 +88,6 @@ char	*ft_find_path_env(t_env *envi, char *str)
 
 void	ft_update_env_pwd(t_env *envi)
 {
-	// printf("envi->pwd----- = %s\n", envi->pwd);			// POLTERGEIST
-	// printf("envi->old_pwd----- = %s\n", envi->old_pwd);	// POLTERGEIST
 	ft_replace_node(envi, "PWD=", envi->pwd);
 	ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 }
@@ -111,7 +103,6 @@ int	ft_one_step_back(t_env *envi)
 	change = -1;
 	cd_back = NULL;
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));	// PREGUNTAR PORQUE HAY QUE HACER MALLOC PARA QUE SE GUARDE MAS ABAJO
-	printf("envi->old_pwd = %s\n", envi->old_pwd);			// POLTERGEIST
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -142,8 +133,6 @@ void	ft_cd(char **cmd, t_env *envi)
 			ft_one_step_back(envi);
 		else
 			ok_change_dir = ft_change_directory(envi, cmd[1]);
-		// printf("envi->old_pwd = %s\n", envi->old_pwd);
-		// printf("envi->pwd = %s\n", envi->pwd);
 	}
 	else
 	{
@@ -166,20 +155,17 @@ void	ft_cd(char **cmd, t_env *envi)
 // 	envi->pwd = NULL;
 // 	envi->old_pwd = NULL;
 // 	cmd[0] = "cd";
-// 	// cmd[1] = "..";
-// 	// cmd[1] = "/home/amanjon/minishell_github/src/";
-// 	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";
-// 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
-// 	cmd[1] = NULL;
+// 	cmd[1] = "..";
+// 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+// // 	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";
+// // 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
+// // 	cmd[1] = NULL;
 	
 // 	ft_builtins(cmd, envi);
 // 	ft_print_lst_2(envi);
-// 	// printf("envi->old_pwd = %s\n", envi->old_pwd);
-// 	// printf("envi->pwd = %s\n", envi->pwd);
 // 	return (0);
 // }
 
-// FALTA QUITAR LAS VARIABLES DE ENTORNO Y JUGR CON EL CD
 // cd /Users/amanjon-/Desktop/minishell_github/		(ruta absoluta)
 // cd ..				(ruta relativa)
 // cd builtins/		¿(ruta relativa)?

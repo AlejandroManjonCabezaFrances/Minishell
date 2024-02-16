@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:23:02 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/15 14:40:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:44:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// ################ Como hacer que el env sea null? ######################
+// ################ env -i ./minishell ######################
 void	ft_when_env_is_null(t_inf *info)
 {
 	info->env = malloc(sizeof(char *) * (3));
