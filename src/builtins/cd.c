@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/16 10:43:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:47:40 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,40 @@
 
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c pwd.c export.c cd.c -o cd && ./cd
 
-/**
- * Replaces the existing environment variable node
- * @param	t_env *envi, char *str
- * @return	void
-*/
-void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
-{
-	t_env	*aux;
-	t_env	*node_free;
-	t_env	*new_node;
-	int		len;
+// /**
+//  * Replaces the existing environment variable node
+//  * @param	t_env *envi, char *str
+//  * @return	void
+// */
+// void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
+// {
+// 	t_env	*aux;
+// 	t_env	*node_free;
+// 	t_env	*new_node;
+// 	int		len;
 
-	aux = envi;
-	node_free = NULL;
-	len = 0;
-	while (str[len] != '=')
-		len++;
-	while (aux)
-	{
-		if (ft_strncmp(aux->content, str, len + 1) == 0)
-		{
-			node_free = aux;
-			aux = aux->prev;
-			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-			aux->next->next->prev = new_node;
-			new_node->next = aux->next->next;
-			aux->next = new_node;
-			ft_lstdelone_ms(node_free, &dele);
-			break;
-		}
-		aux = aux->next;
-	}
-	// ft_print_lst_2(envi); // solo para check
-}
+// 	aux = envi;
+// 	node_free = NULL;
+// 	len = 0;
+// 	while (str[len] != '=')
+// 		len++;
+// 	while (aux)
+// 	{
+// 		if (ft_strncmp(aux->content, str, len + 1) == 0)
+// 		{
+// 			node_free = aux;
+// 			aux = aux->prev;
+// 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+// 			aux->next->next->prev = new_node;
+// 			new_node->next = aux->next->next;
+// 			aux->next = new_node;
+// 			ft_lstdelone_ms(node_free, &dele);
+// 			break;
+// 		}
+// 		aux = aux->next;
+// 	}
+// 	// ft_print_lst_2(envi); // solo para check
+// }
 
 /**
  * int chdir(const char *path); Check the path of the directory you want to change to.

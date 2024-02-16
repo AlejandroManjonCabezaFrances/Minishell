@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 12:56:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 14:47:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/**
+ * Replaces the existing environment variable node
+ * @param	t_env *envi, char *str
+ * @return	void
+*/
+void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
+{
+	t_env	*aux;
+	t_env	*node_free;
+	t_env	*new_node;
+	int		len;
+
+	aux = envi;
+	node_free = NULL;
+	len = 0;
+	while (str[len] != '=')
+		len++;
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, str, len + 1) == 0)
+		{
+			node_free = aux;
+			aux = aux->prev;
+			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+			aux->next->next->prev = new_node;
+			new_node->next = aux->next->next;
+			aux->next = new_node;
+			ft_lstdelone_ms(node_free, &dele);
+			break;
+		}
+		aux = aux->next;
+	}
+	// ft_print_lst_2(envi); // solo para check
+}
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -277,4 +312,26 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
 	}
 	dest[i] = '\0';
 	return (j);
+}
+
+// ESTA EN LA LIBRERIA
+int	ft_isdigit(int c)
+{
+	if (c >= 0 && c <= 9)
+		return (1);
+	return (0);
+}
+
+// ESTA EN LA LIBRERIA
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	write(fd, "\n", 1);
 }

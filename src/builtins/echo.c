@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/05 14:30:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 10:47:15 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_echo(char **cmd)
 // 	cmd[1] = "lo        que diga el papi";
 // 	cmd[2] = NULL; */
 	
-// /* 	char *cmd[7];				// con flag -n
+// /* 	char *cmd[7];			// con flag -n
 // 	cmd[0] = "echo";
 // 	cmd[1] = "-nnn";
 // 	cmd[2] = "-nnnn";

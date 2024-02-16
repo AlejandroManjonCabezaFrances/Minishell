@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/06 07:18:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/16 11:46:48 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	ft_builtins(char **cmd, t_env *envi)
 		ft_unset(cmd, envi);
 	else if (ft_strcmp(*cmd, "cd") == 0)
 		ft_cd(cmd, envi);
-	// else if (ft_strcmp(*cmd, "exit") == 0)
-	// 	ft_exit(cmd);
+	else if (ft_strcmp(*cmd, "exit") == 0)
+		ft_exit(cmd, envi);
 } 
