@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   sandbox2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/14 12:56:41 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:17:03 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_strjoin_2(char *s1, char *s2)
-{
-	char	*ptr;
-	int		i;
-	int		j;
+// char	*ft_strjoin_2(char *s1, char *s2)
+// {
+// 	char	*ptr;
+// 	int		i;
+// 	int		j;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	ptr = malloc(sizeof(char) * (ft_strlen((char *)s1)
-				+ft_strlen((char *)s2)) + 1);
-	if (ptr == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		ptr[j++] = s1[i++];
-	i = 0;
-	while (s2[i] != '\0')
-		ptr[j++] = s2[i++];
-	ptr[j] = '\0';
-	return (ptr);
-}
+// 	if (s1 == NULL || s2 == NULL)
+// 		return (NULL);
+// 	ptr = malloc(sizeof(char) * (ft_strlen((char *)s1)
+// 				+ft_strlen((char *)s2)) + 1);
+// 	if (ptr == NULL)
+// 		return (NULL);
+// 	i = 0;
+// 	j = 0;
+// 	while (s1[i] != '\0')
+// 		ptr[j++] = s1[i++];
+// 	i = 0;
+// 	while (s2[i] != '\0')
+// 		ptr[j++] = s2[i++];
+// 	ptr[j] = '\0';
+// 	return (ptr);
+// }
 
 static int	ft_size_mem(long n)
 {

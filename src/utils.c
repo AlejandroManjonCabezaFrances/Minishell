@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/16 14:47:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:23:28 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 	// ft_print_lst_2(envi); // solo para check
 }
 
+/**
+ * Compares the two strings it receives and returns something other than 0 if
+ * they are different
+ * @param	const char *s1, const char *s2
+ * @return	int
+*/
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int i;

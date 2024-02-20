@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/16 11:59:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:51:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param	t_env *temp
  * @return	void
 */
-void ft_print_lst_2_declare_x(t_env *temp)
+void	ft_print_lst_2_declare_x(t_env *temp)
 {
 	while (temp)
 	{

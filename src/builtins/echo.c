@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/19 10:36:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:45:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param	char **cmd, int len
  * @return	static void
 */
-static void	ft_writing_echo(char **cmd, int len)
+static	void	ft_writing_echo(char **cmd, int len)
 {
 	while (cmd[len])
 	{
@@ -37,7 +37,7 @@ static void	ft_writing_echo(char **cmd, int len)
  * @param	char *str
  * @return	static int. TRUE or FALSE
 */
-static int	ft_flag_n(char *str)
+static	int	ft_flag_n(char *str)
 {	
 	int i;
 
@@ -76,12 +76,6 @@ void	ft_echo(char **cmd)
 		write(1, "\n", 1);
 }
 
-void leaks(void)
-{
-   system("leaks -q echo");
-}
-
-
 // int main(int argc, char **argv, char **env) 
 // {
 // 	t_env	*envi;
@@ -91,7 +85,6 @@ void leaks(void)
 // 	envi = NULL;
 // 	ft_linked_list_env(&envi, env);
 
-// 	atexit(leaks);
 // 	char *cmd[3];
 // 	cmd[0] = "echo";
 // 	cmd[1] = NULL;

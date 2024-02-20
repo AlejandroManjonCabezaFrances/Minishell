@@ -24,6 +24,7 @@ void    ft_pwd(char **cmd)
 {	
     char cwd[PATH_MAX];
 
+	cwd = NULL;
     if (cmd[1] != NULL && cmd[1][0] != '<' && cmd[1][0] != '>')
 	{
 		ft_putstr_fd("pwd without arguments according to subject\n", 2);

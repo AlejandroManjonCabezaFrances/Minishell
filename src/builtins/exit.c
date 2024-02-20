@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/19 15:42:22 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:52:24 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param	t_env *envi
  * @return	void
 */
-void    ft_lower_shlvl(t_env *envi)
+void	ft_lower_shlvl(t_env *envi)
 {
 	t_env   *aux;
 	char	*n_shlvl;
@@ -42,20 +42,25 @@ void    ft_lower_shlvl(t_env *envi)
 	ft_print_lst_2(envi);	// para check
 }
 
-int	ft_manage_numeric(char **cmd)
+/**
+ * Manages the numeric arguments of "exit"
+ * @param	char **cmd
+ * @return	int
+*/
+int	ft_manage_numerics(char **cmd)
 {
 	int	n_argc;
-	int	check_two_num;
+	int	check_num;
 	
 
 	n_argc = 1;
-	check_two_num = 0;
+	check_num = 0;
 	while (cmd[n_argc])
 	{
 		if (ft_isdigit(ft_atoi(cmd[n_argc])))
 		{
-			check_two_num++;
-			if (check_two_num > 1)
+			check_num++;
+			if (check_num > 1)
 			{
 				ft_putendl_fd("exit", STDOUT_FILENO);
 				ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO); 
@@ -64,19 +69,19 @@ int	ft_manage_numeric(char **cmd)
 		}
 		n_argc++;
 	}
-	return (check_two_num);
+	return (check_num);
 }
 
 /**
- * Replicates the "exit" builtin. Check if the argument is NULL, digit or not digit
+ * Replicates the "exit" builtin. Check if the argument is NULL/digit or not digit
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void    ft_exit(char **cmd, t_env *envi)
+void	ft_exit(char **cmd, t_env *envi)
 {
 	int	check_two_num;
 	
-	check_two_num = ft_manage_numeric(cmd);
+	check_two_num = ft_manage_numerics(cmd);
 	if (check_two_num <= 1)
 	{
 		if (cmd[1] == NULL || ft_isdigit(*cmd[1]))
@@ -103,11 +108,18 @@ int main(int argc, char **argv, char **env)
 	envi = NULL;
 	ft_linked_list_env(&envi, env);
 	
-	char    *cmd[4];
+	// char    *cmd[4];
+	// cmd[0] = "exit";
+	// cmd[1] = "1";
+	// cmd[2] = "2";
+	// cmd[3] = NULL;
+
+	char    *cmd[5];
 	cmd[0] = "exit";
 	cmd[1] = "1";
 	cmd[2] = "2";
-	cmd[3] = NULL;
+	cmd[3] = "3";
+	cmd[4] = NULL;
 	
 	// char    *cmd[3];
 	// cmd[0] = "exit";

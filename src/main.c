@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/16 09:19:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:52:34 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,28 @@ int	check_argc(int argc)
  * @param	t_inf *inf
  * @return	void
 */
-void	init_struct(t_inf *inf)
+void	init_struct(t_env *envi, t_inf *info)
 {
-	inf->env = NULL;
-	inf->pwd = NULL;
+	envi->env_n = NULL; 
+	info->cwd = NULL;
 }
 /**
  * This function disable chars printed by ctrl+c '^C'
  * @param	void
  * @return	void
 */
-void	disable_ctrl_c_printing_chars(t_inf inf)
+void	disable_ctrl_c_printing_chars(t_inf info)
 {
 	int rc;
 
-	rc = tcgetattr(0, &inf.termios);
+	rc = tcgetattr(0, &info.termios);
 	if (rc != 0)
 	{
 		perror("tcgetattr");
 		exit (1);
 	}
-	inf.termios.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(0, 0, &inf.termios);
+	info.termios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &info.termios);
 	if (rc != 0)
 	{
 		perror("tcsetattr");
@@ -81,7 +81,8 @@ char	**copy_env(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_inf	inf;
+	t_inf	info;
+	t_env	envi;
 	t_token	*token_list;
 	// t_scmd	*scmds_list;
 	char	*cmd_line;
@@ -91,11 +92,12 @@ int	main(int argc, char **argv, char **env)
 	
 	token_list = NULL;
 	cmd_line = NULL;
+	if (env == NULL || env[0] == NULL)
+		ft_env_is_null(&envi, &info, env);
 	env_cpy = copy_env(env);
-	init_struct(&inf);
-	disable_ctrl_c_printing_chars(inf);
+	init_struct(&envi, &info);
+	disable_ctrl_c_printing_chars(info);
 	check_argc(argc);
-	// ft_copy_env(&g_info, env);
 	while (1)
 	{
 		ft_signals();

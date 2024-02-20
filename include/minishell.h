@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/16 14:48:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:24:05 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_scmd
 
 typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
-	char			**env;
-	char 			*pwd;
+	// char			**env_n;
+	char 			*cwd;
 	// int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;
@@ -70,6 +70,9 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 /* ------ STRUCT SANDBOX LINKED LIST ------ */
 typedef struct s_env
 {
+	char			**env_n;
+	t_list			*list_env
+	// char			*cwd;
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
@@ -111,9 +114,9 @@ enum e_error {
 };
 
 /* ------ MAIN ------ */
-void	disable_ctrl_c_printing_chars(t_inf inf);
+void	disable_ctrl_c_printing_chars(t_inf info);
 char	**copy_env(char **env);
-void	init_struct(t_inf *inf);
+void	init_struct(t_env *envi, t_inf *info);
 int		check_argc(int argc);
 
 /* ------ LEXER ------ */
@@ -166,9 +169,9 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_linked_list_env(t_env **envi, char **env);
 
 /* ------ ENVI ------ */
-char	**copy_env(char **env);
-void	ft_when_env_is_null(t_inf *info);
-void	ft_get_env(t_inf *info, char **env);
+// char	**copy_env(char **env);
+// void	ft_when_env_is_null(t_inf *info);
+void	ft_env_is_null(t_env *envi, t_inf *info, char **env);
 
 /* ------ SANDBOX2 ------ */
 int		ft_strcmp(const char *s1, const char *s2);
