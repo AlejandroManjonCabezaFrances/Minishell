@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 15:52:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:43:39 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ void	init_struct(t_env *envi, t_inf *info)
  * @param	void
  * @return	void
 */
-void	disable_ctrl_c_printing_chars(t_inf info)
+void	disable_ctrl_c_printing_chars(void)
 {
 	int rc;
+	t_inf	info;
 
 	rc = tcgetattr(0, &info.termios);
 	if (rc != 0)
@@ -92,19 +93,20 @@ int	main(int argc, char **argv, char **env)
 	
 	token_list = NULL;
 	cmd_line = NULL;
+	disable_ctrl_c_printing_chars();
 	if (env == NULL || env[0] == NULL)
 		ft_env_is_null(&envi, &info, env);
 	env_cpy = copy_env(env);
 	init_struct(&envi, &info);
-	disable_ctrl_c_printing_chars(info);
 	check_argc(argc);
 	while (1)
 	{
 		ft_signals();
 		cmd_line = readline("minishell-0.2$ ");
-		ft_set_signals_noninteractive();
+		// ft_set_signals_noninteractive();
 		if (!cmd_line)
-			panic(READLINE_ERR, NULL, NULL);
+			break;
+			panic(READLINE_ERR, NULL, NULL);	//VINI esta función conflicto con señales cntrl + D.
 		// cmd_line[ft_strlen(cmd_line)] = '\0';
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)
