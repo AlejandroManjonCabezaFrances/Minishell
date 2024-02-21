@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 16:23:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:09:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	if (node == NULL)
 		return (NULL);
 	node->content = ft_strdup(str_env);
-	// free(str_env); 	// puesto por export, error linux munmap_chunk(): invalid pointer
+	// printf("node->content = %s\n", node->content);
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
@@ -138,7 +138,7 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 	t_env	*aux;
 
 	aux = *envi;
-	if (*envi == NULL || envi == NULL)
+	if (*envi == NULL/*  || envi == NULL */)
 	{
 		*envi = node;
 		return ;

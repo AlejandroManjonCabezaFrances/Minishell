@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 17:36:55 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:02:42 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_scmd
 
 typedef struct s_inf				//para utilizar variable globales o estructuras globales
 {
-	// char			**env_n;
+	char			**env_n;
 	char 			*cwd;
 	// int				signal_code;
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
@@ -152,8 +152,8 @@ void	ft_signals(void);
 void	ft_signal_interrupt(void);
 void	ft_signal_reset_prompt(int signal);
 void	ft_signal_quit(void);
-void	ft_set_signals_noninteractive(void); // new
-void	ft_signal_print_newline(int signal); // new
+// void	ft_set_signals_noninteractive(void); // new
+// void	ft_signal_print_newline(int signal); // new
 
 // BY MATEO
 // void	ft_signals(void);
@@ -171,10 +171,11 @@ void	ft_linked_list_env(t_env **envi, char **env);
 // char	**copy_env(char **env);
 // void	ft_when_env_is_null(t_inf *info);
 void	ft_env_is_null(t_env *envi, t_inf *info, char **env);
+void	ft_when_env_is_null(t_env **envi, t_inf *info);
 
 /* ------ SANDBOX2 ------ */
 int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strjoin_2(char *s1, char *s2);
+// char	*ft_strjoin_2(char *s1, char *s2);
 void	ft_lstclear_mshell_2(t_env **lst);
 void	ft_replace_SHLVL(t_env **env_copy);
 void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);

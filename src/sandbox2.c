@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 15:17:03 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:17:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	ft_replace_SHLVL(t_env **envi)
 			{
 				temp = ft_itoa(ft_atoi(aux->content + 6) + 1);
 				printf("temp ft_itoaft_atoi = %s\n\n\n", temp);
-				aux->content = ft_strjoin_2("SHLVL=", temp);
+				aux->content = ft_strjoin("SHLVL=", temp);
 			}
 		}	
 		aux = aux->next;

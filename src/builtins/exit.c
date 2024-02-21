@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 10:52:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:19:21 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,44 +99,44 @@ void	ft_exit(char **cmd, t_env *envi)
 	}
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_env   *envi;
-	(void) 	argc;
-	(void) 	argv;
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_env   *envi;
+// 	(void) 	argc;
+// 	(void) 	argv;
 
-	envi = NULL;
-	ft_linked_list_env(&envi, env);
+// 	envi = NULL;
+// 	ft_linked_list_env(&envi, env);
 	
-	// char    *cmd[4];
-	// cmd[0] = "exit";
-	// cmd[1] = "1";
-	// cmd[2] = "2";
-	// cmd[3] = NULL;
+// 	// char    *cmd[4];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "1";
+// 	// cmd[2] = "2";
+// 	// cmd[3] = NULL;
 
-	char    *cmd[5];
-	cmd[0] = "exit";
-	cmd[1] = "1";
-	cmd[2] = "2";
-	cmd[3] = "3";
-	cmd[4] = NULL;
+// 	char    *cmd[5];
+// 	cmd[0] = "exit";
+// 	cmd[1] = "1";
+// 	cmd[2] = "2";
+// 	cmd[3] = "3";
+// 	cmd[4] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = "1";
-	// cmd[1] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "1";
+// 	// cmd[1] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = "a";
-	// cmd[2] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "a";
+// 	// cmd[2] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = ".";
-	// cmd[2] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = ".";
+// 	// cmd[2] = NULL;
 	
-	ft_builtins(cmd, envi);
+// 	ft_builtins(cmd, envi);
 	
-	return (0);
-}
+// 	return (0);
+// }

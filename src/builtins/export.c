@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/20 10:51:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:33:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ int	ft_check_env_var_exists(char **cmd, t_env *envi)
 			return (TRUE);
 		aux = aux->next;
 	}
-	return (0);
+	return (FALSE);
 }
 
 /**
