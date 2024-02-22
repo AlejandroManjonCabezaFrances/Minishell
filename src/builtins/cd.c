@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/21 18:51:37 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:46:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,54 @@
  * @param	t_env *envi, char *str
  * @return	void
 */
-// void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
-// {
-// 	t_env	*aux;
-// 	t_env	*node_free;
-// 	t_env	*new_node;
-// 	int		len;
+void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
+{
+	t_env	*aux;
+	t_env	*node_free;
+	t_env	*new_node;
+	int		len;
 
-// 	aux = envi;
-// 	node_free = NULL;
-// 	len = 0;
-// 	while (str[len] != '=')
-// 		len++;
-// 	while (aux)
-// 	{
-// 		if (ft_strncmp(aux->content, str, len + 1) == 0)
-// 		{
-// 			node_free = aux;
-// 			aux = aux->prev;
-// 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-// 			aux->next->next->prev = new_node;
-// 			new_node->next = aux->next->next;
-// 			aux->next = new_node;
-// 			ft_lstdelone_ms(node_free, &dele);
-// 			break;
-// 		}
-// 		aux = aux->next;
-// 	}
-// 	// ft_print_lst_2(envi); // solo para check
-// }
+	aux = *envi;
+	node_free = NULL;
+	len = 0;
+	while (str[len] != '=')
+		len++;
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, str, len + 1) == 0)
+		{
+			if (aux == *envi)
+			{
+				node_free = aux;
+				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+				*envi = new_node;
+				(*envi)->next = aux->next;
+				(*envi)->next->prev = new_node;
+				new_node->prev = NULL;
+			}
+			else
+			{
+				node_free = aux;
+				aux = aux->prev;
+				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd)); // liberar lo que devuelve strjoin
+				printf("4\n");
+				if (aux->next->next != NULL)
+				{
+					printf("aux->next = %s\n", aux->next->content);
+					// printf("entra en el if?\n");
+					aux->next->next->prev = new_node;
+				}
+				printf("5\n");
+				new_node->next = aux->next->next;
+				aux->next = new_node;
+				ft_lstdelone_ms(node_free, &dele);
+				break;
+			}
+		}
+		aux = aux->next;
+	}
+	ft_print_lst_2(*envi); // solo para check
+}
 
 /**
  * int chdir(const char *path); Check the path of the directory you want to change to.
@@ -92,8 +111,16 @@ char	*ft_find_path_env(t_env *envi, char *str)
 
 void	ft_update_env_pwd(t_env *envi)
 {
-	ft_replace_node(envi, "PWD=", envi->pwd);
-	ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
+	// printf("envi->content = %s\n", envi->content);
+	printf("update_1\n");
+	printf("envi->pwd = %s\n", envi->pwd);
+	// envi->old_pwd = ft_strdup(envi->old_pwd);
+	ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
+	printf("envi->old_pwd = %s\n", envi->old_pwd);
+	ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
+	ft_print_lst_2(envi);
+	printf("update_3\n");
+	
 }
 
 int	ft_one_step_back(t_env *envi)
@@ -126,11 +153,15 @@ int	ft_one_step_back(t_env *envi)
 
 void	ft_add_node_tail_lst(t_env *envi)
 {
-	printf("ft_add_node_tail_lst_1\n"); // checkear segfautl por aqui estara ........
+	char	*node;
+	
+	node = NULL;
 	char cwd[PATH_MAX];
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(envi->old_pwd));
-	// ft_print_lst_2(envi);
+	node = ft_strjoin("OLDPWD=", envi->old_pwd);
+	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node));
+	free (node);
+	ft_print_lst_2(envi);
 }
 
 int	ft_env_var_existing(t_env *envi, char *str)
@@ -187,7 +218,7 @@ void	ft_simulacion_env_i_minishell(t_env **envi)
 	env_n[2] = ft_strdup("_=/usr/bin/env");
 	env_n[3] = NULL;
 	ft_linked_list_env(envi, env_n);
-	ft_print_lst_2(*envi);
+	// ft_print_lst_2(*envi);
 }
 
 int main(int argc, char **argv, char **env)

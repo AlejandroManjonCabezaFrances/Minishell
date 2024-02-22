@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/09 12:20:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/22 11:34:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ void	ft_delete_node(t_env *envi, char *cmd)
 		}
 		aux = aux->next;
 	}
-	printf("check_1\n");
 	ft_print_lst_2(envi); // print para checkear
-	printf("\n\n\n\n");
 }
 
 void	ft_unset(char **cmd, t_env *envi)
