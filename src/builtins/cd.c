@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/22 13:46:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/22 16:30:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,29 @@ void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 	len = 0;
 	while (str[len] != '=')
 		len++;
+	// printf("envi->old_pwd en funcion arriba = %s\n", (*envi)->old_pwd);
+	// printf("envi->pwd en funcion arriba = %s\n", (*envi)->pwd);
+	printf("pwd_oldpwd = %s\n", pwd_oldpwd);
 	while (aux)
 	{
 		if (ft_strncmp(aux->content, str, len + 1) == 0)
 		{
 			if (aux == *envi)
 			{
+				printf("entra en el if\n");
 				node_free = aux;
 				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
 				*envi = new_node;
+				new_node->next = aux->next;
 				(*envi)->next = aux->next;
 				(*envi)->next->prev = new_node;
 				new_node->prev = NULL;
+				ft_lstdelone_ms(node_free, &dele);
+				break;
 			}
 			else
 			{
+				printf("entra en el else\n");
 				node_free = aux;
 				aux = aux->prev;
 				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd)); // liberar lo que devuelve strjoin
@@ -111,16 +119,14 @@ char	*ft_find_path_env(t_env *envi, char *str)
 
 void	ft_update_env_pwd(t_env *envi)
 {
-	// printf("envi->content = %s\n", envi->content);
 	printf("update_1\n");
-	printf("envi->pwd = %s\n", envi->pwd);
-	// envi->old_pwd = ft_strdup(envi->old_pwd);
 	ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
-	printf("envi->old_pwd = %s\n", envi->old_pwd);
-	ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
+	printf("primera vuelta\n");
 	ft_print_lst_2(envi);
+	printf("env->pwd = %s\n", envi->pwd);
+	// printf("env->old_pwd = %s\n", envi->old_pwd);
+	ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
 	printf("update_3\n");
-	
 }
 
 int	ft_one_step_back(t_env *envi)
@@ -133,7 +139,7 @@ int	ft_one_step_back(t_env *envi)
 
 	change = -1;
 	cd_back = NULL;
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	// envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));		// creo que hay que hacer flag para que no entre aqui si estoy con la simulacion env -i
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -153,14 +159,27 @@ int	ft_one_step_back(t_env *envi)
 
 void	ft_add_node_tail_lst(t_env *envi)
 {
-	char	*node;
+	// char cwd_1[PATH_MAX];
+	char cwd_2[PATH_MAX];
+	// char	*node_pwd;
+	char	*node_oldpwd;
 	
-	node = NULL;
-	char cwd[PATH_MAX];
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	node = ft_strjoin("OLDPWD=", envi->old_pwd);
-	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node));
-	free (node);
+	// node_pwd = NULL;
+	node_oldpwd = NULL;
+	
+	// envi->pwd = ft_strdup(getcwd(cwd_1, sizeof(cwd_1)));
+	// node_pwd = ft_strjoin("PWD=", envi->pwd);
+	
+	envi->old_pwd = ft_strdup(getcwd(cwd_2, sizeof(cwd_2)));
+	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
+	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
+	
+	// free (node_pwd);
+	free (node_oldpwd);
+	
+	// printf("env->pwd = %s\n", envi->pwd);
+	// printf("env->old_pwd = %s\n", envi->old_pwd);
+	
 	ft_print_lst_2(envi);
 }
 
