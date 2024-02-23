@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/23 12:35:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/23 12:56:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,10 @@ void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 		if (ft_strncmp(aux->content, str, len + 1) == 0)
 		{
 			if (aux == *envi)
-			{
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
-				break;
-			}
 			else
-			{
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
-				break;
-			}
+			break;
 		}
 		aux = aux->next;
 	}
