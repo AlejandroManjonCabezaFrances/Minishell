@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/22 16:30:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/23 12:35:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,60 +18,86 @@
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o cd && env -i ./cd
 // ################ env -i ./minishell ######################
 
+
 /**
- * Replaces the existing environment variable node
- * @param	t_env *envi, char *str
+ * Replaces the pwd of the linked list when --> env -i ./minishell
+ * @param	t_env **envi, char *str, char *pwd_oldpwd
+ * @return	void
+*/
+void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
+{
+	t_env	*aux;
+	t_env	*node_free;
+	t_env	*new_node;
+	char	*result_join;
+	
+	aux = *envi;
+	node_free = NULL;
+	result_join = NULL;
+	node_free = aux;
+	result_join = ft_strjoin(str, pwd_oldpwd); 
+	new_node = ft_lstnew_str_env(result_join);
+	free(result_join);
+	*envi = new_node;
+	new_node->next = aux->next;
+	(*envi)->next = aux->next;
+	(*envi)->next->prev = new_node;
+	new_node->prev = NULL;
+	ft_lstdelone_ms(node_free, &dele);
+}
+
+/**
+ * Replaces the oldpwd of the linked list when --> env -i ./minishell
+ * @param	t_env *aux, char *str, char *pwd_oldpwd
+ * @return	void
+*/
+void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
+{
+	t_env	*node_free;
+	t_env	*new_node;
+	char	*result_join;
+	
+	node_free = NULL;
+	node_free = aux;
+	result_join = NULL;
+	aux = aux->prev;
+	result_join = ft_strjoin(str, pwd_oldpwd);
+	new_node = ft_lstnew_str_env(result_join);
+	free(result_join);
+	if (aux->next->next != NULL)
+		aux->next->next->prev = new_node;
+	new_node->next = aux->next->next;
+	aux->next = new_node;
+	new_node->prev = aux;
+	ft_lstdelone_ms(node_free, &dele);
+}
+
+/**
+ * Replaces the environment variables that this function receives as arguments
+ * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
 void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
-	t_env	*node_free;
-	t_env	*new_node;
 	int		len;
 
 	aux = *envi;
-	node_free = NULL;
 	len = 0;
 	while (str[len] != '=')
 		len++;
-	// printf("envi->old_pwd en funcion arriba = %s\n", (*envi)->old_pwd);
-	// printf("envi->pwd en funcion arriba = %s\n", (*envi)->pwd);
-	printf("pwd_oldpwd = %s\n", pwd_oldpwd);
 	while (aux)
 	{
 		if (ft_strncmp(aux->content, str, len + 1) == 0)
 		{
 			if (aux == *envi)
 			{
-				printf("entra en el if\n");
-				node_free = aux;
-				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-				*envi = new_node;
-				new_node->next = aux->next;
-				(*envi)->next = aux->next;
-				(*envi)->next->prev = new_node;
-				new_node->prev = NULL;
-				ft_lstdelone_ms(node_free, &dele);
+				ft_pwd_without_env(envi, str, pwd_oldpwd);
 				break;
 			}
 			else
 			{
-				printf("entra en el else\n");
-				node_free = aux;
-				aux = aux->prev;
-				new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd)); // liberar lo que devuelve strjoin
-				printf("4\n");
-				if (aux->next->next != NULL)
-				{
-					printf("aux->next = %s\n", aux->next->content);
-					// printf("entra en el if?\n");
-					aux->next->next->prev = new_node;
-				}
-				printf("5\n");
-				new_node->next = aux->next->next;
-				aux->next = new_node;
-				ft_lstdelone_ms(node_free, &dele);
+				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
 				break;
 			}
 		}
@@ -83,7 +109,7 @@ void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 /**
  * int chdir(const char *path); Check the path of the directory you want to change to.
  * @param	char *path, char **env_cpy
- * @return	void
+ * @return	int. corresponds to the correct or incorrect change of the path
  * 
 */
 int	ft_change_directory(t_env *envi, char *path)
@@ -99,6 +125,11 @@ int	ft_change_directory(t_env *envi, char *path)
 	return (change);
 }
 
+/**
+ * We look for the content of the environment variable "HOME="
+ * @param	t_env *envi, char *str
+ * @return	char. NULL or the content of HOME=
+*/
 char	*ft_find_path_env(t_env *envi, char *str)
 {
 	t_env	*aux;
@@ -117,18 +148,31 @@ char	*ft_find_path_env(t_env *envi, char *str)
 	return (NULL);
 }
 
-void	ft_update_env_pwd(t_env *envi)
+/**
+ * Updates the env with its corresponding PWD and OLDPWD
+ * @param	t_env *envi
+ * @return	void
+*/
+void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
-	printf("update_1\n");
-	ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
-	printf("primera vuelta\n");
-	ft_print_lst_2(envi);
-	printf("env->pwd = %s\n", envi->pwd);
-	// printf("env->old_pwd = %s\n", envi->old_pwd);
-	ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
-	printf("update_3\n");
+	if (envi->flag == 1)
+	{
+		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
+		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
+	}
+	else
+	{
+		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
+		ft_replace_node(envi, "PWD=", envi->pwd);
+	}
+		
 }
 
+/**
+ * Updates PWD and OLDPWD variables
+ * @param	t_env *envi
+ * @return	int
+*/
 int	ft_one_step_back(t_env *envi)
 {
 	char	cwd[PATH_MAX];
@@ -139,7 +183,7 @@ int	ft_one_step_back(t_env *envi)
 
 	change = -1;
 	cd_back = NULL;
-	// envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));		// creo que hay que hacer flag para que no entre aqui si estoy con la simulacion env -i
+	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); // creo que no hace falta crear flag xra no entre aqui si estoy con simulacion env -i
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -157,32 +201,29 @@ int	ft_one_step_back(t_env *envi)
 	return (change);
 }
 
+/**
+ * Adds a node to the end of the env linked list
+ * @param	t_env *envi
+ * @return	void
+*/
 void	ft_add_node_tail_lst(t_env *envi)
 {
-	// char cwd_1[PATH_MAX];
-	char cwd_2[PATH_MAX];
-	// char	*node_pwd;
+	char cwd[PATH_MAX];
 	char	*node_oldpwd;
 	
-	// node_pwd = NULL;
 	node_oldpwd = NULL;
-	
-	// envi->pwd = ft_strdup(getcwd(cwd_1, sizeof(cwd_1)));
-	// node_pwd = ft_strjoin("PWD=", envi->pwd);
-	
-	envi->old_pwd = ft_strdup(getcwd(cwd_2, sizeof(cwd_2)));
+	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
-	
-	// free (node_pwd);
 	free (node_oldpwd);
-	
-	// printf("env->pwd = %s\n", envi->pwd);
-	// printf("env->old_pwd = %s\n", envi->old_pwd);
-	
-	ft_print_lst_2(envi);
+	ft_print_lst_2(envi);		// check
 }
 
+/**
+ * Receives a char * and looks for it in the env
+ * @param	t_env *envi, char *str
+ * @return	int. FALSE or TRUE
+*/
 int	ft_env_var_existing(t_env *envi, char *str)
 {
 	t_env	*aux;
@@ -201,6 +242,12 @@ int	ft_env_var_existing(t_env *envi, char *str)
 	return (FALSE);
 }
 
+/**
+ * Replicates the "cd" builtin. Checks if the command has argv
+ * ('..' or a path) or not (go to home) and updates PWD and OLDPWD of the env
+ * @param	char **cmd, t_env *envi
+ * @return	void
+*/
 void	ft_cd(char **cmd, t_env *envi)
 {
 	char	*path_home;
@@ -208,12 +255,14 @@ void	ft_cd(char **cmd, t_env *envi)
 
 	path_home = NULL;
 	ok_change_dir = 0;
-	if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)		// cuando no existe el OLDPWD en el env
-		ft_add_node_tail_lst(envi);
 	if (cmd[1] != NULL)		// distinto de NULL
 	{
 		if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
+		{
+			if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)		// cuando no existe el OLDPWD en el env
+				ft_add_node_tail_lst(envi);
 			ft_one_step_back(envi);
+		}
 		else
 			ok_change_dir = ft_change_directory(envi, cmd[1]);	// cd  /home/amanjon-/Escritorio
 	}
@@ -222,8 +271,9 @@ void	ft_cd(char **cmd, t_env *envi)
 		path_home= ft_find_path_env(envi, "HOME=");		//	cd NULL --> cambio al HOME=/Users/amanjon-
 		ft_change_directory(envi, path_home);
 	}
+	printf("cd_check\n");
 	if (!ok_change_dir)							// actualiza PWD y OLDPWD
-		ft_update_env_pwd(envi);
+		ft_update_env_pwd_oldpwd(envi);
 }
 
 void	ft_simulacion_env_i_minishell(t_env **envi)
@@ -237,6 +287,7 @@ void	ft_simulacion_env_i_minishell(t_env **envi)
 	env_n[2] = ft_strdup("_=/usr/bin/env");
 	env_n[3] = NULL;
 	ft_linked_list_env(envi, env_n);
+	(*envi)->flag = 1;
 	// ft_print_lst_2(*envi);
 }
 
@@ -248,14 +299,13 @@ int main(int argc, char **argv, char **env)
     (void) 	argv;
 	(void)	env;
 
-	// ################ env -i ./minishell ######################
 	envi = NULL;
-	ft_simulacion_env_i_minishell(&envi);
 	// ################ env -i ./minishell ######################
-
-
-	// envi = NULL;
-	// ft_linked_list_env(&envi, env);
+	if (*env == NULL)
+		ft_simulacion_env_i_minishell(&envi);
+	// ################ env -i ./minishell ######################
+	else
+		ft_linked_list_env(&envi, env);
 	envi->pwd = NULL;
 	envi->old_pwd = NULL;
 	cmd[0] = "cd";
