@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/23 12:56:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:32:38 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,39 @@
 void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
-	t_env	*node_free;
-	t_env	*new_node;
+	//t_env	*new_node;
 	char	*result_join;
 	
+	//printf("PWD: env addi = %p y es %s\n", *envi, (*envi)->content);
 	aux = *envi;
-	node_free = NULL;
-	result_join = NULL;
-	node_free = aux;
-	result_join = ft_strjoin(str, pwd_oldpwd); 
-	new_node = ft_lstnew_str_env(result_join);
+	//printf("envi->content = %s\n", (*envi)->content);
+	//printf("str = %s\n", str);
+	//printf("pwd_oldpwd = %s\n", pwd_oldpwd);
+	//printf("aux->content = %s\n", aux->content);
+	(*envi)->content = NULL;
+	result_join = ft_strjoin(str, pwd_oldpwd);
+	//new_node = ft_lstnew_str_env(result_join);
+	//printf("new_node = %s\n", new_node->content);
 	free(result_join);
-	*envi = new_node;
-	new_node->next = aux->next;
-	(*envi)->next = aux->next;
-	(*envi)->next->prev = new_node;
-	new_node->prev = NULL;
-	ft_lstdelone_ms(node_free, &dele);
+	
+	//printf("envi dir antes es %p y su contenido es %s\n", *envi, (*envi)->content);
+	(*envi)->content = ft_strdup(result_join);
+	free (result_join);
+	//printf("envi dir es %p y su contenido es %s\n", *envi, (*envi)->content);
+	//printf("aux->next->content = %s\n", aux->next->content);
+	//new_node->next = aux->next;
+	//(*envi)->next = aux->next;
+	//(*envi)->next->prev = new_node;
+	//printf("(*envi)->next = %s\n", (*envi)->next->content);
+	//ft_lstdelone_ms(node_free, &dele);
+	//printf("(*envi)->next->prev = %s\n", (*envi)->next->prev->content);
+	// aux->next->prev = new_node;
+	// new_node->prev = NULL;
+	//printf("\n\n");
+	printf("BEFORE: env is %p\n", *envi);
+	//ft_print_lst_3(envi);
+	//printf("\n\n");
+	//printf("envi->content = %s\n", (*envi)->content);
 }
 
 /**
@@ -83,22 +99,36 @@ void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 	int		len;
 
 	aux = *envi;
+	// printf("envi->content = %s\n", (*envi)->content);
+	// printf("aux->content = %s\n", aux->content);
 	len = 0;
 	while (str[len] != '=')
 		len++;
+	// printf("en funcion replace node tail header--> pwd_oldpwd = %s\n", pwd_oldpwd);
 	while (aux)
 	{
+		// printf("envi->content = %s\n", (*envi)->content);
+		// printf("aux->content = %s\n", aux->content);
+		// ft_print_lst_2(*envi);
 		if (ft_strncmp(aux->content, str, len + 1) == 0)
 		{
 			if (aux == *envi)
+			{
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
+				printf("1\n");
+			}
 			else
+			{
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
-			break;
+				// ft_print_lst_2(*envi);
+				printf("2\n");
+			}
+			return;
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(*envi); // solo para check
+	// printf("**************envi->content = %s\n",(*envi)->content);
+	// ft_print_lst_2(*envi); // solo para check
 }
 
 /**
@@ -114,7 +144,7 @@ int	ft_change_directory(t_env *envi, char *path)
 	
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	change = chdir(path);
-	envi->pwd = getcwd(cwd, sizeof(cwd));
+	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (change != 0)
 		perror(path);
 	return (change);
@@ -150,17 +180,20 @@ char	*ft_find_path_env(t_env *envi, char *str)
 */
 void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
+	printf("UPDATE: env addi = %p\n", envi);
 	if (envi->flag == 1)
 	{
-		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
+		// ft_replace_node_tail_header(envi, "OLDPWD=", envi->old_pwd);
+		// ft_print_lst_2(envi);
 	}
 	else
 	{
 		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node(envi, "PWD=", envi->pwd);
 	}
-		
+	//	printf("**************envi->content = %s\n",envi->content);
+//	ft_print_lst_2(envi);
 }
 
 /**
@@ -189,7 +222,7 @@ int	ft_one_step_back(t_env *envi)
 		ft_strlcpy(cd_back, envi->old_pwd, len + 1);
 	}
 	change = chdir(cd_back);
-	envi->pwd = getcwd(cwd, sizeof(cwd));
+	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (change != 0)
 		perror(cd_back);
 	free(cd_back);
@@ -203,15 +236,16 @@ int	ft_one_step_back(t_env *envi)
 */
 void	ft_add_node_tail_lst(t_env *envi)
 {
-	char cwd[PATH_MAX];
+	// char cwd[PATH_MAX];
 	char	*node_oldpwd;
 	
 	node_oldpwd = NULL;
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	// envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));	// quitado por caso env -i con cd /Users/amanjon-/Desktop/minishell_github/src/
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
+	
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
 	free (node_oldpwd);
-	ft_print_lst_2(envi);		// check
+	// ft_print_lst_2(envi);	// check
 }
 
 /**
@@ -259,16 +293,25 @@ void	ft_cd(char **cmd, t_env *envi)
 			ft_one_step_back(envi);
 		}
 		else
+		{
 			ok_change_dir = ft_change_directory(envi, cmd[1]);	// cd  /home/amanjon-/Escritorio
+			ft_add_node_tail_lst(envi);		// entrar aqui solo con env -i ./minishell
+			// return;							// entrar aqui solo con env -i ./minishell
+		}
 	}
 	else
 	{
 		path_home= ft_find_path_env(envi, "HOME=");		//	cd NULL --> cambio al HOME=/Users/amanjon-
 		ft_change_directory(envi, path_home);
 	}
-	printf("cd_check\n");
-	if (!ok_change_dir)							// actualiza PWD y OLDPWD
+	if (!ok_change_dir)		// actualiza PWD y OLDPWD
+	{
+		// printf("\n\n\n");
 		ft_update_env_pwd_oldpwd(envi);
+		printf("CD: env addi = %p\n", envi);
+		//printf("* * * *envi->content = %s\n", envi->content);
+		ft_print_lst_3(&envi);
+	}
 }
 
 void	ft_simulacion_env_i_minishell(t_env **envi)
@@ -283,7 +326,6 @@ void	ft_simulacion_env_i_minishell(t_env **envi)
 	env_n[3] = NULL;
 	ft_linked_list_env(envi, env_n);
 	(*envi)->flag = 1;
-	// ft_print_lst_2(*envi);
 }
 
 int main(int argc, char **argv, char **env)
@@ -304,13 +346,14 @@ int main(int argc, char **argv, char **env)
 	envi->pwd = NULL;
 	envi->old_pwd = NULL;
 	cmd[0] = "cd";
-	cmd[1] = "..";
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
-// 	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";
+	// cmd[1] = "..";
+	cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";
 // 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
 // 	cmd[1] = NULL;
 	
 	ft_builtins(cmd, envi);
+	ft_print_lst_3(&envi);
 	// ft_print_lst_2(envi);
 	return (0);
 }

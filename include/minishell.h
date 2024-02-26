@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/23 10:02:43 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:52:51 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@ void    ft_exit(char **cmd, t_env *envi);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);
+void	ft_print_lst_3(t_env **temp);
 void	dele(void *content);
 void	ft_lstdelone_ms(t_env *lst, void (*del)(void *));
 t_env	*ft_lstlast_ms(t_env *lst);
