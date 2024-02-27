@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/26 10:49:18 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:40:57 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_builtins(char **cmd, t_env *envi)
+void	ft_builtins(char **cmd, t_env *envi, char **env)
 {
 	(void) envi;
 	if (ft_strcmp(*cmd, "echo") == 0)
@@ -26,7 +26,7 @@ void	ft_builtins(char **cmd, t_env *envi)
 	else if (ft_strcmp(*cmd, "unset") == 0)
 		ft_unset(cmd, envi);
 	else if (ft_strcmp(*cmd, "cd") == 0)
-		ft_cd(cmd, envi);
+		ft_cd(cmd, envi, env);
 	else if (ft_strcmp(*cmd, "exit") == 0)
 		ft_exit(cmd, envi);
 } 

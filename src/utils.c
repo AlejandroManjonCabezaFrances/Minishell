@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/26 16:15:04 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/27 07:33:49 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ void ft_linked_list_env(t_env **envi, char **env)
 	}
 }
 
-void ft_print_lst_3(t_env **temp)
-{
-	printf("my PRINT: env addi = %p\n", *temp);
-	t_env *test = *temp;
-	while (test)
-	{
-		printf("node.content = [%s]\n", test->content);
-		test = test->next;
-	}
-}
+// void ft_print_lst_3(t_env **temp)
+// {
+// 	printf("my PRINT: env addi = %p\n", *temp);
+// 	t_env *test = *temp;
+// 	while (test)
+// 	{
+// 		printf("node.content = [%s]\n", test->content);
+// 		test = test->next;
+// 	}
+// }
 
 void ft_print_lst_2(t_env *temp)
 {

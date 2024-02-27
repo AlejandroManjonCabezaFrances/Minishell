@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/26 15:52:51 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:50:05 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstdelone_mshell(t_env *env_copy);
 
 /* ----------- BUILTINS ----------- */
-void		ft_builtins(char **cmd, t_env *envi);
+void		ft_builtins(char **cmd, t_env *envi, char **env);
 
 	/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
@@ -205,7 +205,7 @@ void	ft_export(char **cmd, t_env *envi);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env *envi);
 	/* ------ CD ------ */
-void	ft_cd(char **cmd, t_env *envi);
+int		ft_cd(char **cmd, t_env *envi, char **env);
 	/* ------ ENV ------ */
 void	ft_env(t_env *envi);
 	/* ------ EXIT ------ */
