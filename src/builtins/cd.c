@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/27 15:21:15 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:56:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,22 @@
 
 
 /**
- * Replaces the pwd of the linked list when --> env -i ./minishell
+ * We update the node by overwriting the content when --> env -i ./minishell
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
 void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
 {
-	// t_env	*aux;
 	char	*result_join;
 	
-	// aux = *envi;
-	printf("envi->content antes = %s\n", (*envi)->content);
-	// (*envi)->content = NULL;
 	result_join = ft_strjoin(str, pwd_oldpwd);
-	//new_node = ft_lstnew_str_env(result_join);
 	(*envi)->content = ft_strdup(result_join);
-	printf("envi->content despues = %s\n", (*envi)->content);
 	free (result_join);
-	//new_node->next = aux->next;
-	//(*envi)->next = aux->next;
-	//(*envi)->next->prev = new_node;
-	//ft_lstdelone_ms(node_free, &dele);
-	// aux->next->prev = new_node;
-	// new_node->prev = NULL;
-	//ft_print_lst_3(envi);
-	ft_print_lst_2(*envi);
-	printf("\n\n");
 }
 
 /**
  * Replaces the oldpwd of the linked list when --> env -i ./minishell
+ * updating the pointers and deleting the node
  * @param	t_env *aux, char *str, char *pwd_oldpwd
  * @return	void
 */
@@ -155,21 +141,20 @@ void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
+		printf("entra en el if\n");
 		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
 		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
-		// ft_print_lst_2(envi);
 	}
 	else
 	{
+		printf("entra en el else\n");
 		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node(envi, "PWD=", envi->pwd);
 	}
-//	ft_print_lst_2(envi);
 }
 
 /**
- * Updates PWD and OLDPWD variables
- * @param	t_env *envi
+ * We reserve memory to update envi->old_pwd and envi->pwd
  * @return	int
 */
 int	ft_one_step_back(t_env *envi)
@@ -182,7 +167,7 @@ int	ft_one_step_back(t_env *envi)
 
 	change = -1;
 	cd_back = NULL;
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); // creo que no hace falta crear flag xra no entre aqui si estoy con simulacion env -i
+	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -212,12 +197,11 @@ void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 	
 	node_oldpwd = NULL;
 	if (ft_strcmp(cmd[1], "..") == 0)
-		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));	// no entre env -i cd /Users/amanjon-/Desktop/minishell_github/src/
+		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
 	
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
 	free (node_oldpwd);
-	// ft_print_lst_2(envi);	// check
 }
 
 /**
@@ -244,8 +228,34 @@ int	ft_env_var_existing(t_env *envi, char *str)
 }
 
 /**
+ * We manage the cd with arguments ".., folder change and when we
+ * do env -i ./minishell"
+ * @param	t_env *envi, char *str
+ * @return	int. ok_change_dir
+*/
+int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
+{
+	if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
+	{
+		printf("entra en ..?\n");
+		if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)		// cuando no existe el OLDPWD en el env
+			ft_add_node_tail_lst(envi, cmd);
+		ft_one_step_back(envi);
+	}
+	else
+	{
+		ok_change_dir = ft_change_directory(envi, cmd[1]);	// cd  /home/amanjon-/Escritorio
+		printf("ok_change_dir = %d\n", ok_change_dir);
+		if (!ok_change_dir && ft_env_var_existing(envi, "OLDPWD=") == FALSE)	// entrar aqui solo con env -i ./minishell
+			ft_add_node_tail_lst(envi, cmd);									// entrar aqui solo con env -i ./minishell
+	}
+	return (ok_change_dir);
+}
+
+/**
  * Replicates the "cd" builtin. Checks if the command has argv
  * ('..' or a path) or not (go to home) and updates PWD and OLDPWD of the env
+ * with/without env -i ./minishell
  * @param	char **cmd, t_env *envi
  * @return	void
 */
@@ -256,38 +266,30 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 
 	path_home = NULL;
 	ok_change_dir = 0;
-	if (cmd[1] != NULL)		// distinto de NULL
-	{
-		if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
-		{
-			if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)		// cuando no existe el OLDPWD en el env
-				ft_add_node_tail_lst(envi, cmd);
-			ft_one_step_back(envi);
-		}
-		else
-		{
-			ok_change_dir = ft_change_directory(envi, cmd[1]);	// cd  /home/amanjon-/Escritorio
-			if (!ok_change_dir)					// entrar aqui solo con env -i ./minishell
-				ft_add_node_tail_lst(envi, cmd);		// entrar aqui solo con env -i ./minishell
-		}
-	}
+	if (cmd[1] != NULL)
+		ok_change_dir = ft_cd_with_argv(cmd, envi, ok_change_dir);
 	else
 	{
 		if (*env == NULL)
 		{
-			// printf("minisell: cd: HOME not set\n");
 			ft_putstr_fd("minisell: cd: HOME not set\n", 1);
 			return (1); // echo $? --> no me saca un 1, como vas (env -i ./minishell solo con cd para el HOME)
 		}
 		path_home= ft_find_path_env(envi, "HOME=");		//	cd NULL --> cambio al HOME=/Users/amanjon-
 		ft_change_directory(envi, path_home);
 	}
-	if (!ok_change_dir)		// actualiza PWD y OLDPWD
+	if (!ok_change_dir)
 		ft_update_env_pwd_oldpwd(envi);
 	return (0);
 }
 
-void	ft_simulacion_env_i_minishell(t_env **envi)
+/**
+ * We create a double pointer and simulate the environment variables
+ *	when --> env -i ./minishell
+ * @param	t_env *envi
+ * @return	void
+*/
+void	ft_simulate_env_i_minishell(t_env **envi)
 {
 	char	**env_n;
 	char	cwd[PATH_MAX];
@@ -321,6 +323,7 @@ int main(int argc, char **argv, char **env)
 	cmd[0] = "cd";
 	// cmd[1] = "..";
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src";
 	// cmd[1] = "/Users/amanjon-/Desktop/";
 	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
 // 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
