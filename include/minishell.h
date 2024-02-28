@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/28 11:53:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:29:57 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,12 +215,12 @@ void    ft_exit(char **cmd, t_env *envi);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);
-void	ft_print_lst_3(t_env **temp);
 void	dele(void *content);
 void	ft_lstdelone_ms(t_env *lst, void (*del)(void *));
 t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
+void	ft_simulate_env_i_minishell(t_env **envi);
 
 #endif

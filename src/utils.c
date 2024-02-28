@@ -6,11 +6,31 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/27 07:33:49 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:27:35 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/**
+ * We create a double pointer and simulate the environment variables
+ *	when --> env -i ./minishell
+ * @param	t_env *envi
+ * @return	void
+*/
+void	ft_simulate_env_i_minishell(t_env **envi)
+{
+	char	**env_n;
+	char	cwd[PATH_MAX];
+
+	env_n = malloc(sizeof(char *) * 4);
+	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
+	env_n[1] = ft_strdup("SHLVL=1");
+	env_n[2] = ft_strdup("_=/usr/bin/env");
+	env_n[3] = NULL;
+	ft_linked_list_env(envi, env_n);
+	(*envi)->flag = 1;
+}
 
 /**
  * Replaces the existing environment variable node

@@ -6,13 +6,17 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/21 17:33:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:57:18 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c pwd.c export.c -o export && ./export
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o export && ./export
+
+// ################ env -i ./minishell ######################
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o export && env -i ./export
+// ################ env -i ./minishell ######################
 
 /**
  * Print the linked list with the flag declare -x
@@ -37,7 +41,7 @@ void	ft_print_lst_2_declare_x(t_env *temp)
 void	ft_export_parsed_variable(char *cmd, t_env *envi)
 {
 	ft_lstadd_penultimate_str_env(&envi, ft_lstnew_str_env(cmd));
-	ft_print_lst_2(envi);
+	// ft_print_lst_2(envi);
 }
 
 /**
@@ -76,6 +80,7 @@ void	ft_export_without_argv_sort(t_env *envi)
 */
 void	ft_sort_minilist(t_env *envi, t_env *finish_list)
 {
+	(void)	envi;
 	t_env	*temp;
 	t_env	*head;
 	char	*aux;
@@ -95,7 +100,7 @@ void	ft_sort_minilist(t_env *envi, t_env *finish_list)
 		else
 			temp = temp->next;
 	}
-	ft_print_lst_2_declare_x(envi);
+	// ft_print_lst_2_declare_x(envi);
 }
 
 /**
@@ -280,7 +285,7 @@ void	ft_replace_node_parsed(t_env *envi, char *cmd)
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(envi); // solo para check
+	// ft_print_lst_2(envi); // solo para check
 }
 
 /**
@@ -298,7 +303,7 @@ void    ft_export(char **cmd, t_env *envi)
 	if (cmd[1] == NULL)
 	{
 		ft_export_without_argv_sort(envi);
-		ft_print_lst_2_declare_x(envi);
+		// ft_print_lst_2_declare_x(envi);
 	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
 		ft_replace_node_parsed(envi, cmd[1]);
@@ -317,34 +322,40 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 }
 
-// int main(int argc, char **argv, char **env) 
-// {
-// 	t_env	*envi;
-// 	char 	*cmd[3];
-//     (void) 	argc;
-//     (void) 	argv;
-    
-// 	envi = NULL;
-// 	ft_linked_list_env(&envi ,env);
-	// cmd[0] = "export";
-// 	// cmd[1] = "A LEX=alex";
-// 	// cmd[1] = "LEX= alex";
-// 	// cmd[1] = "ALEX=alex";
-// 	// cmd[1] = "ALEX=alex espacio";
-// 	// cmd[1] = "a alex=hola que";
-// 	// cmd[1] = "a2a=";
-// 	cmd[1] = NULL;					// -*-*-*
-// 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-// 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
-// 	cmd[1] = "Z B A E";			// -*-*-*
-// 	// cmd[1] = "1 2 3";
-// 	// cmd[1] = "PRUEBA";			// -*-*-*
-// 	cmd[2] = NULL;
-	// ft_builtins(cmd, envi);
+int main(int argc, char **argv, char **env) 
+{
+	t_env	*envi;
+	char 	*cmd[3];
+    (void) 	argc;
+    (void) 	argv;
 
-//	// export quiero que reciba el char ** de tal manera que despues de export
-//	// meta todo el string en el primer *
-//	// probar cuando me pasen el string, espacios al primcipio y al final o parsearlo afuera
+	envi = NULL;
 
-//     return (0);
-// }
+		// ################ env -i ./minishell ######################
+	if (*env == NULL)
+		ft_simulate_env_i_minishell(&envi);
+	// ################ env -i ./minishell ######################
+	else
+		ft_linked_list_env(&envi, env);
+	
+	// ft_linked_list_env(&envi ,env);
+	cmd[0] = "export";
+	// cmd[1] = "A LEX=alex";
+	// cmd[1] = "LEX= alex";
+	// cmd[1] = "ALEX=alex";
+	// cmd[1] = "ALEX=alex espacio";
+	// cmd[1] = "a alex=hola que";
+	// cmd[1] = "a2a=";
+	// cmd[1] = NULL;					// -*-*-*
+	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
+	
+	// cmd[1] = "Z B A E";				// -*-*-*	bash--> no exporta nada . mi minishell lo exporta en sort_second_minilist
+	// cmd[1] = "1 2 3";					// ok
+	cmd[1] = "PRUEBA";				// -*-*-*	// bash NO tiene que esportarlo con o sin env
+	cmd[2] = NULL;
+	ft_builtins(cmd, envi, env);
+	ft_print_lst_2(envi);
+
+    return (0);
+}
