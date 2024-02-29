@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/28 17:57:18 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:30:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void	ft_parser_string(char *cmd, int *fail)
 	i = 0;
 	while (cmd[i] != '=' && cmd[i] != ' ')	// && != NULL (PRUEBA) argv:
 	{
+		printf("cmd[%d] = %s\n", i, cmd);
 		if (ft_isalpha(cmd[i]) == 0)
 		{
 			*fail = 0;
@@ -302,18 +303,23 @@ void    ft_export(char **cmd, t_env *envi)
 	fail = 0;
 	if (cmd[1] == NULL)
 	{
+		printf("1  **************\n");
 		ft_export_without_argv_sort(envi);
 		// ft_print_lst_2_declare_x(envi);
 	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
+	{
+		printf("2  **************\n");
 		ft_replace_node_parsed(envi, cmd[1]);
+	}
 	else
 	{
 		if (ft_is_equal(cmd[1]))
 		{
+			printf("3  **************\n");
 			aux = ft_parser_arguments(cmd[1], &fail);
 			if (fail == 0)
-				printf("arguments not founds");
+				printf("arguments not founds\n");
 			else
 				ft_export_parsed_variable(aux, envi);
 		}
@@ -345,15 +351,21 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "ALEX=alex";
 	// cmd[1] = "ALEX=alex espacio";
 	// cmd[1] = "a alex=hola que";
-	// cmd[1] = "a2a=";
+	
+	cmd[1] = "2";		// no esportar
+	cmd[1] = "2a=";		// no exportar
+	cmd[1] = "2a";		// no exportar
+	cmd[1] = "a2";		// no exportar
+	cmd[1] = "a2=";		// si exportar
+	cmd[1] = "a2a=";	// si exportar
 	// cmd[1] = NULL;					// -*-*-*
 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
 	
-	// cmd[1] = "Z B A E";				// -*-*-*	bash--> no exporta nada . mi minishell lo exporta en sort_second_minilist
+	// cmd[1] = "Z B A E";			// -*-*-* bash-->no exporta, pero si en el declare, pero si alfabeticamente
 	// cmd[1] = "1 2 3";					// ok
-	cmd[1] = "PRUEBA";				// -*-*-*	// bash NO tiene que esportarlo con o sin env
-	cmd[2] = NULL;
+	// cmd[1] = "PRUEBA";				// -*-*-* bash-->no lo exporta, pero si en el declare alfabeticamente
+	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente
 	ft_builtins(cmd, envi, env);
 	ft_print_lst_2(envi);
 
