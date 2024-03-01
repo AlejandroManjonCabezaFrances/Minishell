@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/01 11:24:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/01 13:24:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,58 +341,58 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 }
 
-int main(int argc, char **argv, char **env) 
-{
-	t_env	*envi;
-	char 	*cmd[3];
-    (void) 	argc;
-    (void) 	argv;
+// int main(int argc, char **argv, char **env) 
+// {
+// 	t_env	*envi;
+// 	char 	*cmd[3];
+//     (void) 	argc;
+//     (void) 	argv;
 
-	envi = NULL;
+// 	envi = NULL;
 
-		// ################ env -i ./minishell ######################
-	if (*env == NULL)
-	{
-		printf("crear lista sin env -i\n");
-		ft_simulate_env_i_minishell(&envi);
-	}
-	// ################ env -i ./minishell ######################
-	else
-	{
-		printf("crear lista normal\n");
-		ft_linked_list_env(&envi, env);
-	}
+// 		// ################ env -i ./minishell ######################
+// 	if (*env == NULL)
+// 	{
+// 		ft_simulate_env_i_minishell(&envi);
+// 	}
+// 	// ################ env -i ./minishell ######################
+// 	else
+// 	{
+// 		ft_linked_list_env(&envi, env);
+// 	}
 	
-	// ft_linked_list_env(&envi ,env);
-	cmd[0] = "export";
-	// cmd[1] = NULL;
+// 	// ft_linked_list_env(&envi ,env);
+// 	cmd[0] = "export";
+// 	// cmd[1] = NULL;
 	
-	cmd[1] = "A LEX=alex";
-	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";
-	// cmd[1] = "ALEX=alex espacio";
-	// cmd[1] = "a alex=hola que";
+// 	// cmd[1] = "A LEX=alex";
+// 	// cmd[1] = "LEX= alex";
+// 	// cmd[1] = "ALEX=alex";
+// 	// cmd[1] = "ALEX=alex espacio";
+// 	// cmd[1] = "a alex=hola que";
 	
-	// cmd[1] = "2";		// no exportar	-ok-
-	// cmd[1] = "2a";			// no exportar	-ok-
-	// cmd[1] = "2a=";		// no exportar			-ok-
-	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	// cmd[1] = "2";		// no exportar	-ok-
+// 	// cmd[1] = "2a";			// no exportar	-ok-
+// 	// cmd[1] = "2a=";		// no exportar			-ok-
+// 	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
 	
-	// cmd[1] = "a2=";		// si exportar
-	// cmd[1] = "a2a=";	// si exportar
-	// cmd[1] = NULL;					// -*-*-*
-	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
-	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
+// 	// cmd[1] = "a2=";		// si exportar
+// 	// cmd[1] = "a2a=";	// si exportar
+// 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
+// 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
 	
-	// cmd[1] = "Z";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-	// cmd[1] = "1 2 3";					// ok
-	// cmd[1] = "PRUEBA";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente
-	ft_builtins(cmd, envi, env);
-	printf("\n\n");
-	printf("***********************************\n");
-	ft_print_lst_2(envi);
-	printf("***********************************\n");
-	printf("\n\n");
-    return (0);
-}
+// 	// cmd[1] = "Z";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	// cmd[1] = "1 2 3";					// ok
+// 	// cmd[1] = "PRUEBA";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente
+// 	ft_builtins(cmd, envi, env);
+// 	printf("\n\n");
+// 	printf("***********************************\n");
+// 	ft_print_lst_2(envi);
+// 	printf("***********************************\n");
+// 	printf("\n\n");
+//     return (0);
+// }
+
+// ** FALLO con cmd[1] = "Z"; y  cmd[1] = "PRUEBA"; **
+//** tambien tengo que guarar la lista **

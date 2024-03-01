@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/21 17:19:21 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:05:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c cd.c exit.c env.c echo.c pwd.c export.c -o exit && ./exit
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o exit && ./exit
+
+// ################ env -i ./minishell ######################
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o exit && env -i ./exit
+// ################ env -i ./minishell ######################
 
 /**
  * Lower the shlvl by -1, checking that shlvl > 1
@@ -84,13 +88,16 @@ void	ft_exit(char **cmd, t_env *envi)
 	check_two_num = ft_manage_numerics(cmd);
 	if (check_two_num <= 1)
 	{
-		if (cmd[1] == NULL || ft_isdigit(*cmd[1]))
+		printf("*****cmd[1] = %d\n", *cmd[1]);
+		if (cmd[1] == NULL || ft_isdigit(*cmd[1]) == 1)
 		{
+			printf("entra en el if\n");
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_lower_shlvl(envi);
 		}
 		else
 		{
+			printf("entra en el else\n");
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_putendl_fd("minishell: exit: numeric argument required", STDERR_FILENO); 	// 1 stdout ?
 			ft_lower_shlvl(envi);															// 2 stderr ?
@@ -99,44 +106,54 @@ void	ft_exit(char **cmd, t_env *envi)
 	}
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env   *envi;
-// 	(void) 	argc;
-// 	(void) 	argv;
+int main(int argc, char **argv, char **env)
+{
+	t_env   *envi;
+	(void) 	argc;
+	(void) 	argv;
 
-// 	envi = NULL;
-// 	ft_linked_list_env(&envi, env);
-	
-// 	// char    *cmd[4];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "1";
-// 	// cmd[2] = "2";
-// 	// cmd[3] = NULL;
+	envi = NULL;
+	if (*env == NULL)
+	{
+		ft_simulate_env_i_minishell(&envi);
+	}
+	// ################ env -i ./minishell ######################
+	else
+	{
+		ft_linked_list_env(&envi, env);
+	}
 
-// 	char    *cmd[5];
-// 	cmd[0] = "exit";
-// 	cmd[1] = "1";
-// 	cmd[2] = "2";
-// 	cmd[3] = "3";
-// 	cmd[4] = NULL;
+	ft_linked_list_env(&envi, env);
 	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "1";
-// 	// cmd[1] = NULL;
+	char    *cmd[4];
+	cmd[0] = "exit";
+	cmd[1] = "1";
+	cmd[2] = "2";
+	cmd[3] = NULL;
+
+	// char    *cmd[5];
+	// cmd[0] = "exit";
+	// cmd[1] = "1";
+	// cmd[2] = "2";
+	// cmd[3] = "3";
+	// cmd[4] = NULL;
 	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "a";
-// 	// cmd[2] = NULL;
+	// char    *cmd[3];
+	// cmd[0] = "exit";
+	// cmd[1] = "1";
+	// cmd[1] = NULL;
 	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = ".";
-// 	// cmd[2] = NULL;
+	// char    *cmd[3];
+	// cmd[0] = "exit";
+	// cmd[1] = "a";
+	// cmd[2] = NULL;
 	
-// 	ft_builtins(cmd, envi);
+	// char    *cmd[3];
+	// cmd[0] = "exit";
+	// cmd[1] = ".";
+	// cmd[2] = NULL;
 	
-// 	return (0);
-// }
+	ft_builtins(cmd, envi, env);
+	ft_print_lst_2(envi);
+	return (0);
+}

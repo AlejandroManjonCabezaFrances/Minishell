@@ -12,7 +12,12 @@
 
 #include "../../include/minishell.h"
 
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c echo.c env.c pwd.c export.c -o pwd && ./pwd
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o pwd && ./pwd
+
+// ################ env -i ./minishell ######################
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o pwd && env -i ./pwd
+// ################ env -i ./minishell ######################
+
 // bash pwd < builtins.c
 
 /**
@@ -45,17 +50,27 @@ void    ft_pwd(char **cmd)
 //  	(void) 	argv;
 	
 // 	envi = NULL;
-// 	ft_linked_list_env(&envi, env);
 
-// 	// char *cmd[2];
-// 	// cmd[0] = "pwd";
-// 	// cmd[1] = NULL;
+	// ################ env -i ./minishell ######################
+	// if (*env == NULL)
+	// {
+	// 	ft_simulate_env_i_minishell(&envi);
+	// }
+	// // ################ env -i ./minishell ######################
+	// else
+	// {
+	// 	ft_linked_list_env(&envi, env);
+	// }
 
-// 	char *cmd[3];
+// 	char *cmd[2];
 // 	cmd[0] = "pwd";
-// 	cmd[1] = "!";
-// 	cmd[2] = NULL;
-// 	ft_builtins(cmd, envi);
+// 	cmd[1] = NULL;
+
+// 	// char *cmd[3];
+// 	// cmd[0] = "pwd";
+// 	// cmd[1] = "!";
+// 	// cmd[2] = NULL;
+// 	ft_builtins(cmd, envi, env);
 
 //     return (0);
 // }
