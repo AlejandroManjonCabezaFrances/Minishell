@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/29 11:30:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/01 11:24:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ void	ft_export_without_argv_sort(t_env *envi)
 		else
 			temp = temp->next;
 	}
-	ft_print_lst_2_declare_x(envi);
+	// printf("\n\n");
+	// printf("***********************************\n");
+	// ft_print_lst_2_declare_x(envi);
+	// printf("***********************************\n");
+	// printf("\n\n");
 }
 
 /**
@@ -100,7 +104,30 @@ void	ft_sort_minilist(t_env *envi, t_env *finish_list)
 		else
 			temp = temp->next;
 	}
-	// ft_print_lst_2_declare_x(envi);
+	printf("\n\n");
+	printf("***********************************\n");
+	ft_print_lst_2_declare_x(envi);
+	printf("***********************************\n");
+	printf("\n\n");
+}
+
+/**
+ * Look for a "=" in the received string
+ * @param	char *str
+ * @return	TRUE, FALSE
+*/
+int	ft_is_equal(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
 }
 
 /**
@@ -117,18 +144,20 @@ void	ft_export_but_not_in_env(t_env *envi, char *cmd)
 
 	i = -1;
 	finish_list = envi;
+	printf("cmd = %s\n", cmd);
 	while (cmd[++i])
-		if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
+		if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
 		{
 			printf("minishell: export: '%s' not a valid identifier\n", cmd);
 			return ;
 		}
+	
 	argum = ft_split(cmd, ' ');
 	ft_export_without_argv_sort(envi);
 	while (finish_list->next)
 		finish_list = finish_list->next;
-	ft_linked_list_env(&envi, argum);
-	ft_sort_minilist(envi, finish_list);
+	ft_linked_list_env(&envi, argum);	// hago lista linkeada con el nodo spliteado. que lo uso luego para hacer sort de minilista
+	ft_sort_minilist(envi, finish_list);	// y noo quiero guardar esa lista envi con ese nodo, solo para la ordenacion ejemplo con cmd[1] = "Z"; o cmd[1] = "a2";
 }
 
 /**
@@ -165,56 +194,37 @@ char	*ft_parser_arguments_2(char *cmd)
  * @param	char *cmd, int *fail
  * @return	 void. By reference a fail flag is returned
 */
-void	ft_parser_string(char *cmd, int *fail)
-{
-	int i;
+// void	ft_parser_string(char *cmd, int *fail)
+// {
+// 	int i;
 
-	i = 0;
-	while (cmd[i] != '=' && cmd[i] != ' ')	// && != NULL (PRUEBA) argv:
-	{
-		printf("cmd[%d] = %s\n", i, cmd);
-		if (ft_isalpha(cmd[i]) == 0)
-		{
-			*fail = 0;
-			break;
-		}
-		*fail = 1;
-		i++;
-	}
-}
-
-/**
- * Look for a "=" in the received string
- * @param	char *str
- * @return	TRUE, FALSE
-*/
-int	ft_is_equal(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
+// 	i = 0;
+// 	while (cmd[i] != '=' && cmd[i] != ' ')	// && != NULL (PRUEBA) argv:
+// 	{
+// 		printf("cmd[%d] = %s\n", i, cmd);
+// 		if (ft_isalpha(cmd[i]) == 0)
+// 		{
+// 			*fail = 0;
+// 			break;
+// 		}
+// 		*fail = 1;
+// 		i++;
+// 	}
+// }
 
 /**
  * The non-existing variable to be exported will be parsed.
  * @param	char **cmd, char *aux, int *fail
  * @return	var_parsed. Parsed mallocated string
 */
-char	*ft_parser_arguments(char *cmd, int *fail)
+char	*ft_parser_arguments(char *cmd/* , int *fail */)
 {
 	int		i;
 	int		len;
 	int		start;
 	char	*var_parsed;
 
-	ft_parser_string(cmd, fail);
+	// ft_parser_string(cmd, fail);
 	i = 0;
 	while (cmd[i] && cmd[i] != '=')
 		i++;
@@ -297,15 +307,15 @@ void	ft_replace_node_parsed(t_env *envi, char *cmd)
 void    ft_export(char **cmd, t_env *envi)
 {
 	char	*aux;
-	int		fail;
+	// int		fail;
 
 	aux = NULL;
-	fail = 0;
+	// fail = 0;
 	if (cmd[1] == NULL)
 	{
 		printf("1  **************\n");
 		ft_export_without_argv_sort(envi);
-		// ft_print_lst_2_declare_x(envi);
+		ft_print_lst_2_declare_x(envi);
 	}
 	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
 	{
@@ -314,17 +324,20 @@ void    ft_export(char **cmd, t_env *envi)
 	}
 	else
 	{
-		if (ft_is_equal(cmd[1]))
+		if (ft_is_equal(cmd[1]) && ft_isalpha(cmd[1][0]))
 		{
 			printf("3  **************\n");
-			aux = ft_parser_arguments(cmd[1], &fail);
-			if (fail == 0)
+			aux = ft_parser_arguments(cmd[1]/* , &fail */);
+/* 			if (fail == 0)
 				printf("arguments not founds\n");
-			else
+			else */
 				ft_export_parsed_variable(aux, envi);
 		}
 		else
+		{
+			printf("4 ***********\n");
 			ft_export_but_not_in_env(envi, cmd[1]);
+		}
 	}
 }
 
@@ -339,35 +352,47 @@ int main(int argc, char **argv, char **env)
 
 		// ################ env -i ./minishell ######################
 	if (*env == NULL)
+	{
+		printf("crear lista sin env -i\n");
 		ft_simulate_env_i_minishell(&envi);
+	}
 	// ################ env -i ./minishell ######################
 	else
+	{
+		printf("crear lista normal\n");
 		ft_linked_list_env(&envi, env);
+	}
 	
 	// ft_linked_list_env(&envi ,env);
 	cmd[0] = "export";
-	// cmd[1] = "A LEX=alex";
+	// cmd[1] = NULL;
+	
+	cmd[1] = "A LEX=alex";
 	// cmd[1] = "LEX= alex";
 	// cmd[1] = "ALEX=alex";
 	// cmd[1] = "ALEX=alex espacio";
 	// cmd[1] = "a alex=hola que";
 	
-	cmd[1] = "2";		// no esportar
-	cmd[1] = "2a=";		// no exportar
-	cmd[1] = "2a";		// no exportar
-	cmd[1] = "a2";		// no exportar
-	cmd[1] = "a2=";		// si exportar
-	cmd[1] = "a2a=";	// si exportar
+	// cmd[1] = "2";		// no exportar	-ok-
+	// cmd[1] = "2a";			// no exportar	-ok-
+	// cmd[1] = "2a=";		// no exportar			-ok-
+	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+	
+	// cmd[1] = "a2=";		// si exportar
+	// cmd[1] = "a2a=";	// si exportar
 	// cmd[1] = NULL;					// -*-*-*
 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";
 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
 	
-	// cmd[1] = "Z B A E";			// -*-*-* bash-->no exporta, pero si en el declare, pero si alfabeticamente
+	// cmd[1] = "Z";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
 	// cmd[1] = "1 2 3";					// ok
-	// cmd[1] = "PRUEBA";				// -*-*-* bash-->no lo exporta, pero si en el declare alfabeticamente
+	// cmd[1] = "PRUEBA";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
 	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente
 	ft_builtins(cmd, envi, env);
+	printf("\n\n");
+	printf("***********************************\n");
 	ft_print_lst_2(envi);
-
+	printf("***********************************\n");
+	printf("\n\n");
     return (0);
 }
