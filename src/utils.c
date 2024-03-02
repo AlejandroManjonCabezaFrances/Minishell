@@ -59,7 +59,7 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 			aux->next->next->prev = new_node;
 			new_node->next = aux->next->next;
 			aux->next = new_node;
-			ft_lstdelone_ms(node_free, &dele);
+			ft_lstdelone_ms(&node_free, &del_ms);
 			break;
 		}
 		aux = aux->next;
@@ -124,17 +124,33 @@ void ft_print_lst_2(t_env *temp)
 	}
 }
 
-void	dele(void *content)
+// void	dele(void *content)
+// {
+// 	free(content);
+// }
+
+// void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
+// {
+// 	if (lst != NULL && del != NULL)
+// 	{
+// 		(*del)(lst->content);
+// 		free(lst);
+// 	}
+// }
+
+void	del_ms(void *content)
 {
 	free(content);
 }
 
-void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
+void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
 {
-	if (lst != NULL && del != NULL)
+	// printf("lst->content = %s\n", lst->content);
+	// printf("lst = %p\n", lst);
+	if (*lst != NULL && del_ms != NULL)
 	{
-		(*del)(lst->content);
-		free(lst);
+		free((*lst)->content);
+		free(*lst);
 	}
 }
 

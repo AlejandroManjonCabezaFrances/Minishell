@@ -106,54 +106,54 @@ void	ft_exit(char **cmd, t_env *envi)
 	}
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_env   *envi;
-	(void) 	argc;
-	(void) 	argv;
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_env   *envi;
+// 	(void) 	argc;
+// 	(void) 	argv;
 
-	envi = NULL;
-	if (*env == NULL)
-	{
-		ft_simulate_env_i_minishell(&envi);
-	}
-	// ################ env -i ./minishell ######################
-	else
-	{
-		ft_linked_list_env(&envi, env);
-	}
+// 	envi = NULL;
+// 	if (*env == NULL)
+// 	{
+// 		ft_simulate_env_i_minishell(&envi);
+// 	}
+// 	// ################ env -i ./minishell ######################
+// 	else
+// 	{
+// 		ft_linked_list_env(&envi, env);
+// 	}
 
-	ft_linked_list_env(&envi, env);
+// 	ft_linked_list_env(&envi, env);
 	
-	char    *cmd[4];
-	cmd[0] = "exit";
-	cmd[1] = "1";
-	cmd[2] = "2";
-	cmd[3] = NULL;
+// 	char    *cmd[4];
+// 	cmd[0] = "exit";
+// 	cmd[1] = "1";
+// 	cmd[2] = "2";
+// 	cmd[3] = NULL;
 
-	// char    *cmd[5];
-	// cmd[0] = "exit";
-	// cmd[1] = "1";
-	// cmd[2] = "2";
-	// cmd[3] = "3";
-	// cmd[4] = NULL;
+// 	// char    *cmd[5];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "1";
+// 	// cmd[2] = "2";
+// 	// cmd[3] = "3";
+// 	// cmd[4] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = "1";
-	// cmd[1] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "1";
+// 	// cmd[1] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = "a";
-	// cmd[2] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = "a";
+// 	// cmd[2] = NULL;
 	
-	// char    *cmd[3];
-	// cmd[0] = "exit";
-	// cmd[1] = ".";
-	// cmd[2] = NULL;
+// 	// char    *cmd[3];
+// 	// cmd[0] = "exit";
+// 	// cmd[1] = ".";
+// 	// cmd[2] = NULL;
 	
-	ft_builtins(cmd, envi, env);
-	ft_print_lst_2(envi);
-	return (0);
-}
+// 	ft_builtins(cmd, envi, env);
+// 	ft_print_lst_2(envi);
+// 	return (0);
+// }

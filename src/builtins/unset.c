@@ -23,8 +23,12 @@ void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	t_env	*temp;
 	t_env	*last_node;
 
+	printf("(*envi)->content = %s\n", (*envi)->content);
+	printf("(*aux)->content = %s\n", (*aux)->content);
 	temp = *envi;
 	last_node = ft_lstlast_ms(temp);
+	printf("envi->content = %s\n",(*envi)->content);
+	printf("aux->content = %s\n", (*aux)->content);
 	if (*aux != *envi)		// no primer nodo lista
 	{
 		*aux = (*aux)->prev;
@@ -39,18 +43,20 @@ void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	}
 	else									//	primer nodo lista
 	{
+		printf("*pointer = %p\n", *envi);
+		printf("(*envi)->next->content = %s\n", (*envi)->next->content);
 		*envi = (*envi)->next;
-		// *aux = *envi;
+		*aux = *envi;
 	}
 }
 
-void	ft_delete_node(t_env *envi, char *cmd)
+void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
 	t_env	*node_free;
 	int		len;
 
-	aux = envi;
+	aux = *envi;
 	node_free = NULL;
 	while (aux)
 	{
@@ -59,17 +65,21 @@ void	ft_delete_node(t_env *envi, char *cmd)
 			len++;
 		if (ft_strncmp(cmd, aux->content, len) == 0)
 		{
+			printf("deberia de printearse 1 vez este mensaje\n");
 			node_free = aux;
-			ft_handle_list_header_and_tail(&envi, &aux);
-			ft_lstdelone_ms(node_free, &dele);
+			ft_handle_list_header_and_tail(envi, &aux);
+			ft_lstdelone_ms(&node_free, &del_ms);
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(envi); // print para checkear
+	printf("*pointer = %p\n", *envi);
+	printf("************(*envi)->content = %s\n", (*envi)->content);
+	printf("\n\n********\n");
+	ft_print_lst_2(*envi); // print para checkear
 	printf("***********\n\n");
 }
 
-void	ft_unset(char **cmd, t_env *envi)
+void	ft_unset(char **cmd, t_env **envi)
 {
 	int i;
 
@@ -78,74 +88,93 @@ void	ft_unset(char **cmd, t_env *envi)
 		return ;
 	while (cmd[i])
 	{
+		printf("cmd[%d] = %s\n", i, cmd[i]);
 		ft_delete_node(envi, cmd[i]);
 		i++;
 	}
-	// ft_print_lst_2(envi);
+	printf("*pointer = %p\n", *envi);
+	printf("****(*envi)->content = %s*********\n", (*envi)->content);
+	ft_print_lst_2(*envi);
+	printf("\n\n");
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env *envi;
+int main(int argc, char **argv, char **env)
+{
+	// t_env *envi;
 
-// 	envi = NULL;
+	// envi = NULL;
 
-// 	if (*env == NULL)
-// 	{
-// 		ft_simulate_env_i_minishell(&envi);
-// 	}
-// 	// ################ env -i ./minishell ######################
-// 	else
-// 	{
-// 		ft_linked_list_env(&envi, env);
-// 	}
-	
-// 	ft_linked_list_env(&envi, env);
-//     (void) argc;
-//     (void) argv;
-// 	/* ejemplo --> primer variable env en Linux */	
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "HOSTTYPE";
-// 	// cmd[2] = NULL;
+	t_env	**envi;
 
-// 	/* ejemplo --> penúltima variable env en Linux*/
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "PATH";
-// 	// cmd[2] = NULL;
+	envi = malloc(sizeof(t_env *));
+	*envi = NULL;
+	if (envi == NULL)
+		return (0);
 
-// 	/* ejemplo --> última variable env en Linux*/
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "_";
-// 	// cmd[2] = NULL;
+	if (*env == NULL)
+	{
+		printf("sin env\n");
+		ft_simulate_env_i_minishell(envi);
+		printf("\n");
+		printf("recién creada la lista\n");
+		ft_print_lst_2(*envi);
+		printf("recien creada la lista\n\n");
+	}
+	// ################ env -i ./minishell ######################
+	else
+	{
+		printf("con env\n");
+		ft_linked_list_env(envi, env);
+	}
 	
-// 	// char *cmd[4];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "PWD";
-// 	// cmd[2] = "OLDPWD";
-// 	// cmd[3] = NULL;
-// 	// tratado como dos argumentos separados--> unset PWD OLDPWD
+	// ft_linked_list_env(&envi, env);
+    (void) argc;
+    (void) argv;
+	/* ejemplo --> primer variable env en Linux */	
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "HOSTTYPE";
+	// cmd[2] = NULL;
+
+	/* ejemplo --> penúltima variable env en Linux*/
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "PATH";
+	// cmd[2] = NULL;
+
+	/* ejemplo --> última variable env en Linux*/
+	// char *cmd[3];
+	// cmd[0] = "unset";
+	// cmd[1] = "_";
+	// cmd[2] = NULL;
 	
-// 	// char *cmd[4];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "SHLVL";
-// 	// cmd[2] = "ZSH";
-// 	// cmd[3] = NULL;
+	char *cmd[4];
+	cmd[0] = "unset";
+	cmd[1] = "PWD";
+	cmd[2] = "OLDPWD";
+	cmd[3] = NULL;
+	// tratado como dos argumentos separados--> unset PWD OLDPWD
 	
-// 	// char *cmd[2];
+	// char *cmd[4];
+	// cmd[0] = "unset";
+	// cmd[1] = "SHLVL";
+	// cmd[2] = "ZSH";
+	// cmd[3] = NULL;
 	
-// 	// cmd[0] = "4";
-// 	// cmd[1] = NULL;
-// 	// cmd[0] = "";
-// 	// cmd[1] = NULL;
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = NULL;
-// 	ft_builtins(cmd, envi, env);
-// 	ft_print_lst_2(envi);
-// 	return (0);
-// }
+	// char *cmd[2];
+	
+	// cmd[0] = "4";
+	// cmd[1] = NULL;
+	// cmd[0] = "";
+	// cmd[1] = NULL;
+	// cmd[0] = "unset";
+	// cmd[1] = NULL;
+	ft_builtins(cmd, envi, env);
+	printf("*pointer = %p\n", *envi);
+	printf("************(*envi)->content = %s\n", (*envi)->content);
+	ft_print_lst_2(*envi);
+	return (0);
+}
 
 
 

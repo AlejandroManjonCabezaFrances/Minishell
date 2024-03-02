@@ -194,7 +194,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstdelone_mshell(t_env *env_copy);
 
 /* ----------- BUILTINS ----------- */
-void		ft_builtins(char **cmd, t_env *envi, char **env);
+void		ft_builtins(char **cmd, t_env **envi, char **env);
 
 	/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
@@ -203,7 +203,7 @@ void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
 void	ft_export(char **cmd, t_env *envi);
 	/* ------ UNSET ------ */
-void	ft_unset(char **cmd, t_env *envi);
+void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
 	/* ------ ENV ------ */
@@ -215,8 +215,8 @@ void    ft_exit(char **cmd, t_env *envi);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);
-void	dele(void *content);
-void	ft_lstdelone_ms(t_env *lst, void (*del)(void *));
+void	del_ms(void *content);
+void	ft_lstdelone_ms(t_env **lst, void (*del)(void *));
 t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
