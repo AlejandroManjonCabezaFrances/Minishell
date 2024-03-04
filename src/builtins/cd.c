@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/28 17:27:39 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/04 10:10:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 	new_node->next = aux->next->next;
 	aux->next = new_node;
 	new_node->prev = aux;
-	ft_lstdelone_ms(&node_free, &del_ms);
+	ft_lstdelone_ms(node_free, &del_ms);
 }
 
 /**

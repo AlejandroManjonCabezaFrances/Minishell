@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/01 13:24:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/04 10:08:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void	ft_replace_node_parsed(t_env *envi, char *cmd)
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
 			new_node->next = aux->next->next;
 			aux->next = new_node;
-			ft_lstdelone_ms(&node_free, &del_ms);
+			ft_lstdelone_ms(node_free, &del_ms);
 			break;
 		}
 		aux = aux->next;
