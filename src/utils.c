@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/01 11:52:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/04 10:11:30 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 			aux->next->next->prev = new_node;
 			new_node->next = aux->next->next;
 			aux->next = new_node;
-			ft_lstdelone_ms(&node_free, &del_ms);
+			ft_lstdelone_ms(node_free, &del_ms);
 			break;
 		}
 		aux = aux->next;
@@ -124,35 +124,33 @@ void ft_print_lst_2(t_env *temp)
 	}
 }
 
-// void	dele(void *content)
-// {
-// 	free(content);
-// }
-
-// void	ft_lstdelone_ms(t_env *lst, void (*del)(void *))
-// {
-// 	if (lst != NULL && del != NULL)
-// 	{
-// 		(*del)(lst->content);
-// 		free(lst);
-// 	}
-// }
-
 void	del_ms(void *content)
 {
 	free(content);
 }
 
-void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
+void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
 {
-	// printf("lst->content = %s\n", lst->content);
-	// printf("lst = %p\n", lst);
-	if (*lst != NULL && del_ms != NULL)
+	if (lst != NULL && del_ms != NULL)
 	{
-		free((*lst)->content);
-		free(*lst);
+		(*del_ms)(lst->content);
+		free(lst);
 	}
 }
+
+// void	del_ms(void *content)
+// {
+// 	free(content);
+// }
+
+// void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
+// {
+// 	if (*lst != NULL && del_ms != NULL)
+// 	{
+// 		free((*lst)->content);
+// 		free(*lst);
+// 	}
+// }
 
 t_env	*ft_lstlast_ms(t_env *lst)
 {

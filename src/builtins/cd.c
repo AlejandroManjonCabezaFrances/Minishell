@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/04 10:10:58 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:53:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,11 @@ void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
-		printf("entra en el if\n");
 		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
 		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
 	}
 	else
 	{
-		printf("entra en el else\n");
 		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node(envi, "PWD=", envi->pwd);
 	}
@@ -235,7 +233,6 @@ int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
 {
 	if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
 	{
-		printf("entra en ..?\n");
 		if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)
 			ft_add_node_tail_lst(envi, cmd);
 		ft_one_step_back(envi);
@@ -243,7 +240,6 @@ int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
 	else
 	{
 		ok_change_dir = ft_change_directory(envi, cmd[1]);
-		printf("ok_change_dir = %d\n", ok_change_dir);
 		if (!ok_change_dir && ft_env_var_existing(envi, "OLDPWD=") == FALSE)
 			ft_add_node_tail_lst(envi, cmd);
 	}
@@ -281,54 +277,34 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 	return (0);
 }
 
-// /**
-//  * We create a double pointer and simulate the environment variables
-//  *	when --> env -i ./minishell
-//  * @param	t_env *envi
-//  * @return	void
-// */
-// void	ft_simulate_env_i_minishell(t_env **envi)
-// {
-// 	char	**env_n;
-// 	char	cwd[PATH_MAX];
+int main(int argc, char **argv, char **env)
+{
+	t_env	*envi;
+	char	*cmd[3];
+    (void) 	argc;
+    (void) 	argv;
+	(void)	env;
 
-// 	env_n = malloc(sizeof(char *) * 4);
-// 	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
-// 	env_n[1] = ft_strdup("SHLVL=1");
-// 	env_n[2] = ft_strdup("_=/usr/bin/env");
-// 	env_n[3] = NULL;
-// 	ft_linked_list_env(envi, env_n);
-// 	(*envi)->flag = 1;
-// }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env	*envi;
-// 	char	*cmd[3];
-//     (void) 	argc;
-//     (void) 	argv;
-// 	(void)	env;
-
-// 	envi = NULL;
-// 	// ################ env -i ./minishell ######################
-// 	if (*env == NULL)
-// 		ft_simulate_env_i_minishell(&envi);
-// 	// ################ env -i ./minishell ######################
-// 	else
-// 		ft_linked_list_env(&envi, env);
-// 	envi->pwd = NULL;
-// 	envi->old_pwd = NULL;
-// 	cmd[0] = "cd";
-// 	// cmd[1] = "..";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/";
-// 	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
-// 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
-// 	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
-// 		// cmd[2] = NULL;
+	envi = NULL;
+	// ################ env -i ./minishell ######################
+	if (*env == NULL)
+		ft_simulate_env_i_minishell(&envi);
+	// ################ env -i ./minishell ######################
+	else
+		ft_linked_list_env(&envi, env);
+	envi->pwd = NULL;
+	envi->old_pwd = NULL;
+	cmd[0] = "cd";
+	// cmd[1] = "..";
+	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+	// cmd[1] = "/Users/amanjon-/Desktop/minish|ell_github/src";
+	// cmd[1] = "/Users/amanjon-/Desktop/";
+	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
+	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
+	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
+		// cmd[2] = NULL;
 	
-// 	ft_builtins(cmd, envi, env);
-// 	ft_print_lst_2(envi);
-// 	return (0);
-// }
+	ft_builtins(cmd, &envi, env);
+	ft_print_lst_2(envi);
+	return (0);
+}
