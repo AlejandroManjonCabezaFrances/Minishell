@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/04 15:53:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:40:18 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	char	*result_join;
-	
+
 	result_join = ft_strjoin(str, pwd_oldpwd);
 	(*envi)->content = ft_strdup(result_join);
 	free (result_join);
@@ -42,7 +42,7 @@ void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 	t_env	*node_free;
 	t_env	*new_node;
 	char	*result_join;
-	
+
 	node_free = NULL;
 	result_join = NULL;
 	node_free = aux;
@@ -97,13 +97,14 @@ int	ft_change_directory(t_env *envi, char *path)
 {
 	int change;
 	char cwd[PATH_MAX];
-	
+
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	change = chdir(path);
 	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (change != 0)
 	{
-		ft_putstr_fd("minishell: cd: ", 1);	// echo $? deberia ser 1 y me saca 0 ???
+		ft_putstr_fd("minishell: cd: ", 2);
+		g_signal_code = 1;
 		perror(path);
 	}
 	return (change);
@@ -117,7 +118,7 @@ int	ft_change_directory(t_env *envi, char *path)
 char	*ft_find_path_env(t_env *envi, char *str)
 {
 	t_env	*aux;
-	int 	len;
+	int		len;
 
 	aux = envi;
 	len = ft_strlen(str);
@@ -125,7 +126,7 @@ char	*ft_find_path_env(t_env *envi, char *str)
 	{
 		if (ft_strncmp(aux->content, str, len) == 0)
 			return (aux->content + len);
-		aux = aux->next;	
+		aux = aux->next;
 	}
 	return (NULL);
 }
@@ -190,7 +191,7 @@ void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 {
 	char cwd[PATH_MAX];
 	char	*node_oldpwd;
-	
+
 	node_oldpwd = NULL;
 	if (ft_strcmp(cmd[1], "..") == 0)
 		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
@@ -266,8 +267,9 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 	{
 		if (*env == NULL)
 		{
-			ft_putstr_fd("minisell: cd: HOME not set\n", 1);
-			return (1); // echo $? --> no me saca un 1, como vas (env -i ./minishell solo con cd para el HOME)
+			ft_putstr_fd("minisell: cd: HOME not set\n", 2);
+			g_signal_code = 1;
+			return (1);
 		}
 		path_home= ft_find_path_env(envi, "HOME=");
 		ft_change_directory(envi, path_home);
@@ -299,7 +301,7 @@ int main(int argc, char **argv, char **env)
 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
 	// cmd[1] = "/Users/amanjon-/Desktop/minish|ell_github/src";
 	// cmd[1] = "/Users/amanjon-/Desktop/";
-	// cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
+	cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
 	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
 		// cmd[2] = NULL;

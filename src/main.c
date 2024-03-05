@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/21 16:00:08 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:10:06 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int g_signal_code = 0;
+// int g_signal_code = 0;
 
 int	check_argc(int argc)
 {
@@ -91,6 +91,7 @@ int	main(int argc, char **argv, char **env)
 	int		err;
 	(void) argv;
 	
+	g_signal_code = 0;
 	token_list = NULL;
 	cmd_line = NULL;
 	disable_ctrl_c_printing_chars();
@@ -106,7 +107,7 @@ int	main(int argc, char **argv, char **env)
 		// ft_set_signals_noninteractive();
 		if (!cmd_line)
 			break;
-			panic(READLINE_ERR, NULL, NULL);	//VINI esta función conflicto con señales cntrl + D.
+		panic(READLINE_ERR, NULL, NULL);	//VINI esta función conflicto con señales cntrl + D.
 		// cmd_line[ft_strlen(cmd_line)] = '\0';
 		err = lexer(&token_list, cmd_line, env_cpy);
 		if (err != 1)

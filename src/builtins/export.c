@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/04 15:49:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:29:14 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,14 @@ void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 
 	i = -1;
 	finish_list = *envi;
-	printf("cmd = %s\n", cmd);
 	while (cmd[++i])
 		if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
 		{
-			printf("minishell: export: '%s' not a valid identifier\n", cmd);
+			ft_putstr_fd("minishell: export: '", 2);
+			ft_putstr_fd(cmd, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			// printf("minishell: export: '%s' not a valid identifier\n", cmd);
+			g_signal_code = 1;
 			return ;
 		}
 	
@@ -370,7 +373,8 @@ void    ft_export(char **cmd, t_env **envi)
 // 	cmd[0] = "export";
 // 	// cmd[1] = NULL;
 	
-// 	cmd[1] = "A LEX=alex";
+// 	// cmd[1] = "A LEX=alex";
+	
 // 	// cmd[1] = "LEX= alex";
 // 	// cmd[1] = "ALEX=alex";
 // 	// cmd[1] = "ALEX=alex espacio";
@@ -390,9 +394,10 @@ void    ft_export(char **cmd, t_env **envi)
 // 	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo
 	
 // 	// cmd[1] = "Z";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	cmd[1] = "1";
 // 	// cmd[1] = "1 2 3";			// ok
 // 	// cmd[1] = "PRUEBA";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-// 	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente
+// 	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
 // 	ft_builtins(cmd, &envi, env);
 // 	printf("\n\n");
 // 	printf("***********************************\n");

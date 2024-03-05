@@ -6,15 +6,17 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/20 10:45:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:28:15 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c cd.c exit.c env.c echo.c pwd.c export.c -o echo && ./echo
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c ../sandbox2.c builtins.c ../../libft/Libft/src/ft_strjoin.c echo.c -o echo && ./echo
+
+// ################ env -i ./minishell ######################
+// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c cd.c exit.c env.c echo.c pwd.c export.c -o echo && env -i ./echo
+// ################ env -i ./minishell ######################
 
 /**
  * Print the string that the function receives
@@ -80,19 +82,19 @@ void	ft_echo(char **cmd)
 // {
 // 	t_env	*envi;
 // 	(void) 	argc;
-//  (void) 	argv;
+// 	(void) 	argv;
 	
 // 	envi = NULL;
 // 	ft_linked_list_env(&envi, env);
 
-// 	char *cmd[3];
+// /* 	char *cmd[3];
 // 	cmd[0] = "echo";
-// 	cmd[1] = NULL;
+// 	cmd[1] = NULL; */
 	
-// /* 	char *cmd[3];			// sin flag -n
+// 	char *cmd[3];			// sin flag -n
 // 	cmd[0] = "echo";
 // 	cmd[1] = "lo        que diga el papi";
-// 	cmd[2] = NULL; */
+// 	cmd[2] = NULL;
 	
 // /* 	char *cmd[7];			// con flag -n
 // 	cmd[0] = "echo";
@@ -103,7 +105,9 @@ void	ft_echo(char **cmd)
 // 	cmd[5] = "alex que tal";
 // 	cmd[6] = NULL; */
 
-// 	ft_builtins(cmd, envi);
+// 	ft_builtins(cmd, &envi, env);
 	
 //     return (0);
 // } 
+
+// g_signal_code = 0; builtin echo, en bash siempre el   echo $? = 0

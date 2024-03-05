@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/01 13:38:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:10:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@
  * @param	t_env *envi
  * @return	void
 */
-void	ft_env(t_env *envi)
+void	ft_env(t_env *envi, char **cmd)
 {
-	ft_print_lst_2(envi);
+	if (cmd[1] != NULL)
+	{
+		printf("env: %s: No such file or directory\n", cmd[1]);
+		g_signal_code = 127;
+	}
+	else
+		ft_print_lst_2(envi);
 }
 
 // int main(int argc, char **argv, char **env)
@@ -44,12 +50,15 @@ void	ft_env(t_env *envi)
 // 	{
 // 		ft_linked_list_env(&envi, env);
 // 	}
-	
-// 	ft_linked_list_env(&envi, env);
-// 		char *cmd[2];
+// 	char *cmd[2];
 // 	cmd[0] = "env";
 // 	cmd[1] = NULL;
+
+// 	// char *cmd[3];
+// 	// cmd[0] = "env";
+// 	// cmd[1] = "lsakdjdskf";
+// 	// cmd[2] = NULL;
 	
-// 	ft_builtins(cmd, envi, env);
+// 	ft_builtins(cmd, &envi, env);
 // 	return (0);
 // }

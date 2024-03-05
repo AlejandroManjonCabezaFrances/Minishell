@@ -6,35 +6,35 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:23:02 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/21 18:37:10 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:58:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // ################ env -i ./minishell ######################
-void	ft_when_env_is_null(t_env **envi, t_inf *info)
-{
-	char	**env_n;
-	(void) info;
+// void	ft_when_env_is_null(t_env **envi, t_inf *info)
+// {
+// 	char	**env_n;
+// 	(void) info;
 	
-	env_n = malloc(sizeof(char *) * 4);
-	env_n[0] = ft_strjoin("PWD=", getcwd(info->cwd, sizeof(info->cwd)));
-	env_n[1] = ft_strdup("SHLVL=1");
-	env_n[2] = ft_strdup("_=/usr/bin/env");
-	env_n[3] = NULL;
-	ft_linked_list_env(envi, env_n);
-	ft_print_lst_2(*envi);
-}
+// 	env_n = malloc(sizeof(char *) * 4);
+// 	env_n[0] = ft_strjoin("PWD=", getcwd(info->cwd, sizeof(info->cwd)));
+// 	env_n[1] = ft_strdup("SHLVL=1");
+// 	env_n[2] = ft_strdup("_=/usr/bin/env");
+// 	env_n[3] = NULL;
+// 	ft_linked_list_env(envi, env_n);
+// 	ft_print_lst_2(*envi);
+// }
 
-void	ft_env_is_null(t_env *envi, t_inf *info, char **env)
-{
-	// (void)	envi;
-	(void)	env;
+// void	ft_env_is_null(t_env *envi, t_inf *info, char **env)
+// {
+// 	// (void)	envi;
+// 	(void)	env;
 
-	envi = NULL;
-	ft_when_env_is_null(&envi, info);
-}
+// 	envi = NULL;
+// 	ft_when_env_is_null(&envi, info);
+// }
 
 // void	store_env_aux(t_inf *info, char **env)
 // {
