@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/01 14:05:01 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/06 11:55:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_lower_shlvl(t_env *envi)
 {
 	t_env   *aux;
 	char	*n_shlvl;
-	
+
 	aux = envi;
 	n_shlvl = NULL;
 	while (aux)
@@ -55,7 +55,6 @@ int	ft_manage_numerics(char **cmd)
 {
 	int	n_argc;
 	int	check_num;
-	
 
 	n_argc = 1;
 	check_num = 0;
@@ -84,7 +83,7 @@ int	ft_manage_numerics(char **cmd)
 void	ft_exit(char **cmd, t_env *envi)
 {
 	int	check_two_num;
-	
+
 	check_two_num = ft_manage_numerics(cmd);
 	if (check_two_num <= 1)
 	{
@@ -99,8 +98,8 @@ void	ft_exit(char **cmd, t_env *envi)
 		{
 			printf("entra en el else\n");
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			ft_putendl_fd("minishell: exit: numeric argument required", STDERR_FILENO); 	// 1 stdout ?
-			ft_lower_shlvl(envi);															// 2 stderr ?
+			ft_putendl_fd("minishell: exit: numeric argument required", STDERR_FILENO);
+			ft_lower_shlvl(envi);
 			exit (255);
 		}
 	}

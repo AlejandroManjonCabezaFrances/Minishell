@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 18:40:18 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:01:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_change_directory(t_env *envi, char *path)
 	if (change != 0)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		g_signal_code = 1;
+		// g_signal_code = 1;
 		perror(path);
 	}
 	return (change);
@@ -268,7 +268,7 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 		if (*env == NULL)
 		{
 			ft_putstr_fd("minisell: cd: HOME not set\n", 2);
-			g_signal_code = 1;
+			// g_signal_code = 1;
 			return (1);
 		}
 		path_home= ft_find_path_env(envi, "HOME=");
@@ -279,34 +279,34 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 	return (0);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_env	*envi;
-	char	*cmd[3];
-    (void) 	argc;
-    (void) 	argv;
-	(void)	env;
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_env	*envi;
+// 	char	*cmd[3];
+//     (void) 	argc;
+//     (void) 	argv;
+// 	(void)	env;
 
-	envi = NULL;
-	// ################ env -i ./minishell ######################
-	if (*env == NULL)
-		ft_simulate_env_i_minishell(&envi);
-	// ################ env -i ./minishell ######################
-	else
-		ft_linked_list_env(&envi, env);
-	envi->pwd = NULL;
-	envi->old_pwd = NULL;
-	cmd[0] = "cd";
-	// cmd[1] = "..";
-	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
-	// cmd[1] = "/Users/amanjon-/Desktop/minish|ell_github/src";
-	// cmd[1] = "/Users/amanjon-/Desktop/";
-	cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
-	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
-	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
-		// cmd[2] = NULL;
+// 	envi = NULL;
+// 	// ################ env -i ./minishell ######################
+// 	if (*env == NULL)
+// 		ft_simulate_env_i_minishell(&envi);
+// 	// ################ env -i ./minishell ######################
+// 	else
+// 		ft_linked_list_env(&envi, env);
+// 	envi->pwd = NULL;
+// 	envi->old_pwd = NULL;
+// 	cmd[0] = "cd";
+// 	// cmd[1] = "..";
+// 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
+// 	// cmd[1] = "/Users/amanjon-/Desktop/minish|ell_github/src";
+// 	// cmd[1] = "/Users/amanjon-/Desktop/";
+// 	cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
+// 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
+// 	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
+// 		// cmd[2] = NULL;
 	
-	ft_builtins(cmd, &envi, env);
-	ft_print_lst_2(envi);
-	return (0);
-}
+// 	ft_builtins(cmd, &envi, env);
+// 	ft_print_lst_2(envi);
+// 	return (0);
+// }

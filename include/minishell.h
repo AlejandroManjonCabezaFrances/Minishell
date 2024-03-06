@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 15:31:41 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:02:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@
 typedef struct s_token		t_token;
 typedef struct s_scmd		t_scmd;
 typedef struct s_inf		t_inf;
-// extern int 					g_signal_code;
-int							g_signal_code;
+// int							g_signal_code;
 
 typedef struct s_token
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/05 18:29:14 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:51:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,7 @@ void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 			ft_putstr_fd("minishell: export: '", 2);
 			ft_putstr_fd(cmd, 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
-			// printf("minishell: export: '%s' not a valid identifier\n", cmd);
-			g_signal_code = 1;
+			// g_signal_code = 1;
 			return ;
 		}
 	
@@ -249,7 +248,7 @@ char	*ft_parser_arguments(char *cmd)
  * @param	char **cmd, t_env *envi
  * @return	(TRUE) --> env var exists
 */
-int	ft_check_env_var_exists(char **cmd, t_env **envi)
+int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 {
 	t_env	*aux;
 	int len;
@@ -260,7 +259,9 @@ int	ft_check_env_var_exists(char **cmd, t_env **envi)
 		len = 0;
 		while (aux->content[len] != '=')
 			len++;
-		if (ft_strncmp(cmd[1], aux->content, len) == 0)
+		if (aux->next == NULL)
+			return (FALSE);
+		if (ft_strncmp(cmd[i], aux->content, len) == 0)
 			return (TRUE);
 		aux = aux->next;
 	}
@@ -329,24 +330,29 @@ void	ft_replace_node_parsed(t_env **envi, char *cmd)
 void    ft_export(char **cmd, t_env **envi)
 {
 	char	*aux;
+	int		i;
 
 	aux = NULL;
-	if (cmd[1] == NULL)
+	i = 0;
+	while (cmd[++i])
 	{
-		ft_export_without_argv_sort(envi);
-		ft_print_lst_2_declare_x(*envi);
-	}
-	else if (ft_check_env_var_exists(cmd, envi) == TRUE)
-		ft_replace_node_parsed(envi, cmd[1]);
-	else
-	{
-		if (ft_is_equal(cmd[1]) && ft_isalpha(cmd[1][0]))
+		if (cmd[1] == NULL)
 		{
-			aux = ft_parser_arguments(cmd[1]);
-			ft_export_parsed_variable(aux, envi);
+			ft_export_without_argv_sort(envi);
+			ft_print_lst_2_declare_x(*envi);
 		}
+		else if (ft_check_env_var_exists(cmd, envi, i) == TRUE)
+			ft_replace_node_parsed(envi, cmd[i]);
 		else
-			ft_export_but_not_in_env(envi, cmd[1]);
+		{
+			if (ft_is_equal(cmd[1]) && ft_isalpha(cmd[1][0]))
+			{
+				aux = ft_parser_arguments(cmd[i]);
+				ft_export_parsed_variable(aux, envi);
+			}
+			else
+				ft_export_but_not_in_env(envi, cmd[i]);
+		}
 	}
 }
 
@@ -373,7 +379,9 @@ void    ft_export(char **cmd, t_env **envi)
 // 	cmd[0] = "export";
 // 	// cmd[1] = NULL;
 	
-// 	// cmd[1] = "A LEX=alex";
+// 	cmd[1] = "ALEX=alex";			// LO EXPORTA BIEN PERO CON ESTE ERROR --> ABAJO
+// 	cmd[2] = "ALVARO=alvaro";		// *** stack smashing detected ***: terminated [1]    5843 IOT instruction  env -i ./export
+// 	cmd[3] = NULL;
 	
 // 	// cmd[1] = "LEX= alex";
 // 	// cmd[1] = "ALEX=alex";
@@ -391,13 +399,13 @@ void    ft_export(char **cmd, t_env **envi)
 // 	// cmd[1] = "SECURITYSESSIONID=sustituir_contenido_de_esta_variable"; 	// primer nodo
 // 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";					  	// medio nodo
 // 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
-// 	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo
+// 	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo, no exportar nunca
 	
 // 	// cmd[1] = "Z";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-// 	cmd[1] = "1";
+// 	// cmd[1] = "1";
 // 	// cmd[1] = "1 2 3";			// ok
 // 	// cmd[1] = "PRUEBA";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-// 	cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
+// 	// cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
 // 	ft_builtins(cmd, &envi, env);
 // 	printf("\n\n");
 // 	printf("***********************************\n");

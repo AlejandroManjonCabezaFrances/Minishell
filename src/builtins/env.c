@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 18:10:22 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:01:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_env(t_env *envi, char **cmd)
 	if (cmd[1] != NULL)
 	{
 		printf("env: %s: No such file or directory\n", cmd[1]);
-		g_signal_code = 127;
+		// g_signal_code = 127;
 	}
 	else
 		ft_print_lst_2(envi);
