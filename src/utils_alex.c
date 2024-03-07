@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 12:27:48 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:27:54 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,10 @@ void ft_linked_list_env(t_env **envi, char **env)
 
 void ft_print_lst_2(t_env *temp)
 {
+	printf("ft_print_lst_1\n");
 	while (temp)
 	{
+		// printf("entra en el while?****************\n");
 		printf("temp = %s\n", temp->content);
 		temp = temp->next;
 	}

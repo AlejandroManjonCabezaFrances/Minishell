@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/07 12:09:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:52:34 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
+void	exec_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 {
 	close(pipe_fd[0]);
 	if (scmd->infile != -1)
@@ -27,7 +27,7 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(info, scmd->cmd_args);
+			ft_builtin(envi, scmd->cmd_args, info);
 			exit(1);
 		}
 		else
@@ -36,7 +36,7 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
-void	last_child(t_scmd *scmd, t_info *info, int upstream)
+void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 {
 	if (scmd->infile != -1)
 		ft_dup(scmd->infile, STDIN_FILENO);
@@ -48,7 +48,7 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(info, scmd->cmd_args);
+			ft_builtin(envi, scmd->cmd_args, info);
 			exit(1);
 		}
 		exit(127);
@@ -56,10 +56,11 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
-void	ft_builtin(t_info *info, char **args)
+void	ft_builtin(t_env **envi, char **args, t_info *info)
 {
 	printf("antes de printear la lista ******************\n");
-	ft_print_lst_2(info->envi);
-	ft_builtins(args, &info->envi, info->env_cpy);
+	// ft_print_lst_2(info->envi);
+	printf("entra aqui?\n");
+	ft_builtins(args, envi, info->env_cpy);
 	// printf("%s\n", args[0]);	// Vini
 }

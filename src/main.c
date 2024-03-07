@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 12:31:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:38:07 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // int g_signal_code = 0;
 int	exit_status = 0;
 
-void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info)
+void	shell_operation(t_env **envi, char *line, t_token *list, t_scmd *scmds, t_info info)
 {
 	int	err;
 
@@ -28,7 +28,7 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info)
 		err = parser(&list, &scmds, &info);
 		if (err != 1)
 			panic(err, NULL, NULL);
-		err = executer(&scmds, &info);
+		err = executer(envi, &scmds, &info);
 		if (err != 1)
 			panic(err, NULL, NULL);
 	}
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_line[0])
 		{
 			cmd_line[ft_strlen(cmd_line)] = '\0';
-			shell_operation(cmd_line, token_list, scmds_list, info);
+			shell_operation(&envi, cmd_line, token_list, scmds_list, info);
 		}
 	}
 	free_info(info);

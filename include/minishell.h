@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:45:06 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:52:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ extern int	exit_status;
 void	disable_ctrl_c_printing_chars(void);
 void	init_struct(t_env *envi, t_inf *info);
 int		check_argc(int argc);
-void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info);
+
+// void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info);
+void	shell_operation(t_env **envi, char *line, t_token *list, t_scmd *scmds, t_info info);
 
 /* ------ LEXER ------ */
 int		lexer(t_token **token_list, char *input);
@@ -187,20 +189,34 @@ int		parser(t_token **token_list, t_scmd **scmds_list, t_info *info);
 
 /* ------ EXECUTER ------ */
 void	ft_dup(int old_fd, int new_fd);
+
 void	check_cmds(t_scmd **scmds_list, t_info *info);
-void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
-void	last_child(t_scmd *scmd, t_info *info, int upstream);
-void	ft_builtin(t_info *info, char **args);
+// void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
+void	exec_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
+
+// void	last_child(t_scmd *scmd, t_info *info, int upstream);
+void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream);
+
+// void	ft_builtin(t_info *info, char **args);
+void	ft_builtin(t_env **envi, char **args, t_info *info);
 void	ft_builtins(char **cmd, t_env **envi, char **env);
 
 void	parent_close(int fd_1, int fd_2, t_scmd *scmd);
 int		check_builtin(t_scmd *scmd);
-int		exec_command(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
-int		last_command(t_scmd *scmd, t_info *info, int upstream);
-int		exec_cmds(t_scmd **scmds_list, t_info *info);
+
+// int		exec_command(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
+int		exec_command(t_env **envi, t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
+
+// int		last_command(t_scmd *scmd, t_info *info, int upstream);
+int		last_command(t_env **envi, t_scmd *scmd, t_info *info, int upstream);
+
+// int		exec_cmds(t_scmd **scmds_list, t_info *info);
+int		exec_cmds(t_env **envi, t_scmd **scmds_list, t_info *info);
 int		get_cmd(t_scmd *scmds_list, t_info *info);
 int		check_path(t_scmd *scmd);
-int		executer(t_scmd **scmds_list, t_info *info);
+
+// int		executer(t_scmd **scmds_list, t_info *info);
+int		executer(t_env **envi, t_scmd **scmds_list, t_info *info);
 
 /* ------ LISTS ------ */
 t_token	*ms_lstnew(void);
@@ -273,7 +289,7 @@ void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
 	/* ------ ENV ------ */
-void	ft_env(t_env *envi, char **cmd);
+void	ft_env(t_env **envi, char **cmd);
 	/* ------ EXIT ------ */
 void    ft_exit(char **cmd, t_env *envi);
 

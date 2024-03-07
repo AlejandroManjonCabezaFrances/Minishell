@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/05 14:25:12 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:49:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parent_close(int fd_1, int fd_2, t_scmd *scmd)
 	free (scmd);
 }
 
-int	exec_cmds(t_scmd **scmds_list, t_info *info)
+int	exec_cmds(t_env **envi, t_scmd **scmds_list, t_info *info)
 {
 	t_scmd	*aux;
 	int		pipe_fd[2];
@@ -32,9 +32,9 @@ int	exec_cmds(t_scmd **scmds_list, t_info *info)
 		if (pipe(pipe_fd) == -1)
 			return (PIPE_ERR);
 		if (!aux->next)
-			last_command(aux, info, upstream);
+			last_command(envi, aux, info, upstream);
 		else
-			exec_command(aux, info, upstream, pipe_fd);
+			exec_command(envi, aux, info, upstream, pipe_fd);
 		close(pipe_fd[1]);
 		upstream = pipe_fd[0];
 		aux = aux->next;
@@ -100,8 +100,8 @@ void	check_cmds(t_scmd **scmds_list, t_info *info)
 	free(aux);
 }
 
-int	executer(t_scmd **scmds_list, t_info *info)
+int	executer(t_env **envi, t_scmd **scmds_list, t_info *info)
 {
 	check_cmds(scmds_list, info);
-	return (exec_cmds(scmds_list, info));
+	return (exec_cmds(envi, scmds_list, info));
 }

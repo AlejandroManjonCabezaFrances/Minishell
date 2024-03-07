@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 15:31:13 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:57:42 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 void	ft_builtins(char **cmd, t_env **envi, char **env)
 {
 	(void) envi;
+	printf("entra ft_builtins\n");
 	if (ft_strcmp(*cmd, "echo") == 0)
+	{
+		printf("ENTRA EN MI ECHO?\n");
 		ft_echo(cmd);
+	}
     else if (ft_strcmp(*cmd, "env") == 0)
-		ft_env(*envi, cmd);
+	{
+		printf("entra en el if de ft_env\n");
+		ft_env(envi, cmd);
+	}
 	else if (ft_strcmp(*cmd, "export") == 0)
 		ft_export(cmd, envi);
 	else if (ft_strcmp(*cmd, "pwd") == 0)
