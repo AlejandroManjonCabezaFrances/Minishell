@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/06 11:01:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/07 11:15:00 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
-void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
+static	void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	char	*result_join;
 
@@ -37,7 +37,7 @@ void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
  * @param	t_env *aux, char *str, char *pwd_oldpwd
  * @return	void
 */
-void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
+static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 {
 	t_env	*node_free;
 	t_env	*new_node;
@@ -63,7 +63,7 @@ void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
-void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
+static	void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
 	int		len;
@@ -93,7 +93,7 @@ void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
  * @return	int. corresponds to the correct or incorrect change of the path
  * 
 */
-int	ft_change_directory(t_env *envi, char *path)
+static	int	ft_change_directory(t_env *envi, char *path)
 {
 	int change;
 	char cwd[PATH_MAX];
@@ -115,7 +115,7 @@ int	ft_change_directory(t_env *envi, char *path)
  * @param	t_env *envi, char *str
  * @return	char. NULL or the content of HOME=
 */
-char	*ft_find_path_env(t_env *envi, char *str)
+static	char	*ft_find_path_env(t_env *envi, char *str)
 {
 	t_env	*aux;
 	int		len;
@@ -136,7 +136,7 @@ char	*ft_find_path_env(t_env *envi, char *str)
  * @param	t_env *envi
  * @return	void
 */
-void	ft_update_env_pwd_oldpwd(t_env *envi)
+static	void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
@@ -154,7 +154,7 @@ void	ft_update_env_pwd_oldpwd(t_env *envi)
  * We reserve memory to update envi->old_pwd and envi->pwd
  * @return	int
 */
-int	ft_one_step_back(t_env *envi)
+static	int	ft_one_step_back(t_env *envi)
 {
 	char	cwd[PATH_MAX];
 	char	*last_ocurrence;
@@ -187,7 +187,7 @@ int	ft_one_step_back(t_env *envi)
  * @param	t_env *envi
  * @return	void
 */
-void	ft_add_node_tail_lst(t_env *envi, char **cmd)
+static	void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 {
 	char cwd[PATH_MAX];
 	char	*node_oldpwd;
@@ -206,7 +206,7 @@ void	ft_add_node_tail_lst(t_env *envi, char **cmd)
  * @param	t_env *envi, char *str
  * @return	int. FALSE or TRUE
 */
-int	ft_env_var_existing(t_env *envi, char *str)
+static	int	ft_env_var_existing(t_env *envi, char *str)
 {
 	t_env	*aux;
 	int		len;
@@ -230,7 +230,7 @@ int	ft_env_var_existing(t_env *envi, char *str)
  * @param	t_env *envi, char *str
  * @return	int. ok_change_dir
 */
-int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
+static	int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
 {
 	if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
 	{

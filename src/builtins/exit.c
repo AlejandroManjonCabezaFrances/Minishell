@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/06 11:55:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/07 11:16:26 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @param	t_env *envi
  * @return	void
 */
-void	ft_lower_shlvl(t_env *envi)
+static	void	ft_lower_shlvl(t_env *envi)
 {
 	t_env   *aux;
 	char	*n_shlvl;
@@ -51,7 +51,7 @@ void	ft_lower_shlvl(t_env *envi)
  * @param	char **cmd
  * @return	int
 */
-int	ft_manage_numerics(char **cmd)
+static	int	ft_manage_numerics(char **cmd)
 {
 	int	n_argc;
 	int	check_num;

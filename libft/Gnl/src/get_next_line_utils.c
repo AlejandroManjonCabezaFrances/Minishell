@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 07:25:50 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/07/11 12:14:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:58:31 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,4 @@ char	*ft_strchr_gnl(const char *s, int c)
 		i++;
 	}
 	return (0);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
-{
-	size_t	i;
-	size_t	j;
-	char	*a;
-
-	i = 0;
-	j = ft_strlen_gnl(src);
-	a = (char *)src;
-	if (destsize == 0)
-		return (j);
-	while (a[i] != '\0' && i < (destsize - 1))
-	{
-		dest[i] = a[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (j);
 }

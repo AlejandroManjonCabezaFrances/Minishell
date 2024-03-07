@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/02/21 17:17:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:54:38 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,26 +161,26 @@ char	*ft_strdup(const char	*s1)
 	return (ptr);
 }
 
-void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
-{
-	t_env	*aux;
-	t_env	*last;
+// void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
+// {
+// 	t_env	*aux;
+// 	t_env	*last;
 
-	aux = *envi;
-	last = ft_lstlast_ms(*envi);
-	if (*envi == NULL)
-	{
-		*envi = node;
-		return ;
-	}
-	else
-	{
-		while (aux->next->next != NULL)
-			aux = aux->next;
-		aux->next = node;
-		node->next = last;
-	}
-}
+// 	aux = *envi;
+// 	last = ft_lstlast_ms(*envi);
+// 	if (*envi == NULL)
+// 	{
+// 		*envi = node;
+// 		return ;
+// 	}
+// 	else
+// 	{
+// 		while (aux->next->next != NULL)
+// 			aux = aux->next;
+// 		aux->next = node;
+// 		node->next = last;
+// 	}
+// }
 
 /**
  * Delete one node of linked list

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 10:34:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:45:06 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,26 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+/* ------ STRUCT LINKED LIST ------ */
+typedef struct s_env
+{
+	char			**env_n;
+	int				flag;
+	// char			*cwd;
+	char			*content;
+	char			*pwd;
+	char			*old_pwd;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
+
 typedef struct s_info
 {
 	int				pipe_nbr;
 	char			*path;
 	char			**bin_paths;
 	char			**env_cpy;
+	t_env			*envi;
 }	t_info;
 
 typedef struct s_scmd
@@ -79,18 +93,6 @@ typedef struct s_inf				//para utilizar variable globales o estructuras globales
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;
 
-/* ------ STRUCT SANDBOX LINKED LIST ------ */
-typedef struct s_env
-{
-	char			**env_n;
-	int				flag;
-	// char			*cwd;
-	char			*content;
-	char			*pwd;
-	char			*old_pwd;
-	struct s_env	*next;
-	struct s_env	*prev;
-}	t_env;
 
 /* ------ ENUMS ------ */
 enum e_boolean
@@ -188,7 +190,9 @@ void	ft_dup(int old_fd, int new_fd);
 void	check_cmds(t_scmd **scmds_list, t_info *info);
 void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
 void	last_child(t_scmd *scmd, t_info *info, int upstream);
-void	ft_builtin(char **args);
+void	ft_builtin(t_info *info, char **args);
+void	ft_builtins(char **cmd, t_env **envi, char **env);
+
 void	parent_close(int fd_1, int fd_2, t_scmd *scmd);
 int		check_builtin(t_scmd *scmd);
 int		exec_command(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
@@ -219,15 +223,6 @@ void	ft_signals(void);
 void	ft_signal_interrupt(void);
 void	ft_signal_reset_prompt(int signal);
 void	ft_signal_quit(void);
-// void	ft_set_signals_noninteractive(void); // new
-// void	ft_signal_print_newline(int signal); // new
-
-// BY MATEO
-// void	ft_signals(void);
-// void	ft_signal_print_newline(int signal);
-// void	ft_signal_reset_prompt(int signal);
-// void	ft_ignore_sigquit(void);
-// void	ft_set_signals_noninteractive(void);
 
 /* ------ ENV ------ */
 char	**copy_env(char **envp);
@@ -242,30 +237,30 @@ void	ft_linked_list_env(t_env **envi, char **env);
 /* ------ ENVI ------ */
 // char	**copy_env(char **env);
 // void	ft_when_env_is_null(t_inf *info);
-void	ft_env_is_null(t_env *envi, t_inf *info, char **env);
-void	ft_when_env_is_null(t_env **envi, t_inf *info);
+// void	ft_env_is_null(t_env *envi, t_inf *info, char **env);
+// void	ft_when_env_is_null(t_env **envi, t_inf *info);
 
 /* ------ SANDBOX2 ------ */
-int		ft_strcmp(const char *s1, const char *s2);
-// char	*ft_strjoin_2(char *s1, char *s2);
-void	ft_lstclear_mshell_2(t_env **lst);
-void	ft_replace_SHLVL(t_env **env_copy);
-void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
-char	*ft_find_content_var_env(t_env *env_copy, char *var);
-void	ft_print_double_pointer(char **env_array);
-char	**ft_convert_linked_list_to_array(t_env *env_copy);
-void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
-t_env	*ft_lstnew_penultimate_str_env(char *str_env);
+// int		ft_strcmp(const char *s1, const char *s2);
+// // char	*ft_strjoin_2(char *s1, char *s2);
+// void	ft_lstclear_mshell_2(t_env **lst);
+// void	ft_replace_SHLVL(t_env **env_copy);
+// void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
+// char	*ft_find_content_var_env(t_env *env_copy, char *var);
+// void	ft_print_double_pointer(char **env_array);
+// char	**ft_convert_linked_list_to_array(t_env *env_copy);
+// void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
+// t_env	*ft_lstnew_penultimate_str_env(char *str_env);
 
-char	*ft_itoa(int nbr);
-int		ft_atoi(const char *str);
-size_t	ft_strlen(const char *str);
-char	*ft_strdup(const char	*s1);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+// char	*ft_itoa(int nbr);
+// int		ft_atoi(const char *str);
+// size_t	ft_strlen(const char *str);
+// char	*ft_strdup(const char	*s1);
+// int		ft_strncmp(const char *s1, const char *s2, size_t n);
 // void	ft_lstdelone_mshell(t_env *env_copy);
 
 /* ----------- BUILTINS ----------- */
-void		ft_builtins(char **cmd, t_env **envi, char **env);
+// void		ft_builtins(char **cmd, t_env **envi, char **env);
 
 	/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
@@ -282,7 +277,7 @@ void	ft_env(t_env *envi, char **cmd);
 	/* ------ EXIT ------ */
 void    ft_exit(char **cmd, t_env *envi);
 
-/* ------ UTILS ------ */
+/* ------ UTILS_ALEX ------ */
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/05 15:10:49 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:42:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(scmd->cmd_args);
+			ft_builtin(info, scmd->cmd_args);
 			exit(1);
 		}
 		else
@@ -48,7 +48,7 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(scmd->cmd_args);
+			ft_builtin(info, scmd->cmd_args);
 			exit(1);
 		}
 		exit(127);
@@ -56,7 +56,8 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
-void	ft_builtin(char **args)
+void	ft_builtin(t_info *info, char **args)
 {
-	printf("%s\n", args[0]);
+	ft_builtins(args, &info->envi, info->env_cpy);
+	// printf("%s\n", args[0]);	// Vini
 }

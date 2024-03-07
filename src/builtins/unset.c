@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 11:52:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:13:49 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o unset && env -i ./unset
 // ################ env -i ./minishell ######################
 
-void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
+static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 {
 	t_env	*temp;
 	t_env	*last_node;
@@ -44,7 +44,7 @@ void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	}
 }
 
-void	ft_delete_node(t_env **envi, char *cmd)
+static	void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
 	t_env	*node_free;

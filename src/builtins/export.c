@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 09:28:08 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:55:38 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,33 @@
  * @param	t_env *temp
  * @return	void
 */
-void	ft_print_lst_2_declare_x(t_env *temp)
+static	void	ft_print_lst_2_declare_x(t_env *temp)
 {
 	while (temp)
 	{
 		printf("declare -x %s\n", temp->content);
 		temp = temp->next;
+	}
+}
+
+static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
+{
+	t_env	*aux;
+	t_env	*last;
+
+	aux = *envi;
+	last = ft_lstlast_ms(*envi);
+	if (*envi == NULL)
+	{
+		*envi = node;
+		return ;
+	}
+	else
+	{
+		while (aux->next->next != NULL)
+			aux = aux->next;
+		aux->next = node;
+		node->next = last;
 	}
 }
 
@@ -38,7 +59,7 @@ void	ft_print_lst_2_declare_x(t_env *temp)
  * @param	char *cmd, t_env *envi
  * @return	void
 */
-void	ft_export_parsed_variable(char *cmd, t_env **envi)
+static	void	ft_export_parsed_variable(char *cmd, t_env **envi)
 {
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
 }
@@ -49,7 +70,7 @@ void	ft_export_parsed_variable(char *cmd, t_env **envi)
  * @param	t_env *envi
  * @return	void
 */
-void	ft_export_without_argv_sort(t_env **envi)
+static	void	ft_export_without_argv_sort(t_env **envi)
 {
 	t_env	*temp;
 	t_env	*head;
@@ -81,7 +102,7 @@ void	ft_export_without_argv_sort(t_env **envi)
  * @param	t_env *envi, t_env *finish_list
  * @return	 void
 */
-void	ft_sort_minilist(t_env **envi, t_env *finish_list)
+static	void	ft_sort_minilist(t_env **envi, t_env *finish_list)
 {
 	(void)	envi;
 	t_env	*temp;
@@ -115,7 +136,7 @@ void	ft_sort_minilist(t_env **envi, t_env *finish_list)
  * @param	char *str
  * @return	TRUE, FALSE
 */
-int	ft_is_equal(char *str)
+static	int	ft_is_equal(char *str)
 {
 	int i;
 
@@ -135,7 +156,7 @@ int	ft_is_equal(char *str)
  * @param	t_env *envi, char *cmd
  * @return	 void
 */
-void	ft_export_but_not_in_env(t_env **envi, char *cmd)
+static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 {
 	int i;
 	char	**argum;
@@ -166,7 +187,7 @@ void	ft_export_but_not_in_env(t_env **envi, char *cmd)
  * @param	char *cmd
  * @return	 var_parsed. Parsed mallocated string
 */
-char	*ft_parser_arguments_2(char *cmd)
+static	char	*ft_parser_arguments_2(char *cmd)
 {
 	int		i;
 	int		len;
@@ -218,7 +239,7 @@ char	*ft_parser_arguments_2(char *cmd)
  * @param	char **cmd, char *aux, int *fail
  * @return	var_parsed. Parsed mallocated string
 */
-char	*ft_parser_arguments(char *cmd)
+static	char	*ft_parser_arguments(char *cmd)
 {
 	int		i;
 	int		len;
@@ -248,7 +269,7 @@ char	*ft_parser_arguments(char *cmd)
  * @param	char **cmd, t_env *envi
  * @return	(TRUE) --> env var exists
 */
-int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
+static	int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 {
 	t_env	*aux;
 	int len;
@@ -273,7 +294,7 @@ int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
  * @param	t_env **envi, t_env *aux, t_env *new_node
  * @return	void
 */
-void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **new_node)
+static	void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **new_node)
 {
 	if (aux == envi)
 	{
@@ -294,7 +315,7 @@ void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **new_nod
  * @param	t_env *envi, char *cmd
  * @return	void
 */
-void	ft_replace_node_parsed(t_env **envi, char *cmd)
+static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 {
 	t_env	*aux;
 	t_env	*node_free;
@@ -367,73 +388,73 @@ void    ft_export(char **cmd, t_env **envi)
 	}
 }
 
-int main(int argc, char **argv, char **env) 
-{
-	t_env	*envi;
-	// char 	*cmd[3];
-	char 	*cmd[4];
-    (void) 	argc;
-    (void) 	argv;
+// int main(int argc, char **argv, char **env) 
+// {
+// 	t_env	*envi;
+// 	// char 	*cmd[3];
+// 	char 	*cmd[4];
+//     (void) 	argc;
+//     (void) 	argv;
 
-	envi = NULL;
+// 	envi = NULL;
 
-		// ################ env -i ./minishell ######################
-	if (*env == NULL)
-	{
-		ft_simulate_env_i_minishell(&envi);
-	}
-	// ################ env -i ./minishell ######################
-	else
-	{
-		ft_linked_list_env(&envi, env);
-	}
-	// ft_linked_list_env(&envi ,env);
-	cmd[0] = "export";
-	// cmd[1] = NULL;
+// 		// ################ env -i ./minishell ######################
+// 	if (*env == NULL)
+// 	{
+// 		ft_simulate_env_i_minishell(&envi);
+// 	}
+// 	// ################ env -i ./minishell ######################
+// 	else
+// 	{
+// 		ft_linked_list_env(&envi, env);
+// 	}
+// 	// ft_linked_list_env(&envi ,env);
+// 	cmd[0] = "export";
+// 	// cmd[1] = NULL;
 	
-	// cmd[1] = "SECURITYSESSIONID=alex";
-	// cmd[2] = "USER=alvaro";
-	// cmd[3] = NULL;
+// 	// cmd[1] = "SECURITYSESSIONID=alex";
+// 	// cmd[2] = "USER=alvaro";
+// 	// cmd[3] = NULL;
 
-	// cmd[1] = "USER=alvaro";
-	// cmd[2] = "MallocNanoZone=alex";
-	// cmd[3] = NULL;
+// 	// cmd[1] = "USER=alvaro";
+// 	// cmd[2] = "MallocNanoZone=alex";
+// 	// cmd[3] = NULL;
 	
-	// cmd[1] = "ALEX=alex";
-	// cmd[2] = "ALVARO=alvaro";
-	// cmd[3] = NULL;
+// 	// cmd[1] = "ALEX=alex";
+// 	// cmd[2] = "ALVARO=alvaro";
+// 	// cmd[3] = NULL;
 	
-	// cmd[1] = "LEX= alex";
-	// cmd[1] = "ALEX=alex";
-	// cmd[1] = "ALEX=alex espacio";
-	// cmd[1] = "a alex=hola que";
+// 	// cmd[1] = "LEX= alex";
+// 	// cmd[1] = "ALEX=alex";
+// 	// cmd[1] = "ALEX=alex espacio";
+// 	// cmd[1] = "a alex=hola que";
 	
-	// cmd[1] = "2";		// no exportar	-ok-
-	// cmd[1] = "2a";		// no exportar	-ok-
-	// cmd[1] = "2a=";		// no exportar			-ok-
-	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	// cmd[1] = "2";		// no exportar	-ok-
+// 	// cmd[1] = "2a";		// no exportar	-ok-
+// 	// cmd[1] = "2a=";		// no exportar			-ok-
+// 	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
 	
-	// cmd[1] = "a2=";		// si exportar
-	// cmd[1] = "a2a=";		// si exportar
-	// cmd[1] = "PWD=primer_nodo_sin_env_i";
-	// cmd[1] = "SECURITYSESSIONID=sustituir_contenido_de_esta_variable"; 	// primer nodo
-	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";					  	// medio nodo
-	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
-	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo, no exportar nunca
+// 	// cmd[1] = "a2=";		// si exportar
+// 	// cmd[1] = "a2a=";		// si exportar
+// 	// cmd[1] = "PWD=primer_nodo_sin_env_i";
+// 	// cmd[1] = "SECURITYSESSIONID=sustituir_contenido_de_esta_variable"; 	// primer nodo
+// 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";					  	// medio nodo
+// 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
+// 	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo, no exportar nunca
 	
-	// cmd[1] = "Z";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-	// cmd[1] = "1";
-	// cmd[1] = "1 2 3";			// ok
-	// cmd[1] = "PRUEBA";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-	// cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
-	ft_builtins(cmd, &envi, env);
-	printf("\n\n");
-	printf("***********************************\n");
-	ft_print_lst_2(envi);
-	printf("***********************************\n");
-	printf("\n\n");
-    return (0);
-}
+// 	// cmd[1] = "Z";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	// cmd[1] = "1";
+// 	// cmd[1] = "1 2 3";			// ok
+// 	// cmd[1] = "PRUEBA";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
+// 	// cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
+// 	ft_builtins(cmd, &envi, env);
+// 	printf("\n\n");
+// 	printf("***********************************\n");
+// 	ft_print_lst_2(envi);
+// 	printf("***********************************\n");
+// 	printf("\n\n");
+//     return (0);
+// }
 
 // ** FALLO con cmd[1] = "Z"; y  cmd[1] = "PRUEBA"; **
 //** tambien tengo que guarar la lista **
