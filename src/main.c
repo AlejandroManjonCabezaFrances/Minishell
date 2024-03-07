@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:23:45 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:31:56 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,12 @@ int	check_argc(int argc)
 */
 void	init_struct(t_env *envi, t_inf *inf)
 {
-	envi->env_n = NULL; 
+	
 	inf->cwd = NULL;
+	envi->env_n = NULL;
+	envi->flag = 0;			// new fusion minishell
+	envi->pwd = NULL;		// new fusion minishell
+	envi->old_pwd = NULL;	// new fusion minishell
 }
 /**
  * This function disable chars printed by ctrl+c '^C'
@@ -88,18 +92,31 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*token_list;
 	t_scmd	*scmds_list;
 	t_info	info;
-	t_env	envi;
+	t_env	*envi;
 	t_inf	inf;
 	char	*cmd_line;
 
-	disable_ctrl_c_printing_chars();
-	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
-		return (printf("No smartass shenanigans, just the executable ;)\n"));
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
+	envi = NULL;
+	info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura
+	// ################ env -i ./minishell ######################
+	if (*envp == NULL)
+	{
+		ft_simulate_env_i_minishell(&envi);
+	}
+	else
+	{
+		ft_linked_list_env(&envi, envp);
+		printf("crear lista del env del sistema\n\n");
+		ft_print_lst_2(envi);
+	}
+	disable_ctrl_c_printing_chars();
+	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
+		return (printf("No smartass shenanigans, just the executable ;)\n"));
 	info.env_cpy = copy_env(envp);
-	init_struct(&envi, &inf);
+	init_struct(envi, &inf);
 	while (1)
 	{
 		ft_signals();

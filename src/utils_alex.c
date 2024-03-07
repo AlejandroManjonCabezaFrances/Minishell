@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 10:40:31 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:27:48 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void ft_linked_list_env(t_env **envi, char **env)
 	int i;
 
 	i = 0;
+	
 	while (env[i])
 	{
 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
@@ -172,7 +173,6 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	if (node == NULL)
 		return (NULL);
 	node->content = ft_strdup(str_env);
-	// printf("node->content = %s\n", node->content);
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
@@ -183,7 +183,7 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 	t_env	*aux;
 
 	aux = *envi;
-	if (*envi == NULL/*  || envi == NULL */)
+	if (*envi == NULL /* || envi == NULL */)
 	{
 		*envi = node;
 		return ;

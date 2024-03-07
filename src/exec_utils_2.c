@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/07 11:42:22 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:09:56 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 
 void	ft_builtin(t_info *info, char **args)
 {
+	printf("antes de printear la lista ******************\n");
+	ft_print_lst_2(info->envi);
 	ft_builtins(args, &info->envi, info->env_cpy);
 	// printf("%s\n", args[0]);	// Vini
 }

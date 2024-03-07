@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 11:55:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:15:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,7 +403,6 @@ void    ft_export(char **cmd, t_env **envi)
 // 	{
 // 		ft_simulate_env_i_minishell(&envi);
 // 	}
-// 	// ################ env -i ./minishell ######################
 // 	else
 // 	{
 // 		ft_linked_list_env(&envi, env);
