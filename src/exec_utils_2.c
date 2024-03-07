@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/07 13:52:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:44:28 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 		if (check_builtin(scmd) == 1)
 		{
 			ft_builtin(envi, scmd->cmd_args, info);
-			exit(1);
+			// ft_print_lst_2(*envi);
+			return ;
+			// exit(1);
 		}
 		exit(127);
 	}
@@ -58,9 +60,15 @@ void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 
 void	ft_builtin(t_env **envi, char **args, t_info *info)
 {
-	printf("antes de printear la lista ******************\n");
-	// ft_print_lst_2(info->envi);
-	printf("entra aqui?\n");
+	printf("args[0] = %s\n", args[0]);
+	printf("args[1] = %s\n", args[1]);
 	ft_builtins(args, envi, info->env_cpy);
+	
+/* The code snippet `printf("*****************************\n"); ft_print_lst_2(*envi);
+printf("\n******************+\n\n");` is printing the contents of a linked list pointed to by the
+`envi` pointer. */
+	// printf("*****************************\n");
+	// ft_print_lst_2(envi);
+	// printf("\n******************+\n\n");
 	// printf("%s\n", args[0]);	// Vini
 }

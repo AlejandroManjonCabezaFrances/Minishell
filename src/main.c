@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 13:38:07 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:49:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	shell_operation(t_env **envi, char *line, t_token *list, t_scmd *scmds, t_i
 {
 	int	err;
 
+	// ft_print_lst_2(*envi);
 	err = lexer(&list, line);
 	add_history(line);
 	if (err != 1)
@@ -36,6 +37,7 @@ void	shell_operation(t_env **envi, char *line, t_token *list, t_scmd *scmds, t_i
 	ms_lstclear(&list);
 	ms_close_fds(&scmds);
 	ms_cmdclear(&scmds);
+	
 }
 
 int	check_argc(int argc)
@@ -53,14 +55,14 @@ int	check_argc(int argc)
  * @param	t_inf *inf
  * @return	void
 */
-void	init_struct(t_env *envi, t_inf *inf)
+void	init_struct(t_env **envi, t_inf *inf)
 {
 	
 	inf->cwd = NULL;
-	envi->env_n = NULL;
-	envi->flag = 0;			// new fusion minishell
-	envi->pwd = NULL;		// new fusion minishell
-	envi->old_pwd = NULL;	// new fusion minishell
+	(*envi)->env_n = NULL;
+	(*envi)->flag = 0;			// new fusion minishell
+	(*envi)->pwd = NULL;		// new fusion minishell
+	(*envi)->old_pwd = NULL;	// new fusion minishell
 }
 /**
  * This function disable chars printed by ctrl+c '^C'
@@ -87,6 +89,24 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
+void	ft_print_double_pointer(char **double_pointer)
+{
+	int i;
+	
+	i = 0;
+	while (double_pointer[i])
+	{
+		printf("double_pointer[%d] = %s\n", i, double_pointer[i]);
+		i++;
+	}
+}
+
+void	ft_update_env(t_env **envi, char **env_cpy)
+{
+	ft_print_double_pointer(env_cpy);
+	ft_print_lst_2(*envi);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
@@ -100,23 +120,17 @@ int	main(int argc, char **argv, char **envp)
 	scmds_list = NULL;
 	cmd_line = NULL;
 	envi = NULL;
-	info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura
+	info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura. NO LA USO
 	// ################ env -i ./minishell ######################
 	if (*envp == NULL)
-	{
 		ft_simulate_env_i_minishell(&envi);
-	}
 	else
-	{
 		ft_linked_list_env(&envi, envp);
-		printf("crear lista del env del sistema\n\n");
-		ft_print_lst_2(envi);
-	}
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
 	info.env_cpy = copy_env(envp);
-	init_struct(envi, &inf);
+	init_struct(&envi, &inf);
 	while (1)
 	{
 		ft_signals();
@@ -128,6 +142,10 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(&envi, cmd_line, token_list, scmds_list, info);
 		}
+		printf("\n printenado en el main\n");
+		ft_print_lst_2(envi);
+		printf("\n *********************\n");
+		// ft_update_env(&envi, info.env_cpy);
 	}
 	free_info(info);
 	return (0);

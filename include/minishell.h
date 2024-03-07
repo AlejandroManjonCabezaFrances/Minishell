@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 13:52:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:21:27 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ extern int	exit_status;
 
 /* ------ MAIN ------ */
 void	disable_ctrl_c_printing_chars(void);
-void	init_struct(t_env *envi, t_inf *info);
+void	init_struct(t_env **envi, t_inf *info);
 int		check_argc(int argc);
 
 // void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info);

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 12:15:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:29:18 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,8 @@ void    ft_export(char **cmd, t_env **envi)
 
 	aux = NULL;
 	i = 0;
+	printf("cmd[0] = %s\n", cmd[0]);
+	printf("cmd[1] = %s\n", cmd[1]);
 	while (cmd[++i])
 	{
 		if (cmd[1] == NULL)
@@ -378,6 +380,9 @@ void    ft_export(char **cmd, t_env **envi)
 				printf("ft_export_3\n");
 				aux = ft_parser_arguments(cmd[i]);
 				ft_export_parsed_variable(aux, envi);
+				// printf("*****************************\n");
+				// ft_print_lst_2(*envi);
+				// printf("\n******************+\n");
 			}
 			else
 			{

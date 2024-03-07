@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/07 13:49:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:42:14 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,16 @@ int	exec_cmds(t_env **envi, t_scmd **scmds_list, t_info *info)
 		if (pipe(pipe_fd) == -1)
 			return (PIPE_ERR);
 		if (!aux->next)
+		{
+			printf("entra en el 1\n");
+			// ft_print_lst_2(*envi);
 			last_command(envi, aux, info, upstream);
+		}
 		else
+		{
+			printf("entra en el 2\n");
 			exec_command(envi, aux, info, upstream, pipe_fd);
+		}
 		close(pipe_fd[1]);
 		upstream = pipe_fd[0];
 		aux = aux->next;
@@ -102,6 +109,7 @@ void	check_cmds(t_scmd **scmds_list, t_info *info)
 
 int	executer(t_env **envi, t_scmd **scmds_list, t_info *info)
 {
+	// ft_print_lst_2(*envi);
 	check_cmds(scmds_list, info);
 	return (exec_cmds(envi, scmds_list, info));
 }

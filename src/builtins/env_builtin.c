@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 13:31:19 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:14:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,13 @@
 */
 void	ft_env(t_env **envi, char **cmd)
 {
-	printf("entra en funcion ft_env?_1\n");
 	if (cmd[1] != NULL)
 	{
-		printf("EN EL IF\n");
 		printf("env: %s: No such file or directory\n", cmd[1]);
 		// g_signal_code = 127;
 	}
 	else
-	{
-		printf("EN EL ELSE\n");
 		ft_print_lst_2(*envi);
-	}
 }
 
 // int main(int argc, char **argv, char **env)
