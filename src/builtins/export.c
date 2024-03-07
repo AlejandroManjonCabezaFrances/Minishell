@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 08:49:46 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/07 09:28:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,9 +395,9 @@ int main(int argc, char **argv, char **env)
 	// cmd[2] = "USER=alvaro";
 	// cmd[3] = NULL;
 
-	cmd[1] = "USER=alvaro";
-	cmd[2] = "MallocNanoZone=alex";
-	cmd[3] = NULL;
+	// cmd[1] = "USER=alvaro";
+	// cmd[2] = "MallocNanoZone=alex";
+	// cmd[3] = NULL;
 	
 	// cmd[1] = "ALEX=alex";
 	// cmd[2] = "ALVARO=alvaro";
