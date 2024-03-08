@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 14:29:18 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/08 11:32:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 	{
 		while (aux->next->next != NULL)
 			aux = aux->next;
+		aux->next->prev = node;		// new fusion minishell
+		aux->next->prev->prev = aux;
 		aux->next = node;
 		node->next = last;
 	}

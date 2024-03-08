@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 15:18:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:14:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_builtins(char **cmd, t_env **envi, char **env)
 {
 	(void) envi;
 	printf("entra ft_builtins\n");
+	printf("*cmd = %s\n", *cmd);
 	if (ft_strcmp(*cmd, "echo") == 0)
 	{
 		printf("ENTRA EN MI ECHO?\n\n");
@@ -34,7 +35,10 @@ void	ft_builtins(char **cmd, t_env **envi, char **env)
 	else if (ft_strcmp(*cmd, "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(*cmd, "unset") == 0)
+	{
+		printf("ENTRA EN MI UNSET?\n\n");
 		ft_unset(cmd, envi);
+	}
 	else if (ft_strcmp(*cmd, "cd") == 0)
 		ft_cd(cmd, *envi, env);
 	else if (ft_strcmp(*cmd, "exit") == 0)

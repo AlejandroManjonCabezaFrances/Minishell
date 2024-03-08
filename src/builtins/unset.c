@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:13:49 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/08 12:14:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,33 @@ static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 
 	temp = *envi;
 	last_node = ft_lstlast_ms(temp);
-	if (*aux != *envi)
+	if (*aux != last_node)
 	{
-		*aux = (*aux)->prev;
-		if ((*aux)->next != last_node)
+		if (*aux != *envi)
 		{
-			(*aux)->next = (*aux)->next->next;
-			(*aux)->next->prev = (*aux);
+			*aux = (*aux)->prev;
+			if ((*aux)->next != last_node)		
+			{
+				(*aux)->next = (*aux)->next->next;
+				(*aux)->next->prev = *aux;
+			}
 		}
 		else
-		(*aux)->next = (*aux)->next->next;
-		
-	}
-	else
-	{
-		*envi = (*envi)->next;
-		*aux = *envi;
+		{
+			*envi = (*envi)->next;
+			*aux = *envi;
+		}
 	}
 }
 
 static	void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
-	t_env	*node_free;
+	// t_env	*node_free;
 	int		len;
 
 	aux = *envi;
-	node_free = NULL;
+	// node_free = NULL;
 	while (aux)
 	{
 		len = 0;
@@ -59,15 +59,15 @@ static	void	ft_delete_node(t_env **envi, char *cmd)
 			len++;
 		if (ft_strncmp(cmd, aux->content, len) == 0)
 		{
-			node_free = aux;
+			// node_free = aux;
 			ft_handle_list_header_and_tail(envi, &aux);
-			ft_lstdelone_ms(node_free, &del_ms);
+			// ft_lstdelone_ms(node_free, &del_ms);
 		}
 		aux = aux->next;
 	}
-	printf("\n\n");
-	ft_print_lst_2(*envi);
-	printf("\n\n");
+	// printf("\n\n");
+	// ft_print_lst_2(*envi);
+	// printf("\n\n");
 }
 
 void	ft_unset(char **cmd, t_env **envi)

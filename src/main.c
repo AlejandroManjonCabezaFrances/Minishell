@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 15:49:58 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:59:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,9 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(&envi, cmd_line, token_list, scmds_list, info);
 		}
-		printf("\n printenado en el main\n");
-		ft_print_lst_2(envi);
-		printf("\n *********************\n");
+		// printf("\n printenado en el main\n");
+		// ft_print_lst_2(envi);
+		// printf("\n *********************\n");
 		// ft_update_env(&envi, info.env_cpy);
 	}
 	free_info(info);
