@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/08 11:32:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/08 13:29:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,18 @@
 */
 static	void	ft_print_lst_2_declare_x(t_env *temp)
 {
+	t_env	*last_node;
+
+	last_node = ft_lstlast_ms(temp);
 	while (temp)
 	{
-		printf("declare -x %s\n", temp->content);
-		temp = temp->next;
+		if (temp != last_node)
+		{
+			printf("declare -x %s\n", temp->content);
+			temp = temp->next;
+		}
+		else
+			temp = temp->next;
 	}
 }
 
@@ -80,6 +88,7 @@ static	void	ft_export_without_argv_sort(t_env **envi)
 
 	head = *envi;
 	temp = *envi;
+	printf("envi = %s\n", (*envi)->content);
 	while (temp->next != NULL)
 	{
 		if (ft_strcmp(temp->content, temp->next->content) > 0)
@@ -94,7 +103,7 @@ static	void	ft_export_without_argv_sort(t_env **envi)
 	}
 	// printf("\n\n");
 	// printf("***********************************\n");
-	// ft_print_lst_2_declare_x(envi);
+	// ft_print_lst_2_declare_x(*envi);
 	// printf("***********************************\n");
 	// printf("\n\n");
 }
@@ -126,11 +135,11 @@ static	void	ft_sort_minilist(t_env **envi, t_env *finish_list)
 		else
 			temp = temp->next;
 	}
-	printf("\n\n");
-	printf("***********************************\n");
-	ft_print_lst_2_declare_x(*envi);
-	printf("***********************************\n");
-	printf("\n\n");
+	// printf("\n\n");
+	// printf("***********************************\n");
+	// ft_print_lst_2_declare_x(*envi);
+	// printf("***********************************\n");
+	// printf("\n\n");
 }
 
 /**
@@ -167,6 +176,7 @@ static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 	i = -1;
 	finish_list = *envi;
 	while (cmd[++i])
+	{
 		if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
 		{
 			ft_putstr_fd("minishell: export: '", 2);
@@ -175,12 +185,19 @@ static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 			// g_signal_code = 1;
 			return ;
 		}
-	
+	}
 	argum = ft_split(cmd, ' ');
+	printf("***   **argum = %s\n", *argum);
 	ft_export_without_argv_sort(envi);
 	while (finish_list->next)
 		finish_list = finish_list->next;
+	// ft_lstadd_back_str_env(&finish_list, ft_lstnew_str_env(argum[i]));
 	ft_linked_list_env(envi, argum);	// hago lista linkeada con el nodo spliteado. que lo uso luego para hacer sort de minilista
+	printf("\n\n");
+	printf("***********************************\n");
+	ft_print_lst_2_declare_x(*envi);
+	printf("***********************************\n");
+	printf("\n\n");
 	ft_sort_minilist(envi, finish_list);	// y noo quiero guardar esa lista envi con ese nodo, solo para la ordenacion ejemplo con cmd[1] = "Z"; o cmd[1] = "a2";
 }
 
@@ -359,7 +376,7 @@ void    ft_export(char **cmd, t_env **envi)
 	int		i;
 
 	aux = NULL;
-	i = 0;
+	i = -1;
 	printf("cmd[0] = %s\n", cmd[0]);
 	printf("cmd[1] = %s\n", cmd[1]);
 	while (cmd[++i])
@@ -389,7 +406,8 @@ void    ft_export(char **cmd, t_env **envi)
 			else
 			{
 				printf("ft_export_4\n");
-				ft_export_but_not_in_env(envi, cmd[i]);
+				printf("i = %d\n", i);
+				ft_export_but_not_in_env(envi, cmd[i+1]);
 			}
 		}
 	}
