@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/08 13:29:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/11 13:04:59 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static	void	ft_export_without_argv_sort(t_env **envi)
 
 	head = *envi;
 	temp = *envi;
-	printf("envi = %s\n", (*envi)->content);
 	while (temp->next != NULL)
 	{
 		if (ft_strcmp(temp->content, temp->next->content) > 0)
@@ -113,34 +112,34 @@ static	void	ft_export_without_argv_sort(t_env **envi)
  * @param	t_env *envi, t_env *finish_list
  * @return	 void
 */
-static	void	ft_sort_minilist(t_env **envi, t_env *finish_list)
-{
-	(void)	envi;
-	t_env	*temp;
-	t_env	*head;
-	char	*aux;
+// static	void	ft_sort_minilist(t_env **envi, t_env *finish_list)
+// {
+// 	(void)	envi;
+// 	t_env	*temp;
+// 	t_env	*head;
+// 	char	*aux;
 
-	temp = finish_list->next;
-	head = finish_list->next;
-	aux = NULL;
-	while (temp->next != NULL)
-	{
-		if (ft_strcmp(temp->content, temp->next->content) > 0)
-		{
-			aux = temp->content;
-			temp->content = temp->next->content;
-			temp->next->content = aux;
-			temp = head;
-		}
-		else
-			temp = temp->next;
-	}
-	// printf("\n\n");
-	// printf("***********************************\n");
-	// ft_print_lst_2_declare_x(*envi);
-	// printf("***********************************\n");
-	// printf("\n\n");
-}
+// 	temp = finish_list->next;
+// 	head = finish_list->next;
+// 	aux = NULL;
+// 	while (temp->next != NULL)
+// 	{
+// 		if (ft_strcmp(temp->content, temp->next->content) > 0)
+// 		{
+// 			aux = temp->content;
+// 			temp->content = temp->next->content;
+// 			temp->next->content = aux;
+// 			temp = head;
+// 		}
+// 		else
+// 			temp = temp->next;
+// 	}
+// 	// printf("\n\n");
+// 	// printf("***********************************\n");
+// 	// ft_print_lst_2_declare_x(*envi);
+// 	// printf("***********************************\n");
+// 	// printf("\n\n");
+// }
 
 /**
  * Look for a "=" in the received string
@@ -167,14 +166,19 @@ static	int	ft_is_equal(char *str)
  * @param	t_env *envi, char *cmd
  * @return	 void
 */
-static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
+static	void	ft_export_but_not_in_env(t_env **envi, char *cmd, char **cmds)
 {
 	int i;
 	char	**argum;
-	t_env	*finish_list;
+	t_env	*declare;
+	t_env	*temp;
+	// t_env	*finish_list;
+	
 
 	i = -1;
-	finish_list = *envi;
+	// finish_list = *envi;
+	temp = *envi;
+	declare = NULL;
 	while (cmd[++i])
 	{
 		if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
@@ -187,18 +191,31 @@ static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 		}
 	}
 	argum = ft_split(cmd, ' ');
-	printf("***   **argum = %s\n", *argum);
-	ft_export_without_argv_sort(envi);
-	while (finish_list->next)
-		finish_list = finish_list->next;
+	// printf("***   **argum = %s\n", *argum);
+	
+	ft_linked_list_env_lst_to_lst(&declare, &temp);
+	ft_export_without_argv_sort(&declare);
+	ft_linked_list_env(&declare, argum);
+	
+	if (cmds[1] == NULL)
+		ft_print_lst_2_declare_x(declare);
+	
+	ft_print_lst_2(declare);	// check var guardada en lista declare
+	
+
+	// ft_print_lst_2(*envi);
+	// while (finish_list->next)
+	// 	finish_list = finish_list->next;
 	// ft_lstadd_back_str_env(&finish_list, ft_lstnew_str_env(argum[i]));
-	ft_linked_list_env(envi, argum);	// hago lista linkeada con el nodo spliteado. que lo uso luego para hacer sort de minilista
-	printf("\n\n");
-	printf("***********************************\n");
-	ft_print_lst_2_declare_x(*envi);
-	printf("***********************************\n");
-	printf("\n\n");
-	ft_sort_minilist(envi, finish_list);	// y noo quiero guardar esa lista envi con ese nodo, solo para la ordenacion ejemplo con cmd[1] = "Z"; o cmd[1] = "a2";
+	// ft_linked_list_env(envi, argum);	// hago lista linkeada con el nodo spliteado. que lo uso luego para hacer sort de minilista
+	
+	
+	// printf("\n\n");
+	// printf("***********************************\n");
+	// ft_print_lst_2_declare_x(*envi);
+	// printf("***********************************\n");
+	// printf("\n\n");
+	// ft_sort_minilist(envi, finish_list);	// y noo quiero guardar esa lista envi con ese nodo, solo para la ordenacion ejemplo con cmd[1] = "Z"; o cmd[1] = "a2";
 }
 
 /**
@@ -291,7 +308,7 @@ static	char	*ft_parser_arguments(char *cmd)
 static	int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 {
 	t_env	*aux;
-	int len;
+	int 	len;
 
 	aux = *envi;
 	while (aux)
@@ -302,7 +319,9 @@ static	int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 		if (aux->next == NULL)
 			return (FALSE);
 		if (ft_strncmp(cmd[i], aux->content, len) == 0)
+		{
 			return (TRUE);
+		}
 		aux = aux->next;
 	}
 	return (FALSE);
@@ -322,7 +341,6 @@ static	void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **
 	}
 	else
 	{
-		printf("\nhola\n");
 		*aux = (*aux)->prev;
 		(*aux)->next = *new_node;
 		
@@ -360,9 +378,9 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 		}
 		aux = aux->next;
 	}
-	printf("\n\n");
-	ft_print_lst_2(*envi); // solo para check
-	printf("\n\n");
+	// printf("\n\n");
+	// ft_print_lst_2(*envi); // solo para check
+	// printf("\n\n");
 }
 
 /**
@@ -374,18 +392,22 @@ void    ft_export(char **cmd, t_env **envi)
 {
 	char	*aux;
 	int		i;
+	// int 	x;
 
 	aux = NULL;
-	i = -1;
-	printf("cmd[0] = %s\n", cmd[0]);
-	printf("cmd[1] = %s\n", cmd[1]);
-	while (cmd[++i])
+	i = 1;
+	// x = 0;
+	
+	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{
-		if (cmd[1] == NULL)
+		printf("cmd[1] = %s\n", cmd[1]);
+		if (cmd[1] == NULL || cmd == NULL)
 		{
 			printf("ft_export_1\n");
-			ft_export_without_argv_sort(envi);
-			ft_print_lst_2_declare_x(*envi);
+			ft_export_but_not_in_env(envi, cmd[i], cmd);
+			// ft_export_without_argv_sort(envi);
+			// ft_print_lst_2_declare_x(*envi);
+			break;
 		}
 		else if (ft_check_env_var_exists(cmd, envi, i) == TRUE)
 		{
@@ -394,7 +416,7 @@ void    ft_export(char **cmd, t_env **envi)
 		}
 		else
 		{
-			if (ft_is_equal(cmd[1]) && ft_isalpha(cmd[1][0]))
+			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))	// cmd[1] antes y no [i]
 			{
 				printf("ft_export_3\n");
 				aux = ft_parser_arguments(cmd[i]);
@@ -406,10 +428,11 @@ void    ft_export(char **cmd, t_env **envi)
 			else
 			{
 				printf("ft_export_4\n");
-				printf("i = %d\n", i);
-				ft_export_but_not_in_env(envi, cmd[i+1]);
+				ft_export_but_not_in_env(envi, cmd[i], cmd);
 			}
 		}
+		// x++;
+		i++;
 	}
 }
 

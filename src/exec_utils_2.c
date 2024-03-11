@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/07 15:44:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/11 08:11:42 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 
 void	ft_builtin(t_env **envi, char **args, t_info *info)
 {
-	printf("args[0] = %s\n", args[0]);
-	printf("args[1] = %s\n", args[1]);
 	ft_builtins(args, envi, info->env_cpy);
 	
 /* The code snippet `printf("*****************************\n"); ft_print_lst_2(*envi);

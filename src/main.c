@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/08 09:59:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/11 10:28:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ int	main(int argc, char **argv, char **envp)
 		// printf("\n *********************\n");
 		// ft_update_env(&envi, info.env_cpy);
 	}
-	free_info(info);
+	// free_info(info);
 	return (0);
 }

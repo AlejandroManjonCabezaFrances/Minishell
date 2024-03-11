@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 15:21:27 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/11 10:53:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,5 +304,6 @@ t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
 void	ft_simulate_env_i_minishell(t_env **envi);
+void 	ft_linked_list_env_lst_to_lst(t_env **declare, t_env **envi);
 
 #endif

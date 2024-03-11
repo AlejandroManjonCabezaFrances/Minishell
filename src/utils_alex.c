@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_alex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/08 13:32:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/11 11:22:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,18 @@ void ft_linked_list_env(t_env **envi, char **env)
 	// printf("envi = %s\n", (*envi)->content);
 	while (env[i])
 	{
-		printf("***_____***___env[i] = %s\n", env[i]);
+		// printf("***_____***___env[i] = %s\n", env[i]);
 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
 		i++;	
+	}
+}
+
+void ft_linked_list_env_lst_to_lst(t_env **declare, t_env **envi)
+{
+	while (*envi && (*envi)->next)
+	{
+		ft_lstadd_back_str_env(declare, ft_lstnew_str_env((*envi)->content));
+		(*envi) = (*envi)->next;	
 	}
 }
 
