@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/11 13:04:59 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:28:03 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,9 @@
 */
 static	void	ft_print_lst_2_declare_x(t_env *temp)
 {
-	t_env	*last_node;
-
-	last_node = ft_lstlast_ms(temp);
 	while (temp)
 	{
-		if (temp != last_node)
-		{
 			printf("declare -x %s\n", temp->content);
-			temp = temp->next;
-		}
-		else
 			temp = temp->next;
 	}
 }
@@ -166,11 +158,10 @@ static	int	ft_is_equal(char *str)
  * @param	t_env *envi, char *cmd
  * @return	 void
 */
-static	void	ft_export_but_not_in_env(t_env **envi, char *cmd, char **cmds)
+static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, char **cmds)
 {
 	int i;
 	char	**argum;
-	t_env	*declare;
 	t_env	*temp;
 	// t_env	*finish_list;
 	
@@ -178,29 +169,35 @@ static	void	ft_export_but_not_in_env(t_env **envi, char *cmd, char **cmds)
 	i = -1;
 	// finish_list = *envi;
 	temp = *envi;
-	declare = NULL;
-	while (cmd[++i])
-	{
-		if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
-		{
-			ft_putstr_fd("minishell: export: '", 2);
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			// g_signal_code = 1;
-			return ;
-		}
-	}
-	argum = ft_split(cmd, ' ');
-	// printf("***   **argum = %s\n", *argum);
-	
-	ft_linked_list_env_lst_to_lst(&declare, &temp);
-	ft_export_without_argv_sort(&declare);
-	ft_linked_list_env(&declare, argum);
+	argum = NULL;
+	// while (cmd[++i])
+	// {
+	// 	printf("ft_export_but_not_in_env____1\n");
+	// 	if (!ft_isalpha(cmd[0]) /* && ft_is_equal(cmd) */ /* && cmd[i] != ' ' */)		// if (!ft_isalpha(cmd[i]) && cmd[i] != ' ')
+	// 	{
+	// 		ft_putstr_fd("minishell: export: '", 2);
+	// 		ft_putstr_fd(cmd, 2);
+	// 		ft_putstr_fd("': not a valid identifier\n", 2);
+	// 		// g_signal_code = 1;
+	// 		return ;
+	// 	}
+	// }
+	if (cmd != NULL)
+		argum = ft_split(cmd, ' ');
 	
 	if (cmds[1] == NULL)
-		ft_print_lst_2_declare_x(declare);
-	
-	ft_print_lst_2(declare);	// check var guardada en lista declare
+	{
+		printf("(*declare)->prev->content = %s\n", (*declare)->prev->content);
+		// ft_print_lst_2_declare_x(*declare);
+	}
+	else
+	{	
+		ft_linked_list_env_lst_to_lst(declare, &temp);
+		ft_export_without_argv_sort(declare);
+		ft_linked_list_env(declare, argum);
+		ft_print_lst_2(*declare);	// check var guardada en lista declare
+		// ft_print_lst_2_declare_x(declare);
+	}
 	
 
 	// ft_print_lst_2(*envi);
@@ -393,9 +390,11 @@ void    ft_export(char **cmd, t_env **envi)
 	char	*aux;
 	int		i;
 	// int 	x;
+	t_env	*declare;
 
 	aux = NULL;
 	i = 1;
+	declare = NULL;
 	// x = 0;
 	
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
@@ -404,7 +403,7 @@ void    ft_export(char **cmd, t_env **envi)
 		if (cmd[1] == NULL || cmd == NULL)
 		{
 			printf("ft_export_1\n");
-			ft_export_but_not_in_env(envi, cmd[i], cmd);
+			ft_export_but_not_in_env(&declare, envi, cmd[i], cmd);
 			// ft_export_without_argv_sort(envi);
 			// ft_print_lst_2_declare_x(*envi);
 			break;
@@ -428,7 +427,7 @@ void    ft_export(char **cmd, t_env **envi)
 			else
 			{
 				printf("ft_export_4\n");
-				ft_export_but_not_in_env(envi, cmd[i], cmd);
+				ft_export_but_not_in_env(&declare, envi, cmd[i], cmd);
 			}
 		}
 		// x++;

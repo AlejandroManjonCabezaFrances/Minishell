@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 10:53:19 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:42:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,18 @@ typedef struct s_env
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
+	t_declare		*declare;	
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
+
+/* ------ STRUCT LINKED LIST ------ */
+typedef struct s_declare
+{
+	char			*content;
+	struct s_declare	*next;
+	struct s_declare	*prev;
+}	t_declare;
 
 typedef struct s_info
 {

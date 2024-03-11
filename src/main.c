@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 10:28:11 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:43:28 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 	t_inf	inf;
 	char	*cmd_line;
 
+	envi->declare = NULL;
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
