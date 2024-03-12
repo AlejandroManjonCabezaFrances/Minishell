@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/12 12:47:10 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:26:45 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 // int g_signal_code = 0;
 int	exit_status = 0;
 
-void	shell_operation(/* t_env **envi,  */char *line, t_token *list, t_scmd *scmds, t_info info)
+void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info)
 {
 	int	err;
 
-	// ft_print_lst_2(*envi);
 	err = lexer(&list, line);
 	add_history(line);
 	if (err != 1)
@@ -29,7 +28,7 @@ void	shell_operation(/* t_env **envi,  */char *line, t_token *list, t_scmd *scmd
 		err = parser(&list, &scmds, &info);
 		if (err != 1)
 			panic(err, NULL, NULL);
-		err = executer(envi, &scmds, &info);
+		err = executer(&scmds, &info);
 		if (err != 1)
 			panic(err, NULL, NULL);
 	}
@@ -97,29 +96,28 @@ void	ft_update_env(t_env **envi, char **env_cpy)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*envi;
+	t_info	info;
 	t_token	*token_list;
 	t_scmd	*scmds_list;
-	t_info	info;
 	t_inf	inf;
 	char	*cmd_line;
+	t_envi *envi;
 
-	envi = NULL;
-	// envi->declare = NULL;		// si declaro este puntero PETA
+	info.envi = NULL;
+	info.declare = NULL;
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
-	// info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura. NO LA USO
 	// ################ env -i ./minishell ######################
 	if (*envp == NULL)
-		ft_simulate_env_i_minishell(&envi);
+		ft_simulate_env_i_minishell((info).envi);
 	else
-		ft_linked_list_env(&envi, envp);
+		ft_linked_list_env(&(info).envi, envp);
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
 	info.env_cpy = copy_env(envp);
-	init_struct(&envi, &inf);
+	init_struct(&(info).envi, &inf);
 	while (1)
 	{
 		ft_signals();
@@ -129,7 +127,7 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_line[0])
 		{
 			cmd_line[ft_strlen(cmd_line)] = '\0';
-			shell_operation(/* &envi, */ cmd_line, token_list, scmds_list, info);
+			shell_operation(cmd_line, token_list, scmds_list, info);
 		}
 		// printf("\n printenado en el main\n");
 		// ft_print_lst_2(envi);

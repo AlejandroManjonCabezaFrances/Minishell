@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/12 12:49:55 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:13:03 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_builtins(char **cmd,/*  t_env **envi */, char **env)
+void	ft_builtins(char **cmd, t_info *info)
 {
 	(void) envi;
 	printf("entra ft_builtins\n");
@@ -30,7 +30,7 @@ void	ft_builtins(char **cmd,/*  t_env **envi */, char **env)
 	else if (ft_strcmp(*cmd, "export") == 0)
 	{
 		printf("ENTRA EN MI EXPORT?\n\n");
-		ft_export(cmd, envi);
+		ft_export(cmd, info->envi, info->declare);
 	}
 	else if (ft_strcmp(*cmd, "pwd") == 0)
 		ft_pwd(cmd);

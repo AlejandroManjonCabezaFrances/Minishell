@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/12 12:43:39 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:15:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,15 +442,13 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void    ft_export(char **cmd, t_env **envi)
+void    ft_export(char **cmd, t_env *envi, t_env *declare)
 {
 	char	*aux;
 	int		i;
-	// int 	x;
 
 	aux = NULL;
 	i = 1;
-	// x = 0;
 	
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{

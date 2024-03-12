@@ -6,13 +6,13 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/12 12:50:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:06:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_child(/* t_env **envi,  */t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
+void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 {
 	close(pipe_fd[0]);
 	if (scmd->infile != -1)
@@ -27,7 +27,7 @@ void	exec_child(/* t_env **envi,  */t_scmd *scmd, t_info *info, int upstream, in
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(/* envi,  */scmd->cmd_args, info);
+			ft_builtin(scmd->cmd_args, info);
 			exit(1);
 		}
 		else
@@ -36,7 +36,7 @@ void	exec_child(/* t_env **envi,  */t_scmd *scmd, t_info *info, int upstream, in
 	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
-void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
+void	last_child(t_scmd *scmd, t_info *info, int upstream)
 {
 	if (scmd->infile != -1)
 		ft_dup(scmd->infile, STDIN_FILENO);
@@ -48,8 +48,7 @@ void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 	{
 		if (check_builtin(scmd) == 1)
 		{
-			ft_builtin(/* envi,  */scmd->cmd_args, info);
-			// ft_print_lst_2(*envi);
+			ft_builtin(scmd->cmd_args, info);
 			return ;
 			// exit(1);
 		}
@@ -58,9 +57,9 @@ void	last_child(t_env **envi, t_scmd *scmd, t_info *info, int upstream)
 	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
-void	ft_builtin(/* t_env **envi,  */char **args, t_info *info)
+void	ft_builtin(char **args, t_info *info)
 {
-	ft_builtins(args,/*  envi,  */info->env_cpy); // solo pasar info *******************************
+	ft_builtins(args,info);
 	
 /* The code snippet `printf("*****************************\n"); ft_print_lst_2(*envi);
 printf("\n******************+\n\n");` is printing the contents of a linked list pointed to by the
