@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 15:42:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:48:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+/* ------ STRUCT LINKED LIST DECLARE------ */
+typedef struct s_declare
+{
+	char			*content;
+	struct s_declare	*next;
+	struct s_declare	*prev;
+}	t_declare;
+
 /* ------ STRUCT LINKED LIST ------ */
 typedef struct s_env
 {
@@ -60,18 +68,11 @@ typedef struct s_env
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
-	t_declare		*declare;	
+	t_declare		*declare;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
 
-/* ------ STRUCT LINKED LIST ------ */
-typedef struct s_declare
-{
-	char			*content;
-	struct s_declare	*next;
-	struct s_declare	*prev;
-}	t_declare;
 
 typedef struct s_info
 {
@@ -80,6 +81,7 @@ typedef struct s_info
 	char			**bin_paths;
 	char			**env_cpy;
 	t_env			*envi;
+	t_env			*declare;
 }	t_info;
 
 typedef struct s_scmd
@@ -225,7 +227,7 @@ int		get_cmd(t_scmd *scmds_list, t_info *info);
 int		check_path(t_scmd *scmd);
 
 // int		executer(t_scmd **scmds_list, t_info *info);
-int		executer(t_env **envi, t_scmd **scmds_list, t_info *info);
+int		executer(/* t_env **envi,  */t_scmd **scmds_list, t_info *info);
 
 /* ------ LISTS ------ */
 t_token	*ms_lstnew(void);
@@ -303,16 +305,21 @@ void	ft_env(t_env **envi, char **cmd);
 void    ft_exit(char **cmd, t_env *envi);
 
 /* ------ UTILS_ALEX ------ */
-int		ft_strcmp(const char *s1, const char *s2);
-void	ft_linked_list_env(t_env **envi, char **env);
-void	ft_print_lst_2(t_env *temp);
-void	del_ms(void *content);
-void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *));
-t_env	*ft_lstlast_ms(t_env *lst);
-t_env	*ft_lstnew_str_env(char *str_env);
-void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
-void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
-void	ft_simulate_env_i_minishell(t_env **envi);
-void 	ft_linked_list_env_lst_to_lst(t_env **declare, t_env **envi);
+int			ft_strcmp(const char *s1, const char *s2);
+void		ft_linked_list_env(t_env **envi, char **env);
+void		ft_print_lst_2(t_env *temp);
+void		del_ms(void *content);
+void		ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *));
+t_env		*ft_lstlast_ms(t_env *lst);
+t_env		*ft_lstnew_str_env(char *str_env);
+void		ft_lstadd_back_str_env(t_env **envi, t_env *node);
+void		ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
+void		ft_simulate_env_i_minishell(t_env **envi);
+void		ft_linked_list_env_lst_to_lst(t_declare **declare, t_env **envi);
+void		ft_linked_list_env_to_declare(t_declare **declare, char **env);
+void		ft_print_lst_2_to_declare(t_declare *temp);
+void		ft_lstadd_back_str_env_to_declare(t_declare **declare, t_declare *node);
+t_declare	*ft_lstnew_str_env_to_declare(char *str_env);
+void		ft_print_double_pointer(char **env_array);
 
 #endif

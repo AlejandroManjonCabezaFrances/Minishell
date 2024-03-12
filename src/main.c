@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 15:43:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:47:10 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // int g_signal_code = 0;
 int	exit_status = 0;
 
-void	shell_operation(t_env **envi, char *line, t_token *list, t_scmd *scmds, t_info info)
+void	shell_operation(/* t_env **envi,  */char *line, t_token *list, t_scmd *scmds, t_info info)
 {
 	int	err;
 
@@ -89,18 +89,6 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
-void	ft_print_double_pointer(char **double_pointer)
-{
-	int i;
-	
-	i = 0;
-	while (double_pointer[i])
-	{
-		printf("double_pointer[%d] = %s\n", i, double_pointer[i]);
-		i++;
-	}
-}
-
 void	ft_update_env(t_env **envi, char **env_cpy)
 {
 	ft_print_double_pointer(env_cpy);
@@ -109,19 +97,19 @@ void	ft_update_env(t_env **envi, char **env_cpy)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_env	*envi;
 	t_token	*token_list;
 	t_scmd	*scmds_list;
 	t_info	info;
-	t_env	*envi;
 	t_inf	inf;
 	char	*cmd_line;
 
-	envi->declare = NULL;
+	envi = NULL;
+	// envi->declare = NULL;		// si declaro este puntero PETA
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
-	envi = NULL;
-	info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura. NO LA USO
+	// info.envi = NULL;	// iniciar *envi dentro de info que apunta a mi estructura. NO LA USO
 	// ################ env -i ./minishell ######################
 	if (*envp == NULL)
 		ft_simulate_env_i_minishell(&envi);
@@ -141,7 +129,7 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_line[0])
 		{
 			cmd_line[ft_strlen(cmd_line)] = '\0';
-			shell_operation(&envi, cmd_line, token_list, scmds_list, info);
+			shell_operation(/* &envi, */ cmd_line, token_list, scmds_list, info);
 		}
 		// printf("\n printenado en el main\n");
 		// ft_print_lst_2(envi);

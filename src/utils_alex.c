@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 11:22:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 10:50:41 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 }
 
 /**
- * Create linked list of environment
+ * Create linked list of environment with struct t_env
  * @param	t_env **t_env, char **env
  * @return	void
 */
@@ -106,15 +106,36 @@ void ft_linked_list_env(t_env **envi, char **env)
 	}
 }
 
-void ft_linked_list_env_lst_to_lst(t_env **declare, t_env **envi)
+/**
+ * Create linked list of environment with struct t_declare
+ * @param	t_env **t_env, char **env
+ * @return	void
+*/
+void ft_linked_list_env_to_declare(t_declare **declare, char **env)
 {
-	while (*envi && (*envi)->next)
+	int i;
+
+	i = 0;
+	// printf("envi = %s\n", (*envi)->content);
+	while (env[i])
 	{
-		ft_lstadd_back_str_env(declare, ft_lstnew_str_env((*envi)->content));
-		(*envi) = (*envi)->next;	
+		// printf("***_____***___env[i] = %s\n", env[i]);
+		ft_lstadd_back_str_env_to_declare(declare, ft_lstnew_str_env_to_declare(env[i]));
+		i++;	
 	}
 }
 
+// NO POSIBLE T_ENV TO T_DECLARE
+// void ft_linked_list_env_lst_to_lst(t_declare **declare, t_env **envi)
+// {
+// 	while (*envi && (*envi)->next)
+// 	{
+// 		ft_lstadd_back_str_env_to_declare(declare, ft_lstnew_str_env((*envi)->content));
+// 		(*envi) = (*envi)->next;	
+// 	}
+// }
+
+//NO LA USO, SOLO PARA CHECK
 // void ft_print_lst_3(t_env **temp)
 // {
 // 	printf("my PRINT: env addi = %p\n", *temp);
@@ -132,6 +153,18 @@ void ft_print_lst_2(t_env *temp)
 	{
 		printf("temp = %s\n", temp->content);
 		temp = temp->next;
+	}
+}
+
+void	ft_print_double_pointer(char **env_array)
+{
+	int i;
+	
+	i = 0;
+	while (env_array[i])
+	{
+		printf("env_array[%d] = %s\n", i, env_array[i]);
+		i++;
 	}
 }
 
@@ -188,6 +221,20 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	return (node);
 }
 
+t_declare	*ft_lstnew_str_env_to_declare(char *str_env)
+{
+	t_declare	*node;
+
+	node = NULL;
+	node = malloc(sizeof(t_declare));
+	if (node == NULL)
+		return (NULL);
+	node->content = ft_strdup(str_env);
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
+}
+
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 {
 	t_env	*aux;
@@ -196,6 +243,25 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 	if (*envi == NULL /* || envi == NULL */)
 	{
 		*envi = node;
+		return ;
+	}
+	else
+	{
+		while (aux->next != NULL)
+			aux = aux->next;
+		aux->next = node;
+		node->prev = aux;
+	}
+}
+
+void	ft_lstadd_back_str_env_to_declare(t_declare **declare, t_declare *node)
+{
+	t_declare	*aux;
+
+	aux = *declare;
+	if (*declare == NULL /* || declare == NULL */)
+	{
+		*declare = node;
 		return ;
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:06:13 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:54:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 08:52:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,18 +279,6 @@ char	*ft_find_content_var_env(t_env *envi, char *var)
 	}
 	printf("%s: not a valid identifier\n", var);
 	return ("ERROR");
-}
-
-void	ft_print_double_pointer(char **env_array)
-{
-	int i;
-	
-	i = 0;
-	while (env_array[i])
-	{
-		printf("env_array[%d] = %s\n", i, env_array[i]);
-		i++;
-	}
 }
 
 /**

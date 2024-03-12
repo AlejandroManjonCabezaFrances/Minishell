@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/11 15:28:03 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:43:39 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@
  * @param	t_env *temp
  * @return	void
 */
-static	void	ft_print_lst_2_declare_x(t_env *temp)
+static	void	ft_print_lst_2_declare(t_declare *temp)
 {
+	printf("*******_1");
 	while (temp)
 	{
 			printf("declare -x %s\n", temp->content);
+			printf("*******_2");
 			temp = temp->next;
+			printf("*******_3");
 	}
 }
 
@@ -72,32 +75,33 @@ static	void	ft_export_parsed_variable(char *cmd, t_env **envi)
  * @param	t_env *envi
  * @return	void
 */
-static	void	ft_export_without_argv_sort(t_env **envi)
-{
-	t_env	*temp;
-	t_env	*head;
-	char	*aux;
+// static	void	ft_export_without_argv_sort(t_declare **declare)
+// {
+// 	t_declare	*temp;
+// 	t_declare	*head;
+// 	char	*aux;
 
-	head = *envi;
-	temp = *envi;
-	while (temp->next != NULL)
-	{
-		if (ft_strcmp(temp->content, temp->next->content) > 0)
-		{
-			aux = temp->content;
-			temp->content = temp->next->content;
-			temp->next->content = aux;
-			temp = head;
-		}
-		else
-			temp = temp->next;
-	}
-	// printf("\n\n");
-	// printf("***********************************\n");
-	// ft_print_lst_2_declare_x(*envi);
-	// printf("***********************************\n");
-	// printf("\n\n");
-}
+// 	head = *declare;
+// 	temp = *declare;
+// 	printf("(*declare)->content = %s\n", (*declare)->content);
+// 	while (temp->next != NULL)
+// 	{
+// 		if (ft_strcmp(temp->content, temp->next->content) > 0)
+// 		{
+// 			aux = temp->content;
+// 			temp->content = temp->next->content;
+// 			temp->next->content = aux;
+// 			temp = head;
+// 		}
+// 		else
+// 			temp = temp->next;
+// 	}
+// 	// printf("\n\n");
+// 	// printf("***********************************\n");
+// 	// ft_print_lst_2_declare_x(*envi);
+// 	// printf("***********************************\n");
+// 	// printf("\n\n");
+// }
 
 /**
  * Alphabetically sorts the minilist after the first sorted list
@@ -152,24 +156,71 @@ static	int	ft_is_equal(char *str)
 	return (FALSE);
 }
 
+static	char	**ft_convert_list_to_double_pointer(t_env **envi)
+{
+	t_env	*temp;
+	char	**env_array;
+	int		count;
+	int 	i;
+	
+	temp = *envi;
+	count = 0;
+	i = 0;
+	while(temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (env_array == NULL)
+		return (NULL);
+	temp = *envi;
+	count = 0;
+	while (temp)
+	{
+		env_array[count] = ft_strdup(temp->content);
+		if (env_array[count] == NULL)
+		{
+			i = 0;
+			while (i < count)
+			{
+				free(env_array[i]);
+				i++;
+			}
+			free(*env_array);
+			break;	// checkear si es correcto este break
+		}
+		temp = temp->next;
+		count++;
+	}
+	env_array[count] = NULL;
+	return (env_array);
+}
+
+
 /**
  * Splits arguments without '=', not numbers and creates two alphabetically
  * ordered lists
  * @param	t_env *envi, char *cmd
  * @return	 void
 */
-static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, char **cmds)
+static	void	ft_export_but_not_in_env(t_declare *declare, t_env **envi, char *cmd, char **cmds)
 {
 	int i;
 	char	**argum;
-	t_env	*temp;
+	char	**env_array;
+	// t_env	*temp;
 	// t_env	*finish_list;
 	
 
 	i = -1;
 	// finish_list = *envi;
-	temp = *envi;
+	// temp = *envi;
 	argum = NULL;
+	printf("hasta donde lleha_1\n");
+	if (cmd != NULL)
+		declare = NULL;
+	printf("hasta donde lleha_2\n");
 	// while (cmd[++i])
 	// {
 	// 	printf("ft_export_but_not_in_env____1\n");
@@ -182,24 +233,30 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 	// 		return ;
 	// 	}
 	// }
+
 	if (cmd != NULL)
 		argum = ft_split(cmd, ' ');
-	
+	printf("hasta donde lleha_3\n");
 	if (cmds[1] == NULL)
 	{
-		printf("(*declare)->prev->content = %s\n", (*declare)->prev->content);
-		// ft_print_lst_2_declare_x(*declare);
+		printf("entra en el if porque cmd[1] tiene que ser null\n");
+		// printf("declare->prev->content = %s\n", declare->prev->content);
+		// ft_export_without_argv_sort(&declare);
+		ft_print_lst_2_declare(declare);	// check var guardada en lista declare
+		printf("pasa?\n");
 	}
 	else
 	{	
-		ft_linked_list_env_lst_to_lst(declare, &temp);
-		ft_export_without_argv_sort(declare);
-		ft_linked_list_env(declare, argum);
-		ft_print_lst_2(*declare);	// check var guardada en lista declare
-		// ft_print_lst_2_declare_x(declare);
+		env_array = ft_convert_list_to_double_pointer(envi);
+		printf("\n********\n");
+		ft_print_double_pointer(env_array);
+		printf("\n********\n");
+		ft_linked_list_env_to_declare(&declare, env_array);		// crear funcion que pase lista link envi/temp a doble puntero
+		ft_linked_list_env_to_declare(&declare, argum);
+				
+		ft_print_lst_2_declare(declare);
 	}
-	
-
+	printf("hasta donde lleha_4\n");
 	// ft_print_lst_2(*envi);
 	// while (finish_list->next)
 	// 	finish_list = finish_list->next;
@@ -390,11 +447,9 @@ void    ft_export(char **cmd, t_env **envi)
 	char	*aux;
 	int		i;
 	// int 	x;
-	t_env	*declare;
 
 	aux = NULL;
 	i = 1;
-	declare = NULL;
 	// x = 0;
 	
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
@@ -403,7 +458,11 @@ void    ft_export(char **cmd, t_env **envi)
 		if (cmd[1] == NULL || cmd == NULL)
 		{
 			printf("ft_export_1\n");
-			ft_export_but_not_in_env(&declare, envi, cmd[i], cmd);
+			printf("cmd[%d] = %s\n", i, cmd[i]);
+			
+			ft_export_but_not_in_env((*envi)->declare, envi, cmd[i], cmd);
+			if ((*envi)->declare == NULL)
+				printf("(*envi)->declare es NULLLLLLLLLL\n");
 			// ft_export_without_argv_sort(envi);
 			// ft_print_lst_2_declare_x(*envi);
 			break;
@@ -427,7 +486,7 @@ void    ft_export(char **cmd, t_env **envi)
 			else
 			{
 				printf("ft_export_4\n");
-				ft_export_but_not_in_env(&declare, envi, cmd[i], cmd);
+				ft_export_but_not_in_env((*envi)->declare, envi, cmd[i], cmd);
 			}
 		}
 		// x++;
