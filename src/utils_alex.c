@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 14:59:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:08:17 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,51 @@ void	ft_simulate_env_i_minishell(t_env **envi)
 	(*envi)->flag = 1;
 }
 
+void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
+{
+	t_env	*aux;
+	t_env	*aux2;
+	t_env	*node_free;
+	t_env	*new_node;
+	int		len;
+
+	aux = envi;
+	aux2 = NULL;
+	node_free = NULL;
+	len = 0;
+	while (str[len] != '=')
+		len++;
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, str, len) == 0)
+		{
+			node_free = aux;
+			aux2 = aux->next;
+			aux = aux->prev;
+			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+			aux->next = new_node;
+			new_node->prev = aux;
+			if (aux2)
+			{
+				aux2->prev = new_node;
+				new_node->next = aux2;
+			}
+			else
+				new_node->next = NULL;
+			ft_lstdelone_ms(node_free, &del_ms);
+			break;
+		}
+		aux = aux->next;
+	}
+	// ft_print_lst_2(envi); // solo para check
+}
+
 /**
  * Replaces the existing environment variable node
  * @param	t_env *envi, char *str
  * @return	void
 */
-void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
+/* void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
 	t_env	*node_free;
@@ -51,21 +90,28 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 		len++;
 	while (aux)
 	{
-		if (ft_strncmp(aux->content, str, len + 1) == 0)
+		if (ft_strncmp(aux->content, str, len) == 0)
 		{
 			node_free = aux;
 			aux = aux->prev;
 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-			aux->next->next->prev = new_node;
-			new_node->next = aux->next->next;
 			aux->next = new_node;
+			new_node->prev = aux;
+			printf("%p\n", aux->next->next);
+			if (aux->next->next)
+			{
+				new_node->next = aux->next->next;
+				aux->next->next->prev = new_node;
+			}
+			else
+				new_node->next = NULL;
 			ft_lstdelone_ms(node_free, &del_ms);
 			break;
 		}
 		aux = aux->next;
 	}
 	// ft_print_lst_2(envi); // solo para check
-}
+} */
 
 /**
  * Compares the two strings it receives and returns something other than 0 if

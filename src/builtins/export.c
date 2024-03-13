@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/13 15:32:23 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:25:45 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,38 +378,22 @@ void    ft_export(char **cmd, t_env *envi, t_env **declare)
 	i = 1;
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{
-		printf("cmd[1] = %s\n", cmd[1]);
 		if (cmd[1] == NULL || cmd == NULL)
 		{
-			printf("ft_export_1\n");
-			printf("cmd[%d] = %s\n", i, cmd[i]);
-			
 			ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);
 			break;
 		}
 		else if (ft_check_env_var_exists(cmd, &envi, i) == TRUE)
-		{
-			printf("ft_export_2\n");
 			ft_replace_node_parsed(&envi, cmd[i]);
-		}
 		else
 		{
 			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))	// cmd[1] antes y no [i]
 			{
-				printf("ft_export_3\n");
 				aux = ft_parser_arguments(cmd[i]);
 				ft_export_parsed_variable(aux, &envi);
-				// printf("*****************************\n");
-				// ft_print_lst_2(*envi);
-				// printf("\n******************+\n");
 			}
 			else
-			{
-				printf("ft_export_4\n");
 				ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);
-				// printf("ESTOY AL FINSASSL DEL EXPORT\n");
-				// ft_print_lst_2(declare);
-			}
 		}
 		i++;
 	}

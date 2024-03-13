@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:15:00 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:54:15 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static	void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpw
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(*envi); // solo para check
+	// ft_print_lst_2(*envi); // solo para check
 }
 
 /**
@@ -140,11 +140,15 @@ static	void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
+		printf("entra en el if-->ft_replace_node_tail_header\n");
 		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
 		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
 	}
 	else
 	{
+		printf("entra en el if-->ft_replace_node\n");
+		// ft_print_lst_2(info->envi);
+		printf("\n");
 		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node(envi, "PWD=", envi->pwd);
 	}
@@ -261,21 +265,33 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 
 	path_home = NULL;
 	ok_change_dir = 0;
+	printf("cd_____1\n");
 	if (cmd[1] != NULL)
+	{
+		printf("cd_____2\n");
 		ok_change_dir = ft_cd_with_argv(cmd, envi, ok_change_dir);
+		printf("cd_____3\n");
+	}
 	else
 	{
+		printf("cd_____4\n");
 		if (*env == NULL)
 		{
 			ft_putstr_fd("minisell: cd: HOME not set\n", 2);
 			// g_signal_code = 1;
 			return (1);
 		}
+		printf("cd_____5\n");
 		path_home= ft_find_path_env(envi, "HOME=");
 		ft_change_directory(envi, path_home);
+		printf("cd_____6\n");
 	}
 	if (!ok_change_dir)
+	{
+		printf("cd_____7\n");
 		ft_update_env_pwd_oldpwd(envi);
+		printf("cd_____8\n");
+	}
 	return (0);
 }
 
