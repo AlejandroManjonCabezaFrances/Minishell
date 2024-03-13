@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/12 15:21:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:56:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_env
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
-	t_declare		*declare;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
@@ -152,7 +151,7 @@ extern int	exit_status;
 void	disable_ctrl_c_printing_chars(void);
 void	init_struct(t_env **envi, t_inf *info);
 int		check_argc(int argc);
-void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info info);
+void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info);
 
 /* ------ LEXER ------ */
 int		lexer(t_token **token_list, char *input);
@@ -204,7 +203,7 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
 void	last_child(t_scmd *scmd, t_info *info, int upstream);
 
 void	ft_builtin(char **args, t_info *info);
-void	ft_builtins(char **cmd, t_info *info)
+void	ft_builtins(char **cmd, t_info *info);
 
 void	parent_close(int fd_1, int fd_2, t_scmd *scmd);
 int		check_builtin(t_scmd *scmd);
@@ -280,7 +279,7 @@ void	ft_echo(char **cmd);
 	/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
-void    ft_export(char **cmd, t_env *envi, t_env *declare);
+void    ft_export(char **cmd, t_env *envi, t_env **declare);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */
@@ -303,7 +302,6 @@ void		ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
 void		ft_simulate_env_i_minishell(t_env **envi);
 void		ft_linked_list_env_lst_to_lst(t_declare **declare, t_env **envi);
 void		ft_linked_list_env_to_declare(t_declare **declare, char **env);
-void		ft_print_lst_2_to_declare(t_declare *temp);
 void		ft_lstadd_back_str_env_to_declare(t_declare **declare, t_declare *node);
 t_declare	*ft_lstnew_str_env_to_declare(char *str_env);
 void		ft_print_double_pointer(char **env_array);
