@@ -36,7 +36,6 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 	ms_lstclear(&list);
 	ms_close_fds(&scmds);
 	ms_cmdclear(&scmds);
-	
 }
 
 int	check_argc(int argc)
@@ -128,9 +127,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
-		printf("\n int_main\n");
-		ft_print_lst_2(info.envi);
-		printf("\n");
+		// printf("\n int_main\n");
+		// ft_print_lst_2(info.envi);
+		// printf("\n");
 		}
 		// ft_update_env(&envi, info.env_cpy);
 	}
