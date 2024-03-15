@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 17:13:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:44:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void	ft_builtins(char **cmd, t_info *info)
 	}
 	else if (ft_strcmp(*cmd, "cd") == 0)
 	{
+		printf("ENTRA EN MI CD?\n\n");
 		ft_cd(cmd, info->envi, info->env_cpy);
-		printf("\n ft_builtins\n");
-		ft_print_lst_2(info->envi);
-		printf("\n");
 	}
 	else if (ft_strcmp(*cmd, "exit") == 0)
+	{
+		printf("ENTRA EN MI EXIT?\n\n");
 		ft_exit(cmd, info->envi);
+	}
 } 

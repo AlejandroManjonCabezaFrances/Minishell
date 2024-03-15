@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/08 12:14:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/15 09:38:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,70 +84,3 @@ void	ft_unset(char **cmd, t_env **envi)
 	}
 	// ft_print_lst_2(*envi);		// para checkear
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env	*envi;
-	
-// 	envi = NULL;
-
-// 	if (*env == NULL)
-// 		ft_simulate_env_i_minishell(&envi);
-// 	else
-// 		ft_linked_list_env(&envi, env);
-	
-//     (void) argc;
-//     (void) argv;
-
-// 	/* ejemplo --> primer variable env en 42 */	
-// 	char *cmd[4];
-// 	cmd[0] = "unset";
-// 	cmd[1] = "SECURITYSESSIONID";
-// 	cmd[2] = "MallocNanoZone";
-// 	cmd[3] = NULL;
-
-// 	/* ejemplo --> primer variable env en Linux */	
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "HOSTTYPE";
-// 	// cmd[2] = NULL;
-
-// 	/* ejemplo --> penúltima variable env en Linux*/
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "PATH";
-// 	// cmd[2] = NULL;
-
-// 	/* ejemplo --> última variable env en Linux*/
-// 	// char *cmd[3];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "_";
-// 	// cmd[2] = NULL;
-	
-// 	// char *cmd[4];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "PWD";
-// 	// cmd[2] = "OLDPWD";
-// 	// cmd[3] = NULL;
-// 	// tratado como dos argumentos separados--> unset PWD OLDPWD
-	
-// 	// char *cmd[4];
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = "SHLVL";
-// 	// cmd[2] = "ZSH";
-// 	// cmd[3] = NULL;
-	
-// 	// char *cmd[2];
-	
-// 	// cmd[0] = "4";
-// 	// cmd[1] = NULL;
-// 	// cmd[0] = "";
-// 	// cmd[1] = NULL;
-// 	// cmd[0] = "unset";
-// 	// cmd[1] = NULL;
-// 	ft_builtins(cmd, &envi, env);
-// 	printf("\n\n");
-// 	ft_print_lst_2(envi);
-// 	printf("\n\n");
-// 	return (0);
-// }

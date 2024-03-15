@@ -42,35 +42,3 @@ void    ft_pwd(char **cmd)
     }
     return ;
 }
-
-// int main(int argc, char **argv, char **env) 
-// {
-// 	t_env	*envi;
-// 	(void) 	argc;
-//  	(void) 	argv;
-	
-// 	envi = NULL;
-
-	// ################ env -i ./minishell ######################
-	// if (*env == NULL)
-	// {
-	// 	ft_simulate_env_i_minishell(&envi);
-	// }
-	// // ################ env -i ./minishell ######################
-	// else
-	// {
-	// 	ft_linked_list_env(&envi, env);
-	// }
-
-// 	char *cmd[2];
-// 	cmd[0] = "pwd";
-// 	cmd[1] = NULL;
-
-// 	// char *cmd[3];
-// 	// cmd[0] = "pwd";
-// 	// cmd[1] = "!";
-// 	// cmd[2] = NULL;
-// 	ft_builtins(cmd, envi, env);
-
-//     return (0);
-// }

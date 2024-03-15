@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/07 11:16:26 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:38:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,55 +104,3 @@ void	ft_exit(char **cmd, t_env *envi)
 		}
 	}
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env   *envi;
-// 	(void) 	argc;
-// 	(void) 	argv;
-
-// 	envi = NULL;
-// 	if (*env == NULL)
-// 	{
-// 		ft_simulate_env_i_minishell(&envi);
-// 	}
-// 	// ################ env -i ./minishell ######################
-// 	else
-// 	{
-// 		ft_linked_list_env(&envi, env);
-// 	}
-
-// 	ft_linked_list_env(&envi, env);
-	
-// 	char    *cmd[4];
-// 	cmd[0] = "exit";
-// 	cmd[1] = "1";
-// 	cmd[2] = "2";
-// 	cmd[3] = NULL;
-
-// 	// char    *cmd[5];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "1";
-// 	// cmd[2] = "2";
-// 	// cmd[3] = "3";
-// 	// cmd[4] = NULL;
-	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "1";
-// 	// cmd[1] = NULL;
-	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = "a";
-// 	// cmd[2] = NULL;
-	
-// 	// char    *cmd[3];
-// 	// cmd[0] = "exit";
-// 	// cmd[1] = ".";
-// 	// cmd[2] = NULL;
-	
-// 	ft_builtins(cmd, envi, env);
-// 	ft_print_lst_2(envi);
-// 	return (0);
-// }

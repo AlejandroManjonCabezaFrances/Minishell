@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 14:56:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:04:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ typedef struct s_token
 	char			*content;
 	struct s_token	*next;
 }	t_token;
-
-/* ------ STRUCT LINKED LIST DECLARE------ */
-typedef struct s_declare
-{
-	char			*content;
-	struct s_declare	*next;
-	struct s_declare	*prev;
-}	t_declare;
 
 /* ------ STRUCT LINKED LIST ------ */
 typedef struct s_env
@@ -246,12 +238,6 @@ t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_linked_list_env(t_env **envi, char **env);
 
-/* ------ ENVI ------ */
-// char	**copy_env(char **env);
-// void	ft_when_env_is_null(t_inf *info);
-// void	ft_env_is_null(t_env *envi, t_inf *info, char **env);
-// void	ft_when_env_is_null(t_env **envi, t_inf *info);
-
 /* ------ SANDBOX2 ------ */
 // int		ft_strcmp(const char *s1, const char *s2);
 // // char	*ft_strjoin_2(char *s1, char *s2);
@@ -272,7 +258,7 @@ void	ft_linked_list_env(t_env **envi, char **env);
 // void	ft_lstdelone_mshell(t_env *env_copy);
 
 /* ----------- BUILTINS ----------- */
-// void		ft_builtins(char **cmd, t_env **envi, char **env);
+void	ft_builtins(char **cmd, t_info *info);
 
 	/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
@@ -290,20 +276,17 @@ void	ft_env(t_env **envi, char **cmd);
 void    ft_exit(char **cmd, t_env *envi);
 
 /* ------ UTILS_ALEX ------ */
-int			ft_strcmp(const char *s1, const char *s2);
-void		ft_linked_list_env(t_env **envi, char **env);
-void		ft_print_lst_2(t_env *temp);
-void		del_ms(void *content);
-void		ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *));
-t_env		*ft_lstlast_ms(t_env *lst);
-t_env		*ft_lstnew_str_env(char *str_env);
-void		ft_lstadd_back_str_env(t_env **envi, t_env *node);
-void		ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
-void		ft_simulate_env_i_minishell(t_env **envi);
-void		ft_linked_list_env_lst_to_lst(t_declare **declare, t_env **envi);
-void		ft_linked_list_env_to_declare(t_declare **declare, char **env);
-void		ft_lstadd_back_str_env_to_declare(t_declare **declare, t_declare *node);
-t_declare	*ft_lstnew_str_env_to_declare(char *str_env);
-void		ft_print_double_pointer(char **env_array);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_linked_list_env(t_env **envi, char **env);
+void	ft_print_lst_2(t_env *temp);
+void	del_ms(void *content);
+void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *));
+t_env	*ft_lstlast_ms(t_env *lst);
+t_env	*ft_lstnew_str_env(char *str_env);
+void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
+void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
+void	ft_simulate_env_i_minishell(t_env **envi);
+void	ft_print_double_pointer(char **env_array);
+void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
 
 #endif

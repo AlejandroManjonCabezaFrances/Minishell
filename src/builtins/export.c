@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/13 16:25:45 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:38:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,73 +398,3 @@ void    ft_export(char **cmd, t_env *envi, t_env **declare)
 		i++;
 	}
 }
-
-// int main(int argc, char **argv, char **env) 
-// {
-// 	t_env	*envi;
-// 	// char 	*cmd[3];
-// 	char 	*cmd[4];
-//     (void) 	argc;
-//     (void) 	argv;
-
-// 	envi = NULL;
-
-// 		// ################ env -i ./minishell ######################
-// 	if (*env == NULL)
-// 	{
-// 		ft_simulate_env_i_minishell(&envi);
-// 	}
-// 	else
-// 	{
-// 		ft_linked_list_env(&envi, env);
-// 	}
-// 	// ft_linked_list_env(&envi ,env);
-// 	cmd[0] = "export";
-// 	// cmd[1] = NULL;
-	
-// 	// cmd[1] = "SECURITYSESSIONID=alex";
-// 	// cmd[2] = "USER=alvaro";
-// 	// cmd[3] = NULL;
-
-// 	// cmd[1] = "USER=alvaro";
-// 	// cmd[2] = "MallocNanoZone=alex";
-// 	// cmd[3] = NULL;
-	
-// 	// cmd[1] = "ALEX=alex";
-// 	// cmd[2] = "ALVARO=alvaro";
-// 	// cmd[3] = NULL;
-	
-// 	// cmd[1] = "LEX= alex";
-// 	// cmd[1] = "ALEX=alex";
-// 	// cmd[1] = "ALEX=alex espacio";
-// 	// cmd[1] = "a alex=hola que";
-	
-// 	// cmd[1] = "2";		// no exportar	-ok-
-// 	// cmd[1] = "2a";		// no exportar	-ok-
-// 	// cmd[1] = "2a=";		// no exportar			-ok-
-// 	// cmd[1] = "a2";		// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-	
-// 	// cmd[1] = "a2=";		// si exportar
-// 	// cmd[1] = "a2a=";		// si exportar
-// 	// cmd[1] = "PWD=primer_nodo_sin_env_i";
-// 	// cmd[1] = "SECURITYSESSIONID=sustituir_contenido_de_esta_variable"; 	// primer nodo
-// 	// cmd[1] = "USER=PAPIII_ESTA_HECHOOOOOOOOOOOOO";					  	// medio nodo
-// 	// cmd[1] = "USER=PAPIII_ESTA HECHOOOOOOOOOOOOO";
-// 	// cmd[1] = "_=te_cambio_el_contenido";									// ultimo nodo, no exportar nunca
-	
-// 	// cmd[1] = "Z";				// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-// 	// cmd[1] = "1";
-// 	// cmd[1] = "1 2 3";			// ok
-// 	// cmd[1] = "PRUEBA";			// no exportar, solo al declare "yo lo hago al declare pero tambien la exporto"
-// 	// cmd[2] = NULL;					// sin el env, hace lo mismo que con, no exporta, pero si en el declare alfabeticamente	
-// 	ft_builtins(cmd, &envi, env);
-// 	printf("\n\n");
-// 	printf("***********************************\n");
-// 	ft_print_lst_2(envi);
-// 	printf("***********************************\n");
-// 	printf("\n\n");
-//     return (0);
-// }
-
-// ** FALLO con cmd[1] = "Z"; y  cmd[1] = "PRUEBA"; **
-//** tambien tengo que guarar la lista **

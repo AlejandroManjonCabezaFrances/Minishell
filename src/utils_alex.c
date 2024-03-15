@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_alex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 19:08:17 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:14:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,74 @@ void	ft_simulate_env_i_minishell(t_env **envi)
 	(*envi)->flag = 1;
 }
 
+/**
+ * Replaces the existing environment variable node
+ * @param	t_env *envi, char *str, char *pwd_oldpwd
+ * @return	void
+*/
+// void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
+// {
+// 	t_env	*aux;
+// 	t_env	*aux2;
+// 	t_env	*node_free;
+// 	t_env	*new_node;
+// 	int		len;
+
+// 	aux = envi;
+// 	aux2 = NULL;
+// 	node_free = NULL;
+// 	len = 0;
+// 	while (str[len] != '=')
+// 		len++;
+// 	while (aux)
+// 	{
+// 		if (ft_strncmp(aux->content, str, len) == 0)
+// 		{
+// 			node_free = aux;
+// 			aux2 = aux->next;
+// 			aux = aux->prev;
+// 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
+// 			aux->next = new_node;
+// 			new_node->prev = aux;
+// 			if (aux2)
+// 			{
+// 				aux2->prev = new_node;
+// 				new_node->next = aux2;
+// 			}
+// 			else
+// 				new_node->next = NULL;
+// 			ft_lstdelone_ms(node_free, &del_ms);
+// 			break;
+// 		}
+// 		aux = aux->next;
+// 	}
+// 	// ft_print_lst_2(envi); // solo para check
+// }
+
+/**
+ * Replaces the existing environment variable node
+ * @param	t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node
+ * @return	void
+*/
+void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node)
+{
+	aux->next = new_node;
+	new_node->prev = aux;
+	if (aux2)
+	{
+		aux2->prev = new_node;
+		new_node->next = aux2;
+	}
+	else
+		new_node->next = NULL;
+	ft_lstdelone_ms(node_free, &del_ms);
+}
+
+/**
+ * Replaces the existing environment variable node
+ * @param	t_env *envi, char *str, char *pwd_oldpwd
+ * @return	void
+*/
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
@@ -54,64 +122,12 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 			aux2 = aux->next;
 			aux = aux->prev;
 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-			aux->next = new_node;
-			new_node->prev = aux;
-			if (aux2)
-			{
-				aux2->prev = new_node;
-				new_node->next = aux2;
-			}
-			else
-				new_node->next = NULL;
-			ft_lstdelone_ms(node_free, &del_ms);
+			ft_trim(aux, aux2, node_free, new_node);
 			break;
 		}
 		aux = aux->next;
 	}
-	// ft_print_lst_2(envi); // solo para check
 }
-
-/**
- * Replaces the existing environment variable node
- * @param	t_env *envi, char *str
- * @return	void
-*/
-/* void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
-{
-	t_env	*aux;
-	t_env	*node_free;
-	t_env	*new_node;
-	int		len;
-
-	aux = envi;
-	node_free = NULL;
-	len = 0;
-	while (str[len] != '=')
-		len++;
-	while (aux)
-	{
-		if (ft_strncmp(aux->content, str, len) == 0)
-		{
-			node_free = aux;
-			aux = aux->prev;
-			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-			aux->next = new_node;
-			new_node->prev = aux;
-			printf("%p\n", aux->next->next);
-			if (aux->next->next)
-			{
-				new_node->next = aux->next->next;
-				aux->next->next->prev = new_node;
-			}
-			else
-				new_node->next = NULL;
-			ft_lstdelone_ms(node_free, &del_ms);
-			break;
-		}
-		aux = aux->next;
-	}
-	// ft_print_lst_2(envi); // solo para check
-} */
 
 /**
  * Compares the two strings it receives and returns something other than 0 if
@@ -149,47 +165,6 @@ void ft_linked_list_env(t_env **envi, char **env)
 		i++;	
 	}
 }
-
-/**
- * Create linked list of environment with struct t_declare
- * @param	t_env **t_env, char **env
- * @return	void
-*/
-void ft_linked_list_env_to_declare(t_declare **declare, char **env)
-{
-	int i;
-
-	i = 0;
-	// printf("envi = %s\n", (*envi)->content);
-	while (env[i])
-	{
-		// printf("***_____***___env[i] = %s\n", env[i]);
-		ft_lstadd_back_str_env_to_declare(declare, ft_lstnew_str_env_to_declare(env[i]));
-		i++;	
-	}
-}
-
-// NO POSIBLE T_ENV TO T_DECLARE
-// void ft_linked_list_env_lst_to_lst(t_declare **declare, t_env **envi)
-// {
-// 	while (*envi && (*envi)->next)
-// 	{
-// 		ft_lstadd_back_str_env_to_declare(declare, ft_lstnew_str_env((*envi)->content));
-// 		(*envi) = (*envi)->next;	
-// 	}
-// }
-
-//NO LA USO, SOLO PARA CHECK
-// void ft_print_lst_3(t_env **temp)
-// {
-// 	printf("my PRINT: env addi = %p\n", *temp);
-// 	t_env *test = *temp;
-// 	while (test)
-// 	{
-// 		printf("node.content = [%s]\n", test->content);
-// 		test = test->next;
-// 	}
-// }
 
 void ft_print_lst_2(t_env *temp)
 {
@@ -265,20 +240,6 @@ t_env	*ft_lstnew_str_env(char *str_env)
 	return (node);
 }
 
-t_declare	*ft_lstnew_str_env_to_declare(char *str_env)
-{
-	t_declare	*node;
-
-	node = NULL;
-	node = malloc(sizeof(t_declare));
-	if (node == NULL)
-		return (NULL);
-	node->content = ft_strdup(str_env);
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
-}
-
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 {
 	t_env	*aux;
@@ -297,212 +258,3 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 		node->prev = aux;
 	}
 }
-
-void	ft_lstadd_back_str_env_to_declare(t_declare **declare, t_declare *node)
-{
-	t_declare	*aux;
-
-	aux = *declare;
-	if (*declare == NULL /* || declare == NULL */)
-	{
-		*declare = node;
-		return ;
-	}
-	else
-	{
-		while (aux->next != NULL)
-			aux = aux->next;
-		aux->next = node;
-		node->prev = aux;
-	}
-}
-
-// ESTA EN LA LIBRERIA
-// int	ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
-// 	{
-// 		if (s1[i] != s2[i])
-// 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// // ESTA EN LA LIBRERIA
-// int	ft_isalpha(int c)
-// {
-// 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-// 		return (1);
-// 	return (0);
-// }
-
-// // ESTA EN LA LIBRERIA
-// static int	ft_count_sub(char const *s, char c)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	count;
-
-// 	i = 0;
-// 	j = 0;
-// 	count = 0;
-// 	while (s[i])
-// 	{
-// 		if (s[i] != c && j == 0)
-// 		{
-// 			j = 1;
-// 			count++;
-// 		}
-// 		else if (s[i] == c)
-// 		{
-// 			j = 0;
-// 		}
-// 		i++;
-// 	}
-// 	return (count);
-// }
-
-// // ESTA EN LA LIBRERIA
-// static int	ft_count_letters(char const *s, char c, int i)
-// {
-// 	int	j;
-
-// 	j = 0;
-// 	while (s[i] != c && s[i])
-// 	{
-// 		j++;
-// 		i++;
-// 	}
-// 	return (j);
-// }
-
-// // ESTA EN LA LIBRERIA
-// static void	ft_free_subs(char **k, int subs)
-// {
-// 	while (subs >= 0)
-// 	{
-// 		free (k[subs]);
-// 		subs--;
-// 	}
-// 	free (k);
-// }
-
-// // ESTA EN LA LIBRERIA
-// char	**ft_split(char const *s, char c)
-// {
-// 	char	**k;
-// 	int		subs;
-// 	int		start;
-// 	int		sub_len;
-
-// 	start = 0;
-// 	subs = -1;
-// 	k = malloc(sizeof(char *) * (ft_count_sub(s, c) + 1));
-// 	if (k == NULL)
-// 		return (NULL);
-// 	while (++subs < ft_count_sub(s, c))
-// 	{
-// 		while (s[start] == c)
-// 			start++;
-// 		sub_len = ft_count_letters(s, c, start);
-// 		k[subs] = ft_substr(s, start, sub_len);
-// 		if (k[subs] == NULL)
-// 		{
-// 			ft_free_subs(k, subs);
-// 			return (NULL);
-// 		}
-// 		start = start + sub_len;
-// 	}
-// 	k[subs] = NULL;
-// 	return (k);
-// }
-
-// // ESTA EN LA LIBRERIA
-// char	*ft_substr(char const *s, unsigned int start, size_t len)
-// {
-// 	char		*a;
-// 	size_t		i;
-
-// 	if (ft_strlen(s) <= start)
-// 		return (ft_strdup(""));
-// 	if (ft_strlen(&s[start]) < len)
-// 		len = ft_strlen(&s[start]);
-// 	a = malloc(sizeof(char) * (len + 1));
-// 	if (a == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < len && s[start] != '\0')
-// 	{
-// 		a[i] = s[start];
-// 		i++;
-// 		start++;
-// 	}
-// 	a[i] = '\0';
-// 	return (a);
-// }
-
-// // ESTA EN LA LIBRERIA
-// char	*ft_strrchr(const char *s, int c)
-// {
-// 	int		i;
-// 	char	*a;
-
-// 	a = (char *)s;
-// 	i = ft_strlen(a);
-// 	if (c == '\0')
-// 		return (&a[i]);
-// 	while (i >= 0)
-// 	{
-// 		if (a[i] == (char)c)
-// 			return (&a[i]);
-// 	i--;
-// 	}
-// 	return (NULL);
-// }
-
-// // ESTA EN LA LIBRERIA
-// size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// 	char	*a;
-
-// 	i = 0;
-// 	j = ft_strlen(src);
-// 	a = (char *)src;
-// 	if (destsize == 0)
-// 		return (j);
-// 	while (a[i] != '\0' && i < (destsize - 1))
-// 	{
-// 		dest[i] = a[i];
-// 		i++;
-// 	}
-// 	dest[i] = '\0';
-// 	return (j);
-// }
-
-// // ESTA EN LA LIBRERIA
-// int	ft_isdigit(int c)
-// {
-// 	if (c >= 0 && c <= 9)
-// 		return (1);
-// 	return (0);
-// }
-
-// // ESTA EN LA LIBRERIA
-// void	ft_putendl_fd(char *s, int fd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i] != '\0')
-// 	{
-// 		write(fd, &s[i], 1);
-// 		i++;
-// 	}
-// 	write(fd, "\n", 1);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/11 08:50:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:37:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,3 @@ void	ft_env(t_env **envi, char **cmd)
 	else
 		ft_print_lst_2(*envi);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env	*envi;
-// 	(void) 	argc;
-//     (void) 	argv;
-	
-// 	envi = NULL;
-// 	if (*env == NULL)
-// 	{
-// 		ft_simulate_env_i_minishell(&envi);
-// 	}
-// 	// ################ env -i ./minishell ######################
-// 	else
-// 	{
-// 		ft_linked_list_env(&envi, env);
-// 	}
-// 	char *cmd[2];
-// 	cmd[0] = "env";
-// 	cmd[1] = NULL;
-
-// 	// char *cmd[3];
-// 	// cmd[0] = "env";
-// 	// cmd[1] = "lsakdjdskf";
-// 	// cmd[2] = NULL;
-	
-// 	ft_builtins(cmd, &envi, env);
-// 	return (0);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 18:54:15 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:45:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,11 @@ static	void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
-		printf("entra en el if-->ft_replace_node_tail_header\n");
 		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
 		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
 	}
 	else
 	{
-		printf("entra en el if-->ft_replace_node\n");
-		// ft_print_lst_2(info->envi);
-		printf("\n");
 		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
 		ft_replace_node(envi, "PWD=", envi->pwd);
 	}
@@ -265,64 +261,20 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 
 	path_home = NULL;
 	ok_change_dir = 0;
-	printf("cd_____1\n");
 	if (cmd[1] != NULL)
-	{
-		printf("cd_____2\n");
 		ok_change_dir = ft_cd_with_argv(cmd, envi, ok_change_dir);
-		printf("cd_____3\n");
-	}
 	else
 	{
-		printf("cd_____4\n");
 		if (*env == NULL)
 		{
 			ft_putstr_fd("minisell: cd: HOME not set\n", 2);
 			// g_signal_code = 1;
 			return (1);
 		}
-		printf("cd_____5\n");
 		path_home= ft_find_path_env(envi, "HOME=");
 		ft_change_directory(envi, path_home);
-		printf("cd_____6\n");
 	}
 	if (!ok_change_dir)
-	{
-		printf("cd_____7\n");
 		ft_update_env_pwd_oldpwd(envi);
-		printf("cd_____8\n");
-	}
 	return (0);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_env	*envi;
-// 	char	*cmd[3];
-//     (void) 	argc;
-//     (void) 	argv;
-// 	(void)	env;
-
-// 	envi = NULL;
-// 	// ################ env -i ./minishell ######################
-// 	if (*env == NULL)
-// 		ft_simulate_env_i_minishell(&envi);
-// 	// ################ env -i ./minishell ######################
-// 	else
-// 		ft_linked_list_env(&envi, env);
-// 	envi->pwd = NULL;
-// 	envi->old_pwd = NULL;
-// 	cmd[0] = "cd";
-// 	// cmd[1] = "..";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/minishell_github/src/";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/minish|ell_github/src";
-// 	// cmd[1] = "/Users/amanjon-/Desktop/";
-// 	cmd[1] = "/Users/amanjon/Desktop/minishell_github/sraaac/";	// checkear mas adelante, ya que no agrego OLDPWD si no se cambia correctamente, a ver como guardo la lista enlazada
-// 	// cmd[1] = "/home/amanjon-/Escritorio";		//Linux
-// 	// cmd[1] = NULL;	// env -i ./minishell --> bash: cd: HOME not set
-// 		// cmd[2] = NULL;
-	
-// 	ft_builtins(cmd, &envi, env);
-// 	ft_print_lst_2(envi);
-// 	return (0);
-// }

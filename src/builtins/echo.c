@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/05 15:28:15 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:37:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,37 +77,3 @@ void	ft_echo(char **cmd)
 	if (flag == FALSE)
 		write(1, "\n", 1);
 }
-
-// int main(int argc, char **argv, char **env) 
-// {
-// 	t_env	*envi;
-// 	(void) 	argc;
-// 	(void) 	argv;
-	
-// 	envi = NULL;
-// 	ft_linked_list_env(&envi, env);
-
-// /* 	char *cmd[3];
-// 	cmd[0] = "echo";
-// 	cmd[1] = NULL; */
-	
-// 	char *cmd[3];			// sin flag -n
-// 	cmd[0] = "echo";
-// 	cmd[1] = "lo        que diga el papi";
-// 	cmd[2] = NULL;
-	
-// /* 	char *cmd[7];			// con flag -n
-// 	cmd[0] = "echo";
-// 	cmd[1] = "-nnn";
-// 	cmd[2] = "-nnnn";
-// 	cmd[3] = "-nnnn";
-// 	cmd[4] = "lo        que diga el papi";
-// 	cmd[5] = "alex que tal";
-// 	cmd[6] = NULL; */
-
-// 	ft_builtins(cmd, &envi, env);
-	
-//     return (0);
-// } 
-
-// g_signal_code = 0; builtin echo, en bash siempre el   echo $? = 0
