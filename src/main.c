@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 11:39:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:35:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
 		}
+		// printf("\n\nprintear lista en int main\n\n");
+		// ft_print_lst_2(info.envi);
 		// ft_update_env(&envi, info.env_cpy);
 	}
 	// free_info(info);
