@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 12:35:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:30:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,12 @@ int	main(int argc, char **argv, char **envp)
 	cmd_line = NULL;
 	// ################ env -i ./minishell ######################
 	// if (*envp == NULL)
-	// 	ft_simulate_env_i_minishell(&info);
+	// 	ft_simulate_env_i_minishell(&(info.envi), &(info.declare));
 	if (*envp == NULL)
-		ft_simulate_env_i_minishell(&(info.envi), &(info.declare));
+	{						
+		ft_simulate_env_i_minishell(&(info.envi), &(info.declare), &info);
+		
+	}
 	else
 	{
 		ft_linked_list_env(&(info.envi), envp);

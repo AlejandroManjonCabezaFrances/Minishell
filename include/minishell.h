@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 10:22:11 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:31:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
 void    ft_export(char **cmd, t_env *envi, t_env **declare);
 	/* ------ UNSET ------ */
-void	ft_unset(char **cmd, t_env **envi);
+void	ft_unset(char **cmd, t_env **envi, t_env **declare);
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
 	/* ------ ENV ------ */
@@ -287,8 +287,8 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
 
 
-void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);
-// void	ft_simulate_env_i_minishell(t_info *info);
+// void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);
+void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info);
 
 
 void	ft_print_double_pointer(char **env_array);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 09:38:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/18 15:22:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,39 @@ static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	}
 }
 
+static	void	ft_delete_node_declare(t_env **declare, char *cmd)
+{
+	t_env	*aux_declare;
+	int		len;
+
+	aux_declare = *declare;
+	while (aux_declare)
+	{
+		len = ft_strlen(cmd);
+		if (ft_strncmp(cmd, aux_declare->content, len) == 0)
+			ft_handle_list_header_and_tail(declare, &aux_declare);
+		aux_declare = aux_declare->next;
+	}
+}
+
 static	void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
-	// t_env	*node_free;
 	int		len;
 
 	aux = *envi;
-	// node_free = NULL;
 	while (aux)
 	{
 		len = 0;
 		while (aux->content[len] != '=')
 			len++;
 		if (ft_strncmp(cmd, aux->content, len) == 0)
-		{
-			// node_free = aux;
 			ft_handle_list_header_and_tail(envi, &aux);
-			// ft_lstdelone_ms(node_free, &del_ms);
-		}
 		aux = aux->next;
 	}
-	// printf("\n\n");
-	// ft_print_lst_2(*envi);
-	// printf("\n\n");
 }
 
-void	ft_unset(char **cmd, t_env **envi)
+void	ft_unset(char **cmd, t_env **envi, t_env **declare)
 {
 	int i;
 
@@ -80,7 +86,7 @@ void	ft_unset(char **cmd, t_env **envi)
 	while (cmd[i])
 	{
 		ft_delete_node(envi, cmd[i]);
+		ft_delete_node_declare(declare, cmd[i]);
 		i++;
 	}
-	// ft_print_lst_2(*envi);		// para checkear
 }

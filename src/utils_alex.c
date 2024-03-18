@@ -6,11 +6,32 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 10:21:14 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:32:24 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// /**
+//  * We create a double pointer and simulate the environment variables
+//  *	when --> env -i ./minishell
+//  * @param	t_env *envi
+//  * @return	void
+// */
+// void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare)
+// {
+// 	char	**env_n;
+// 	char	cwd[PATH_MAX];
+
+// 	env_n = malloc(sizeof(char *) * 4);
+// 	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
+// 	env_n[1] = ft_strdup("SHLVL=1");
+// 	env_n[2] = ft_strdup("_=/usr/bin/env");
+// 	env_n[3] = NULL;
+// 	ft_linked_list_env(envi, env_n);
+// 	ft_linked_list_env(declare, env_n);
+// 	(*envi)->flag = 1;
+// }
 
 /**
  * We create a double pointer and simulate the environment variables
@@ -18,18 +39,17 @@
  * @param	t_env *envi
  * @return	void
 */
-void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare)
+void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info)
 {
-	char	**env_n;
 	char	cwd[PATH_MAX];
 
-	env_n = malloc(sizeof(char *) * 4);
-	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
-	env_n[1] = ft_strdup("SHLVL=1");
-	env_n[2] = ft_strdup("_=/usr/bin/env");
-	env_n[3] = NULL;
-	ft_linked_list_env(envi, env_n);
-	ft_linked_list_env(declare, env_n);
+	info->env_cpy = malloc(sizeof(char *) * 4);
+	info->env_cpy[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
+	info->env_cpy[1] = ft_strdup("SHLVL=1");
+	info->env_cpy[2] = ft_strdup("_=/usr/bin/env");
+	info->env_cpy[3] = NULL;
+	ft_linked_list_env(envi, info->env_cpy);
+	ft_linked_list_env(declare, info->env_cpy);
 	(*envi)->flag = 1;
 }
 

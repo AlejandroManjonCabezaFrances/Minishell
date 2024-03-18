@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/18 12:48:12 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:32:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 		argum = ft_split(cmd, ' ');
 	if (cmds[1] == NULL)
 	{
-		printf("al poner export --> entra en el if?\n");
 		// env_array = ft_convert_list_to_double_pointer(envi);
 		// // ft_print_double_pointer(env_array);
 		// ft_linked_list_env(declare, env_array);		// new
@@ -227,7 +226,6 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 	}
 	else
 	{
-		printf("al poner export --> entra en el elseeeeeeee?\n");
 		j = 0;
 		while (argum[j])
 		{
