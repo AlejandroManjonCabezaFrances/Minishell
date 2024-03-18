@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 10:04:42 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/18 10:22:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,12 @@ t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
-void	ft_simulate_env_i_minishell(t_env **envi);
+
+
+void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);
+// void	ft_simulate_env_i_minishell(t_info *info);
+
+
 void	ft_print_double_pointer(char **env_array);
 void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
 

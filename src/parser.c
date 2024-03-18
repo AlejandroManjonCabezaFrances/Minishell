@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:07:20 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/04 11:41:09 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:11:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ int	check_syntax(t_token **token_list)
 int	parser(t_token **token_list, t_scmd **scmds_list, t_info *info)
 {
 	int	err;
-
+	
+	
 	info->path = get_path(info->env_cpy);
-	info->bin_paths = ft_split(info->path, ':');
+	if (info->path != NULL)								// ALEX --> chekealo VINI
+		info->bin_paths = ft_split(info->path, ':');
 	err = check_syntax(token_list);
 	if (err != 1)
 		return (err);

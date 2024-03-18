@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/15 09:38:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/18 10:44:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
  * @param	char *cmd, t_env *envi
  * @return	void
 */
-static	void	ft_export_parsed_variable(char *cmd, t_env **envi)
+static	void	ft_export_parsed_variable(char *cmd, t_env **envi, t_env **declare)
 {
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
+	ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
 }
 
 /**
@@ -114,46 +115,68 @@ static	int	ft_is_equal(char *str)
 	return (FALSE);
 }
 
-static	char	**ft_convert_list_to_double_pointer(t_env **envi)
-{
-	t_env	*temp;
-	char	**env_array;
-	int		count;
-	int 	i;
+// static	void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
+// {
+// 	int i;
+
+// 	while (temp)
+// 	{
+// 		env_array[*count] = ft_strdup(temp->content);
+// 		if (env_array[*count] == NULL)
+// 		{
+// 			i = 0;
+// 			while (i < (*count))
+// 			{
+// 				free(env_array[i]);
+// 				i++;
+// 			}
+// 			free(*env_array);
+// 			break;	// checkear si es correcto este break
+// 		}
+// 		temp = temp->next;
+// 		(*count)++;
+// 	}
+// }
+// static	char	**ft_convert_list_to_double_pointer(t_env **envi)
+// {
+// 	t_env	*temp;
+// 	char	**env_array;
+// 	int		count;
+// 	// int 	i;
 	
-	temp = *envi;
-	count = 0;
-	i = 0;
-	while(temp)
-	{
-		count++;
-		temp = temp->next;
-	}
-	env_array = malloc(sizeof(char *) * (count + 1));
-	if (env_array == NULL)
-		return (NULL);
-	temp = *envi;
-	count = 0;
-	while (temp)
-	{
-		env_array[count] = ft_strdup(temp->content);
-		if (env_array[count] == NULL)
-		{
-			i = 0;
-			while (i < count)
-			{
-				free(env_array[i]);
-				i++;
-			}
-			free(*env_array);
-			break;	// checkear si es correcto este break
-		}
-		temp = temp->next;
-		count++;
-	}
-	env_array[count] = NULL;
-	return (env_array);
-}
+// 	temp = *envi;
+// 	count = 0;
+// 	while(temp)
+// 	{
+// 		count++;
+// 		temp = temp->next;
+// 	}
+// 	env_array = malloc(sizeof(char *) * (count + 1));
+// 	if (env_array == NULL)
+// 		return (NULL);
+// 	temp = *envi;
+// 	count = 0;
+// 	ft_convert_list_2(temp, env_array, &count);
+// 	// while (temp)
+// 	// {
+// 	// 	env_array[count] = ft_strdup(temp->content);
+// 	// 	if (env_array[count] == NULL)
+// 	// 	{
+// 	// 		i = 0;
+// 	// 		while (i < count)
+// 	// 		{
+// 	// 			free(env_array[i]);
+// 	// 			i++;
+// 	// 		}
+// 	// 		free(*env_array);
+// 	// 		break;	// checkear si es correcto este break
+// 	// 	}
+// 	// 	temp = temp->next;
+// 	// 	count++;
+// 	// }
+// 	env_array[count] = NULL;
+// 	return (env_array);
+// }
 
 
 /**
@@ -167,9 +190,12 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 	char	**env_array;
 	char	**argum;
 	int 	i;
+	int j;
 
 	i = -1;
 	argum = NULL;
+	env_array = NULL;
+	envi = NULL;					// probablemente tenga que quitar envi de la funcion
 	if (cmd != NULL)
 	{
 		while (cmd[++i])
@@ -188,14 +214,28 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 		argum = ft_split(cmd, ' ');
 	if (cmds[1] == NULL)
 	{
+		// env_array = ft_convert_list_to_double_pointer(envi);
+		// // ft_print_double_pointer(env_array);
+		// ft_linked_list_env(declare, env_array);		// new
+
 		ft_export_without_argv_sort(declare);
 		ft_print_lst_2_declare(*declare);
+		
 	}
 	else
 	{	
-		env_array = ft_convert_list_to_double_pointer(envi);
-		ft_linked_list_env(declare, env_array);
-		ft_linked_list_env(declare, argum);
+		j = 0;
+		while (argum[j])
+		{
+			ft_lstadd_back_str_env(declare, ft_lstnew_str_env(argum[j]));
+			j++;
+		}
+		ft_export_without_argv_sort(declare);
+		// ft_print_lst_2_declare(*declare);
+		
+		// env_array = ft_convert_list_to_double_pointer(envi);
+		// ft_linked_list_env(declare, env_array);
+		// ft_linked_list_env(declare, argum);
 	}
 }
 
@@ -353,6 +393,7 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
 			new_node->next = aux->next;
 			aux->next->prev = new_node;
+			new_node->prev = aux->prev;
 			ft_handle_head_tail_replace_node(envi, &aux, &new_node);
 			ft_lstdelone_ms(node_free, &del_ms);
 			break;
@@ -390,7 +431,7 @@ void    ft_export(char **cmd, t_env *envi, t_env **declare)
 			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))	// cmd[1] antes y no [i]
 			{
 				aux = ft_parser_arguments(cmd[i]);
-				ft_export_parsed_variable(aux, &envi);
+				ft_export_parsed_variable(aux, &envi, declare);
 			}
 			else
 				ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);

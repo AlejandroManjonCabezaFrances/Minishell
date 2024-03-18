@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_alex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 10:14:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/18 10:21:14 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param	t_env *envi
  * @return	void
 */
-void	ft_simulate_env_i_minishell(t_env **envi)
+void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare)
 {
 	char	**env_n;
 	char	cwd[PATH_MAX];
@@ -29,9 +29,31 @@ void	ft_simulate_env_i_minishell(t_env **envi)
 	env_n[2] = ft_strdup("_=/usr/bin/env");
 	env_n[3] = NULL;
 	ft_linked_list_env(envi, env_n);
+	ft_linked_list_env(declare, env_n);
 	(*envi)->flag = 1;
 }
 
+// /**
+//  * We create a double pointer and simulate the environment variables
+//  *	when --> env -i ./minishell
+//  * @param	t_env *envi
+//  * @return	void
+// */
+// void	ft_simulate_env_i_minishell(t_info *info)
+// {
+// 	char	**env_n;
+// 	char	cwd[PATH_MAX];
+
+// 	env_n = malloc(sizeof(char *) * 4);
+// 	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
+// 	env_n[1] = ft_strdup("SHLVL=1");
+// 	env_n[2] = ft_strdup("_=/usr/bin/env");
+// 	env_n[3] = NULL;
+// 	ft_linked_list_env(&(info->envi), env_n);
+// 	ft_linked_list_env(&(info->declare), env_n);
+// 	info->env_cpy = copy_env(env_n);
+// 	(info->envi)->flag = 1;
+// }
 /**
  * Replaces the existing environment variable node
  * @param	t_env *envi, char *str, char *pwd_oldpwd
@@ -245,7 +267,7 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 	t_env	*aux;
 
 	aux = *envi;
-	if (*envi == NULL /* || envi == NULL */)
+	if (*envi == NULL)
 	{
 		*envi = node;
 		return ;

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/13 17:13:40 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:21:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ int	check_argc(int argc)
  * @param	t_inf *inf
  * @return	void
 */
-// void	init_struct(t_env **envi, t_inf *inf)
+// void	init_struct(t_info *info, t_inf *inf)
 // {
 	
 // 	inf->cwd = NULL;
+	
+	
 // 	(*envi)->env_n = NULL;
 // 	(*envi)->flag = 0;			// new fusion minishell
 // 	(*envi)->pwd = NULL;		// new fusion minishell
@@ -108,15 +110,21 @@ int	main(int argc, char **argv, char **envp)
 	scmds_list = NULL;
 	cmd_line = NULL;
 	// ################ env -i ./minishell ######################
+	// if (*envp == NULL)
+	// 	ft_simulate_env_i_minishell(&info);
 	if (*envp == NULL)
-		ft_simulate_env_i_minishell(&(info.envi));
+		ft_simulate_env_i_minishell(&(info.envi), &(info.declare));
 	else
+	{
 		ft_linked_list_env(&(info.envi), envp);
+		ft_linked_list_env(&(info.declare), envp);
+	}
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
-	info.env_cpy = copy_env(envp);
-	// init_struct(&(info.envi), &inf); // FALTA INICIALIZARLAS LAS DE ENVI
+	// if ((info.envi)->flag != 1)
+		info.env_cpy = copy_env(envp);
+	// init_struct(&(info.envi), &inf);
 	while (1)
 	{
 		ft_signals();
@@ -127,9 +135,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
-		// printf("\n int_main\n");
-		// ft_print_lst_2(info.envi);
-		// printf("\n");
 		}
 		// ft_update_env(&envi, info.env_cpy);
 	}
