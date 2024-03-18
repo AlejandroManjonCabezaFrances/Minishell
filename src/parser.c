@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:07:20 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/18 10:11:19 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:52:20 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,8 @@ int	parser(t_token **token_list, t_scmd **scmds_list, t_info *info)
 {
 	int	err;
 	
-	
 	info->path = get_path(info->env_cpy);
-	if (info->path != NULL)								// ALEX --> chekealo VINI
+	if (info->path != NULL)
 		info->bin_paths = ft_split(info->path, ':');
 	err = check_syntax(token_list);
 	if (err != 1)

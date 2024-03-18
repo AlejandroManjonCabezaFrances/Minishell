@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/12 15:06:22 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:54:00 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 		else
 			exit(127);
 	}
-	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
+	if (info->path != NULL)
+		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
 void	last_child(t_scmd *scmd, t_info *info, int upstream)
@@ -54,7 +55,8 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 		}
 		exit(127);
 	}
-	execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
+	if (info->path != NULL)
+		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
 }
 
 void	ft_builtin(char **args, t_info *info)

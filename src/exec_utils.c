@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:11 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/12 15:02:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:53:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,21 @@ int	get_cmd(t_scmd *scmd, t_info *info)
 	int		i;
 
 	i = 0;
-	while (info->bin_paths[i])
+	if (info->path != NULL)
 	{
-		aux = ft_strjoin(info->bin_paths[i], "/");
-		command = ft_strjoin(aux, scmd->cmd_name);
-		free(aux);
-		if (access(command, F_OK & R_OK & X_OK) == 0)
+		while (info->bin_paths[i])
 		{
-			scmd->cmd_path = command;
-			return (1);
+			aux = ft_strjoin(info->bin_paths[i], "/");
+			command = ft_strjoin(aux, scmd->cmd_name);
+			free(aux);
+			if (access(command, F_OK & R_OK & X_OK) == 0)
+			{
+				scmd->cmd_path = command;
+				return (1);
+			}
+			free(command);
+			i++;
 		}
-		free(command);
-		i++;
 	}
 	return (COMMAND_ERR);
 }

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/18 10:44:52 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:15:18 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 */
 static	void	ft_export_parsed_variable(char *cmd, t_env **envi, t_env **declare)
 {
+	(void ) *declare;
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
-	ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
+	// ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
 }
 
 /**

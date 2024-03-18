@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 10:21:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:39:52 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	// info = NULL;
 	info.envi = NULL;
 	info.declare = NULL;
+	info.env_cpy = NULL;
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
@@ -118,12 +119,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_linked_list_env(&(info.envi), envp);
 		ft_linked_list_env(&(info.declare), envp);
+		info.env_cpy = copy_env(envp);
 	}
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
-	// if ((info.envi)->flag != 1)
-		info.env_cpy = copy_env(envp);
 	// init_struct(&(info.envi), &inf);
 	while (1)
 	{
