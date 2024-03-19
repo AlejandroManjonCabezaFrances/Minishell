@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/18 15:32:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:03:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static	void	ft_export_without_argv_sort(t_env **declare)
 
 	head = *declare;
 	temp = *declare;
-	// printf("(*declare)->content = %s\n", (*declare)->content);
 	while (temp->next != NULL)
 	{
 		if (ft_strcmp(temp->content, temp->next->content) > 0)
@@ -180,7 +179,6 @@ static	int	ft_is_equal(char *str)
 // 	return (env_array);
 // }
 
-
 /**
  * Splits arguments without '=', not numbers and creates two alphabetically
  * ordered lists
@@ -198,6 +196,7 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 	argum = NULL;
 	env_array = NULL;
 	envi = NULL;					// probablemente tenga que quitar envi de la funcion
+	//ft_print_lst_2_declare2(*declare);
 	if (cmd != NULL)
 	{
 		while (cmd[++i])
@@ -219,7 +218,6 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 		// env_array = ft_convert_list_to_double_pointer(envi);
 		// // ft_print_double_pointer(env_array);
 		// ft_linked_list_env(declare, env_array);		// new
-		
 		ft_export_without_argv_sort(declare);
 		ft_print_lst_2_declare(*declare);
 		
@@ -357,7 +355,7 @@ static	int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 */
 static	void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **new_node)
 {
-	if (aux == envi)
+	if (ft_strcmp((*aux)->content, (*envi)->content) == 0)
 	{
 		envi = new_node;
 		aux = envi;
@@ -394,6 +392,7 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 			node_free = aux;
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
 			new_node->next = aux->next;
+			printf("nodo es %s\n", aux->content);
 			aux->next->prev = new_node;
 			new_node->prev = aux->prev;
 			ft_handle_head_tail_replace_node(envi, &aux, &new_node);
@@ -406,7 +405,43 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 	// ft_print_lst_2(*envi); // solo para check
 	// printf("\n\n");
 }
+static	void	ft_replace_node_parsed2(t_env **envi, char *cmd)
+{
+	t_env	*aux;
+	t_env	*node_free;
+	t_env	*new_node;
+	int		len;
 
+	aux = *envi;
+	node_free = NULL;
+	len = 0;
+	while (cmd[len] != '=')
+		len++;
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, cmd, len + 1) == 0)
+		{
+			node_free = aux;
+			printf("token de node_free es %s y su dir es %p\n", aux->content, aux);
+			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
+			new_node->next = aux->next;
+			aux->next->prev = new_node;
+			new_node->prev = aux->prev;
+			printf("token new_node es %s\n", new_node->content);
+			printf("token raro es %s y su dir es %p\n", aux->next->prev->content, aux->next->prev);
+			printf("token declare es %s\n", aux->content);
+			ft_handle_head_tail_replace_node(envi, &aux, &new_node);
+			printf("token declare despues es %s\n", aux->content);
+			ft_lstdelone_ms(node_free, &del_ms);
+			
+			break;
+		}
+		aux = aux->next;
+	}
+	// printf("\n\n");
+	// ft_print_lst_2(*envi); // solo para check
+	// printf("\n\n");
+}
 /**
  * Replicate the export command
  * @param	char **cmd, t_env *envi
@@ -421,22 +456,28 @@ void    ft_export(char **cmd, t_env *envi, t_env **declare)
 	i = 1;
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{
-		if (cmd[1] == NULL || cmd == NULL)
+		if (cmd[1] == NULL || cmd == NULL)			// ENTRA AL LLAMAR A EXPORT
 		{
+			printf("entra en el primer if\n");
 			ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);
 			break;
 		}
-		else if (ft_check_env_var_exists(cmd, &envi, i) == TRUE)
+		else if (ft_check_env_var_exists(cmd, &envi, i) == TRUE){				//ENTRA CUANDO REESCRIBO LA VARIABLE EXPORTADA
+			printf("entra en el segundo en el else if\n");
 			ft_replace_node_parsed(&envi, cmd[i]);
+			ft_replace_node_parsed2(declare, cmd[i]);
+		}
 		else
 		{
-			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))	// cmd[1] antes y no [i]
+			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))	// cmd[1] antes y no [i]      //ENTRA AL EXPORTAR A=a
 			{
+				printf("entra en el tercer if\n");
 				aux = ft_parser_arguments(cmd[i]);
 				ft_export_parsed_variable(aux, &envi, declare);
 			}
-			else
+			else{															//ENTRA CUANDO NO ESTA EL SIGNO DE IGUAL			printf("entra en el else\n");
 				ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);
+			}
 		}
 		i++;
 	}
