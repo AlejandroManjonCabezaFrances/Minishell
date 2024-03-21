@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 15:31:36 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/21 10:28:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,24 +238,6 @@ t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_linked_list_env(t_env **envi, char **env);
 
-/* ------ SANDBOX2 ------ */
-// int		ft_strcmp(const char *s1, const char *s2);
-// // char	*ft_strjoin_2(char *s1, char *s2);
-// void	ft_lstclear_mshell_2(t_env **lst);
-// void	ft_replace_SHLVL(t_env **env_copy);
-// void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
-// char	*ft_find_content_var_env(t_env *env_copy, char *var);
-// void	ft_print_double_pointer(char **env_array);
-// char	**ft_convert_linked_list_to_array(t_env *env_copy);
-// void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
-// t_env	*ft_lstnew_penultimate_str_env(char *str_env);
-
-// char	*ft_itoa(int nbr);
-// int		ft_atoi(const char *str);
-// size_t	ft_strlen(const char *str);
-// char	*ft_strdup(const char	*s1);
-// int		ft_strncmp(const char *s1, const char *s2, size_t n);
-// void	ft_lstdelone_mshell(t_env *env_copy);
 
 /* ----------- BUILTINS ----------- */
 void	ft_builtins(char **cmd, t_info *info);
@@ -285,6 +267,8 @@ t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
+char	**ft_convert_list_to_double_pointer(t_env **envi);
+void	ft_convert_list_2(t_env *temp, char **env_array, int *count);
 
 
 // void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);
@@ -293,5 +277,24 @@ void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info);
 
 void	ft_print_double_pointer(char **env_array);
 void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
+
+/* ------ SANDBOX2 ------ */
+// int		ft_strcmp(const char *s1, const char *s2);
+// // char	*ft_strjoin_2(char *s1, char *s2);
+// void	ft_lstclear_mshell_2(t_env **lst);
+// void	ft_replace_SHLVL(t_env **env_copy);
+// void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
+// char	*ft_find_content_var_env(t_env *env_copy, char *var);
+// void	ft_print_double_pointer(char **env_array);
+// char	**ft_convert_linked_list_to_array(t_env *env_copy);
+// void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
+// t_env	*ft_lstnew_penultimate_str_env(char *str_env);
+
+// char	*ft_itoa(int nbr);
+// int		ft_atoi(const char *str);
+// size_t	ft_strlen(const char *str);
+// char	*ft_strdup(const char	*s1);
+// int		ft_strncmp(const char *s1, const char *s2, size_t n);
+// void	ft_lstdelone_mshell(t_env *env_copy);
 
 #endif

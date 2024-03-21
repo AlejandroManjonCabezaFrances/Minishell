@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/18 15:32:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/21 10:28:23 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,4 +299,67 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 		aux->next = node;
 		node->prev = aux;
 	}
+}
+
+void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
+{
+	int i;
+
+	while (temp)
+	{
+		env_array[*count] = ft_strdup(temp->content);
+		if (env_array[*count] == NULL)
+		{
+			i = 0;
+			while (i < (*count))
+			{
+				free(env_array[i]);
+				i++;
+			}
+			free(*env_array);
+			break;	// checkear si es correcto este break
+		}
+		temp = temp->next;
+		(*count)++;
+	}
+}
+char	**ft_convert_list_to_double_pointer(t_env **envi)
+{
+	t_env	*temp;
+	char	**env_array;
+	int		count;
+	// int 	i;
+	
+	temp = *envi;
+	count = 0;
+	while(temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (env_array == NULL)
+		return (NULL);
+	temp = *envi;
+	count = 0;
+	ft_convert_list_2(temp, env_array, &count);
+	// while (temp)
+	// {
+	// 	env_array[count] = ft_strdup(temp->content);
+	// 	if (env_array[count] == NULL)
+	// 	{
+	// 		i = 0;
+	// 		while (i < count)
+	// 		{
+	// 			free(env_array[i]);
+	// 			i++;
+	// 		}
+	// 		free(*env_array);
+	// 		break;	// checkear si es correcto este break
+	// 	}
+	// 	temp = temp->next;
+	// 	count++;
+	// }
+	env_array[count] = NULL;
+	return (env_array);
 }
