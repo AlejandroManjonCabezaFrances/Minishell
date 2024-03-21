@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 10:28:23 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:38:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void ft_print_lst_2(t_env *temp)
 {
 	while (temp)
 	{
-		printf("temp = %s\n", temp->content);
+		printf("%s\n", temp->content);
 		temp = temp->next;
 	}
 }
@@ -229,19 +229,6 @@ void	ft_print_double_pointer(char **env_array)
 	}
 }
 
-void	del_ms(void *content)
-{
-	free(content);
-}
-
-void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
-{
-	if (lst != NULL && del_ms != NULL)
-	{
-		(*del_ms)(lst->content);
-		free(lst);
-	}
-}
 
 // void	del_ms(void *content)
 // {
@@ -362,4 +349,39 @@ char	**ft_convert_list_to_double_pointer(t_env **envi)
 	// }
 	env_array[count] = NULL;
 	return (env_array);
+}
+
+// void	del_ms(void *content)
+// {
+// 	free(content);
+// }
+
+void	del_ms(void *content)
+{
+	free(content);
+}
+
+void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
+{
+	if (lst != NULL && del_ms != NULL)
+	{
+		(*del_ms)(lst->content);
+		free(lst);
+	}
+}
+
+void	ft_lstclear_ms(t_env **lst, void (*del)(void*))
+{
+	t_env	*next;
+
+	if (lst != NULL && del != NULL)
+	{
+		while (*lst != NULL)
+		{
+			next = (*lst)->next;
+			(*del)((*lst)->content);
+			free(*lst);
+			*lst = (*lst)->next;
+		}
+	}
 }

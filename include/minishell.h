@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 10:28:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:36:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,8 @@ void	ft_echo(char **cmd);
 	/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
-void    ft_export(char **cmd, t_env *envi, t_env **declare);
+// void    ft_export(char **cmd, t_env *envi, t_env **declare);
+void    ft_export_new(char **cmd, t_env *envi);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi, t_env **declare);
 	/* ------ CD ------ */
@@ -269,6 +270,8 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
 char	**ft_convert_list_to_double_pointer(t_env **envi);
 void	ft_convert_list_2(t_env *temp, char **env_array, int *count);
+void	ft_lstclear_ms(t_env **lst, void (*del)(void*));
+void	del_ms(void *content);
 
 
 // void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);

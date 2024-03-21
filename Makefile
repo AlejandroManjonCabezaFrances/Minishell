@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/03/07 11:52:44 by amanjon-         ###   ########.fr        #
+#    Updated: 2024/03/21 12:52:39 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC = main.c lexer.c lexer_utils.c list_utils.c list_utils_2.c error.c \
 		parser.c parser_utils.c parser_utils_2.c parser_utils_3.c \
 		parser_utils_4.c parser_utils_5.c parser_utils_6.c env.c exec.c \
 		exec_utils.c exec_utils_2.c signals.c utils_alex.c \
-		builtins/cd.c builtins/echo.c builtins/env_builtin.c builtins/exit.c builtins/export.c builtins/unset.c builtins/builtins.c builtins/pwd.c
+		builtins/cd.c builtins/echo.c builtins/env_builtin.c builtins/exit.c builtins/export.c builtins/unset.c builtins/builtins.c builtins/pwd.c \
+		builtins/export_new.c
 #SRC = sandbox2.c sandbox.c
 
 # CASA # **********************

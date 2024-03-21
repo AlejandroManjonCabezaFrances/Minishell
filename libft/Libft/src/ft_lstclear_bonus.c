@@ -6,11 +6,16 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 08:03:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2023/06/22 11:49:10 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:26:23 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+
+void	del(void *content)
+{
+	free(content);
+}
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
@@ -26,11 +31,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 			*lst = (*lst)->next;
 		}
 	}
-}
-
-void	del(void *content)
-{
-	free(content);
 }
 
 /* int	main(void)

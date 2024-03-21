@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 13:13:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/21 11:42:51 by amanjon-         ###   ########.fr       */
+/*   Created: 2024/03/21 12:33:42 by amanjon-          #+#    #+#             */
+/*   Updated: 2024/03/21 18:47:18 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
  * @param	t_env *temp
  * @return	void
 */
-static	void	ft_print_lst_2_declare(t_env *temp)
-{
-	while (temp)
-	{
-			printf("declare -x %s\n", temp->content);
-			temp = temp->next;
-	}
-}
+// static	void	ft_print_lst_2_declare(t_env *temp)
+// {
+// 	while (temp)
+// 	{
+// 			printf("declare -x %s\n", temp->content);
+// 			temp = temp->next;
+// 	}
+// }
 
 static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 {
@@ -61,12 +61,10 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
  * @param	char *cmd, t_env *envi
  * @return	void
 */
-static	void	ft_export_parsed_variable(char *cmd, t_env **envi, t_env **declare)
+static	void	ft_export_parsed_variable(char *cmd, t_env **envi/* , t_env **declare */)
 {
-	(void ) *declare;
-	printf("cmd = %s\n", cmd);
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
-	ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
+	// ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
 }
 
 /**
@@ -75,14 +73,14 @@ static	void	ft_export_parsed_variable(char *cmd, t_env **envi, t_env **declare)
  * @param	t_env *envi
  * @return	void
 */
-static	void	ft_export_without_argv_sort(t_env **declare)
+static	void	ft_export_without_argv_sort(t_env *envi)
 {
 	t_env	*temp;
 	t_env	*head;
 	char	*aux;
 
-	head = *declare;
-	temp = *declare;
+	head = envi;
+	temp = envi;
 	while (temp->next != NULL)
 	{
 		if (ft_strcmp(temp->content, temp->next->content) > 0)
@@ -122,7 +120,7 @@ static	int	ft_is_equal(char *str)
  * @param	t_env *envi, char *cmd
  * @return	 void
 */
-static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, char **cmds)
+static	void	ft_export_but_not_in_env(t_env **envi, char *cmd)
 {
 	char	**env_array;
 	char	**argum;
@@ -131,8 +129,7 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 
 	i = -1;
 	argum = NULL;
-	env_array = NULL;
-	envi = NULL;					
+	env_array = NULL;					
 	if (cmd != NULL)
 	{
 		while (cmd[++i])
@@ -149,20 +146,15 @@ static	void	ft_export_but_not_in_env(t_env **declare, t_env **envi, char *cmd, c
 	}
 	if (cmd != NULL)
 		argum = ft_split(cmd, ' ');
-	if (cmds[1] == NULL)
-	{
-		ft_export_without_argv_sort(declare);
-		ft_print_lst_2_declare(*declare);	
-	}
 	else
 	{
 		j = 0;
 		while (argum[j])
 		{
-			ft_lstadd_back_str_env(declare, ft_lstnew_str_env(argum[j]));
+			ft_lstadd_back_str_env(envi, ft_lstnew_str_env(argum[j]));
 			j++;
 		}
-		ft_export_without_argv_sort(declare);
+		ft_export_without_argv_sort(*envi);
 	}
 }
 
@@ -333,40 +325,101 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 	// printf("\n\n");
 }
 
+static	t_env	*ft_copy_lst_to_declare(t_env *envi)
+{
+	t_env *dest = NULL;
+    t_env *temp_envi = envi;
+    t_env *temp_dest = NULL;
+
+    while (temp_envi != NULL) {
+        if (dest == NULL) {
+            dest = ft_lstnew_str_env(temp_envi->content);
+            temp_dest = dest;
+        } else {
+            temp_dest->next = ft_lstnew_str_env(temp_envi->content);
+            temp_dest = temp_dest->next;
+        }
+        temp_envi = temp_envi->next;
+    }
+    return (dest);	
+}
+
+static	void	ft_put_quotes_in_declare(t_env *copy_lst)
+{
+	t_env	*aux;
+	int 	len;
+
+	aux = copy_lst;
+	while (aux)
+	{
+		ft_putstr_fd("declare -x ", 1);
+		len = 0;
+		while (aux->content[len])
+		{
+			if (aux->content[len] != '=')
+				ft_putchar(aux->content[len]);
+			else
+			{
+				ft_putchar('=');
+				ft_putchar('\"');
+			}
+			if (aux->content[len + 1] == '\0')
+				ft_putchar('\"');
+			len++;
+		}
+		ft_putchar('\n');
+		aux = aux->next;
+	}
+}
+
 /**
  * Replicate the export command
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void    ft_export(char **cmd, t_env *envi, t_env **declare)
+void    ft_export_new(char **cmd, t_env *envi)
 {
 	char	*aux;
 	int		i;
+	t_env	*copy_lst;
 
 	aux = NULL;
+	copy_lst = NULL;
 	i = 1;
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{
 		if (cmd[1] == NULL || cmd == NULL)											// export
-		{
-			ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);
+		{																			// ordenacion
+			printf("export_**************************__1\n\n");
+			// ft_export_but_not_in_env(&envi, cmd[i], cmd);
+			copy_lst = ft_copy_lst_to_declare(envi);
+			ft_export_without_argv_sort(copy_lst);
+			
+			ft_put_quotes_in_declare(copy_lst);
+			
+			
+			// ft_print_lst_2_declare(copy_lst);
+			ft_lstclear_ms(&copy_lst, &del_ms);
+			copy_lst = NULL;
 			break;
 		}
 		else if (ft_check_env_var_exists(cmd, &envi, i) == TRUE)					// var existente
 		{
+			printf("export_**************************__2\n\n");
 			ft_replace_node_parsed(&envi, cmd[i]);
-			ft_replace_node_parsed(declare, cmd[i]);
 		}
 		else
 		{
 			if (ft_is_equal(cmd[i]) && ft_isalpha(cmd[i][0]))						// variable tiene =
 			{
+				printf("export_**************************__3\n\n");
 				aux = ft_parser_arguments(cmd[i]);
-				ft_export_parsed_variable(aux, &envi, declare);
+				ft_export_parsed_variable(aux, &envi);
 			}
 			else
 			{	
-				ft_export_but_not_in_env(declare, &envi, cmd[i], cmd);				// vaariable no tiene =
+				printf("export_**************************__4\n\n");
+				ft_export_but_not_in_env(&envi, cmd[i]);				// vaariable no tiene =
 			}
 		}
 		i++;

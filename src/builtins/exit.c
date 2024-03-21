@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 09:38:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 11:02:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static	void	ft_lower_shlvl(t_env *envi)
 		}
 		aux = aux->next;
 	}
-	ft_print_lst_2(envi);	// para check
+	// ft_print_lst_2(envi);	// para check
 }
 
 /**
@@ -87,16 +87,13 @@ void	ft_exit(char **cmd, t_env *envi)
 	check_two_num = ft_manage_numerics(cmd);
 	if (check_two_num <= 1)
 	{
-		printf("*****cmd[1] = %d\n", *cmd[1]);
 		if (cmd[1] == NULL || ft_isdigit(*cmd[1]) == 1)
 		{
-			printf("entra en el if\n");
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_lower_shlvl(envi);
 		}
 		else
 		{
-			printf("entra en el else\n");
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_putendl_fd("minishell: exit: numeric argument required", STDERR_FILENO);
 			ft_lower_shlvl(envi);
