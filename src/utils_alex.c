@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_alex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 16:38:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/22 08:31:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,13 +372,13 @@ void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
 
 void	ft_lstclear_ms(t_env **lst, void (*del)(void*))
 {
-	t_env	*next;
+	// t_env	*next;
 
 	if (lst != NULL && del != NULL)
 	{
 		while (*lst != NULL)
 		{
-			next = (*lst)->next;
+			// next = (*lst)->next;
 			(*del)((*lst)->content);
 			free(*lst);
 			*lst = (*lst)->next;

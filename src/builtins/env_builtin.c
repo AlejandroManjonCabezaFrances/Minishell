@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 18:34:35 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/22 08:56:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 // ################ env -i ./minishell ######################
 
 
-// void ft_print_lst_3(t_env *temp)
-// {
-// 	while (temp)
-// 	{
-// 		if (ft_strchr(temp->content, '=') != 0)
-// 			printf("%s\n", temp->content);
-// 		temp = temp->next;
-// 	}
-// }
+static	void	ft_print_lst_3(t_env *temp)
+{
+	while (temp)
+	{
+		if (ft_strchr(temp->content, '=') != 0)
+			printf("%s\n", temp->content);
+		temp = temp->next;
+	}
+}
 
 
 /**
@@ -43,5 +43,5 @@ void	ft_env(t_env **envi, char **cmd)
 		// g_signal_code = 127;
 	}
 	else
-		ft_print_lst_2(*envi);
+		ft_print_lst_3(*envi);		// cambiado al 3 por el export declare
 }
