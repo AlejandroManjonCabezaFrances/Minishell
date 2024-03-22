@@ -72,7 +72,6 @@ typedef struct s_info
 	char			**bin_paths;
 	char			**env_cpy;
 	t_env			*envi;
-	t_env			*declare;
 }	t_info;
 
 typedef struct s_scmd
@@ -250,7 +249,7 @@ void	ft_pwd(char **cmd);
 // void    ft_export(char **cmd, t_env *envi, t_env **declare);
 void    ft_export_new(char **cmd, t_env *envi);
 	/* ------ UNSET ------ */
-void	ft_unset(char **cmd, t_env **envi, t_env **declare);
+void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
 	/* ------ ENV ------ */
@@ -263,7 +262,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);
 void	del_ms(void *content);
-void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *));
+void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *));
 t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
@@ -272,12 +271,7 @@ char	**ft_convert_list_to_double_pointer(t_env **envi);
 void	ft_convert_list_2(t_env *temp, char **env_array, int *count);
 void	ft_lstclear_ms(t_env **lst, void (*del)(void*));
 void	del_ms(void *content);
-
-
-// void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare);
-void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info);
-
-
+void	ft_simulate_env_i_minishell(t_env **envi, t_info *info);
 void	ft_print_double_pointer(char **env_array);
 void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
 

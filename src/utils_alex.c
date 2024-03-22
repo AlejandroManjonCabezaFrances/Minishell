@@ -12,34 +12,13 @@
 
 #include "../include/minishell.h"
 
-// /**
-//  * We create a double pointer and simulate the environment variables
-//  *	when --> env -i ./minishell
-//  * @param	t_env *envi
-//  * @return	void
-// */
-// void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare)
-// {
-// 	char	**env_n;
-// 	char	cwd[PATH_MAX];
-
-// 	env_n = malloc(sizeof(char *) * 4);
-// 	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
-// 	env_n[1] = ft_strdup("SHLVL=1");
-// 	env_n[2] = ft_strdup("_=/usr/bin/env");
-// 	env_n[3] = NULL;
-// 	ft_linked_list_env(envi, env_n);
-// 	ft_linked_list_env(declare, env_n);
-// 	(*envi)->flag = 1;
-// }
-
 /**
  * We create a double pointer and simulate the environment variables
  *	when --> env -i ./minishell
  * @param	t_env *envi
  * @return	void
 */
-void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info)
+void	ft_simulate_env_i_minishell(t_env **envi, t_info *info)
 {
 	char	cwd[PATH_MAX];
 
@@ -49,7 +28,6 @@ void	ft_simulate_env_i_minishell(t_env **envi, t_env **declare, t_info *info)
 	info->env_cpy[2] = ft_strdup("_=/usr/bin/env");
 	info->env_cpy[3] = NULL;
 	ft_linked_list_env(envi, info->env_cpy);
-	ft_linked_list_env(declare, info->env_cpy);
 	(*envi)->flag = 1;
 }
 
@@ -134,7 +112,7 @@ void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node)
 	}
 	else
 		new_node->next = NULL;
-	ft_lstdelone_ms(node_free, &del_ms);
+	ft_lstdelone_ms(&node_free, &del_ms);	// &node_free new toqietenado punteros
 }
 
 /**
@@ -361,12 +339,22 @@ void	del_ms(void *content)
 	free(content);
 }
 
-void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
+// void	ft_lstdelone_ms(t_env *lst, void (*del_ms)(void *))
+// {
+// 	if (lst != NULL && del_ms != NULL)
+// 	{
+// 		(*del_ms)(lst->content);
+// 		free(lst);
+// 	}
+// }
+
+void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
 {
-	if (lst != NULL && del_ms != NULL)
+	if (lst != NULL && *lst != NULL && del_ms != NULL)
 	{
-		(*del_ms)(lst->content);
-		free(lst);
+		(*del_ms)((*lst)->content);
+		free(*lst);
+		*lst = NULL;
 	}
 }
 

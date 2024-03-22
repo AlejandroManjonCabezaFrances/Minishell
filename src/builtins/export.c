@@ -245,11 +245,14 @@ static	void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **
 {
 	if (ft_strcmp((*aux)->content, (*envi)->content) == 0)
 	{
-		envi = new_node;
-		aux = envi;
+		printf("entra en el if\n");
+		*envi = *new_node;
+		printf("envi->content = %s\n", (*envi)->content);
+		*aux = *envi;
 	}
 	else
 	{
+		printf("entra en el else\n");
 		*aux = (*aux)->prev;
 		(*aux)->next = *new_node;
 		
@@ -279,18 +282,19 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 		{
 			node_free = aux;
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
+			printf("new_node->content = %s\n", new_node->content);
 			new_node->next = aux->next;
 			aux->next->prev = new_node;
 			new_node->prev = aux->prev;
 			ft_handle_head_tail_replace_node(envi, &aux, &new_node);
-			ft_lstdelone_ms(node_free, &del_ms);
+			ft_lstdelone_ms(&node_free, &del_ms); // new double pointer
 			break;
 		}
 		aux = aux->next;
 	}
-	// printf("\n\n");
-	// ft_print_lst_2(*envi); // solo para check
-	// printf("\n\n");
+	printf("\n\n");
+	ft_print_lst_2(*envi); // solo para check
+	printf("\n\n");
 }
 
 static	t_env	*ft_copy_lst_to_declare(t_env *envi)
@@ -374,6 +378,10 @@ void    ft_export_new(char **cmd, t_env *envi)
 		{
 			printf("export_**************************__2\n\n");
 			ft_replace_node_parsed(&envi, cmd[i]);
+			// printf("\n\n");
+			// printf("export********\n");
+			// ft_print_lst_2(envi); // solo para check
+			// printf("\n\n");
 		}
 		else
 		{

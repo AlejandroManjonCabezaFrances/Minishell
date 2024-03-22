@@ -44,21 +44,6 @@ static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	}
 }
 
-static	void	ft_delete_node_declare(t_env **declare, char *cmd)
-{
-	t_env	*aux_declare;
-	int		len;
-
-	aux_declare = *declare;
-	while (aux_declare)
-	{
-		len = ft_strlen(cmd);
-		if (ft_strncmp(cmd, aux_declare->content, len) == 0)
-			ft_handle_list_header_and_tail(declare, &aux_declare);
-		aux_declare = aux_declare->next;
-	}
-}
-
 static	void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
@@ -76,7 +61,7 @@ static	void	ft_delete_node(t_env **envi, char *cmd)
 	}
 }
 
-void	ft_unset(char **cmd, t_env **envi, t_env **declare)
+void	ft_unset(char **cmd, t_env **envi)
 {
 	int i;
 
@@ -86,7 +71,6 @@ void	ft_unset(char **cmd, t_env **envi, t_env **declare)
 	while (cmd[i])
 	{
 		ft_delete_node(envi, cmd[i]);
-		ft_delete_node_declare(declare, cmd[i]);
 		i++;
 	}
 }

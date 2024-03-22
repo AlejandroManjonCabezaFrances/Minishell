@@ -105,7 +105,6 @@ int	main(int argc, char **argv, char **envp)
 
 	// info = NULL;
 	info.envi = NULL;
-	info.declare = NULL;
 	info.env_cpy = NULL;
 	token_list = NULL;
 	scmds_list = NULL;
@@ -115,13 +114,11 @@ int	main(int argc, char **argv, char **envp)
 	// 	ft_simulate_env_i_minishell(&(info.envi), &(info.declare));
 	if (*envp == NULL)
 	{						
-		ft_simulate_env_i_minishell(&(info.envi), &(info.declare), &info);
-		
+		ft_simulate_env_i_minishell(&(info.envi), &info);
 	}
 	else
 	{
 		ft_linked_list_env(&(info.envi), envp);
-		ft_linked_list_env(&(info.declare), envp);
 		info.env_cpy = copy_env(envp);
 	}
 	disable_ctrl_c_printing_chars();
@@ -139,8 +136,10 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
 		}
-		// printf("\n\nprintear lista en int main\n\n");
-		// ft_print_lst_2(info.envi);
+			printf("\n\n");
+			printf("********MAIN********\n");
+			ft_print_lst_2(info.envi); // solo para check
+			printf("\n\n");
 		// ft_update_env(&envi, info.env_cpy);
 	}
 	// free_info(info);

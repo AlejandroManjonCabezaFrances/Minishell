@@ -55,7 +55,7 @@ static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 	new_node->next = aux->next->next;
 	aux->next = new_node;
 	new_node->prev = aux;
-	ft_lstdelone_ms(node_free, &del_ms);
+	ft_lstdelone_ms(&node_free, &del_ms);	// new double pointer
 }
 
 /**

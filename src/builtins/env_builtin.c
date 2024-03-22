@@ -29,7 +29,6 @@ static	void	ft_print_lst_3(t_env *temp)
 	}
 }
 
-
 /**
  * Replicate the env command printing the environment list
  * @param	t_env *envi

@@ -23,7 +23,7 @@ void	ft_builtins(char **cmd, t_info *info)
 	else if (ft_strcmp(*cmd, "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(*cmd, "unset") == 0)
-		ft_unset(cmd, &(info->envi), &info->declare);
+		ft_unset(cmd, &(info->envi));
 	else if (ft_strcmp(*cmd, "cd") == 0)
 		ft_cd(cmd, info->envi, info->env_cpy);
 	else if (ft_strcmp(*cmd, "exit") == 0)
