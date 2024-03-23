@@ -247,7 +247,7 @@ void	ft_echo(char **cmd);
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
 // void    ft_export(char **cmd, t_env *envi, t_env **declare);
-void    ft_export_new(char **cmd, t_env *envi);
+void    ft_export(char **cmd, t_env **envi);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */

@@ -19,7 +19,7 @@ void	ft_builtins(char **cmd, t_info *info)
     else if (ft_strcmp(*cmd, "env") == 0)
 		ft_env(&(info->envi), cmd);
 	else if (ft_strcmp(*cmd, "export") == 0)
-		ft_export_new(cmd, info->envi/* , &info->declare */);
+		ft_export(cmd, &(info->envi));
 	else if (ft_strcmp(*cmd, "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(*cmd, "unset") == 0)

@@ -48,7 +48,7 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 	{
 		while (aux->next->next != NULL)
 			aux = aux->next;
-		aux->next->prev = node;		// new fusion minishell
+		aux->next->prev = node;
 		aux->next->prev->prev = aux;
 		aux->next = node;
 		node->next = last;
@@ -64,7 +64,6 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 static	void	ft_export_parsed_variable(char *cmd, t_env **envi/* , t_env **declare */)
 {
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
-	// ft_lstadd_penultimate_str_env(declare, ft_lstnew_str_env(cmd));
 }
 
 /**
@@ -105,16 +104,12 @@ static	int	ft_is_equal(char *str)
 	int i;
 
 	i = 0;
-	// printf("str = %s\n", str);
 	while (str[i])
 	{
-		// printf("ft_is_equal_1\n");
 		if (str[i] == '=')
 			return (TRUE);
-		// printf("ft_is_equal_2\n");
 		i++;
 	}
-	// printf("ft_is_equal_3\n");
 	return (FALSE);
 }
 
@@ -222,7 +217,6 @@ static	int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 	while (aux)
 	{
 		len = 0;
-		// printf("aux->content = %s\n", aux->content);
 		while (aux->content[len] != '=' && aux->content[len])
 			len++;
 		if (aux->next == NULL)
@@ -245,14 +239,11 @@ static	void	ft_handle_head_tail_replace_node(t_env **envi, t_env **aux, t_env **
 {
 	if (ft_strcmp((*aux)->content, (*envi)->content) == 0)
 	{
-		printf("entra en el if\n");
 		*envi = *new_node;
-		printf("envi->content = %s\n", (*envi)->content);
 		*aux = *envi;
 	}
 	else
 	{
-		printf("entra en el else\n");
 		*aux = (*aux)->prev;
 		(*aux)->next = *new_node;
 		
@@ -282,7 +273,6 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 		{
 			node_free = aux;
 			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
-			printf("new_node->content = %s\n", new_node->content);
 			new_node->next = aux->next;
 			aux->next->prev = new_node;
 			new_node->prev = aux->prev;
@@ -292,9 +282,6 @@ static	void	ft_replace_node_parsed(t_env **envi, char *cmd)
 		}
 		aux = aux->next;
 	}
-	printf("\n\n");
-	ft_print_lst_2(*envi); // solo para check
-	printf("\n\n");
 }
 
 static	t_env	*ft_copy_lst_to_declare(t_env *envi)
@@ -349,7 +336,7 @@ static	void	ft_put_quotes_in_declare(t_env *copy_lst)
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void    ft_export_new(char **cmd, t_env *envi)
+void    ft_export(char **cmd, t_env **envi)
 {
 	t_env	*copy_lst;
 	char	*aux;
@@ -360,35 +347,22 @@ void    ft_export_new(char **cmd, t_env *envi)
 	i = 1;
 	while (cmd[i] || (ft_strncmp(cmd[0], "export", 7) == 0 && cmd[1] == NULL))
 	{
-		if (cmd[1] == NULL || cmd == NULL)											// export
-		{																			// ordenacion
-			printf("export_**************************__1\n\n");
-			// ft_export_but_not_in_env(&envi, cmd[i], cmd);
-			copy_lst = ft_copy_lst_to_declare(envi);
+		if (cmd[1] == NULL || cmd == NULL)
+		{
+			copy_lst = ft_copy_lst_to_declare(*envi);
 			ft_export_without_argv_sort(copy_lst);
 			ft_put_quotes_in_declare(copy_lst);
-			
-			
-			// ft_print_lst_2_declare(copy_lst);
 			ft_lstclear_ms(&copy_lst, &del_ms);
 			copy_lst = NULL;
 			break;
 		}
-		else if (ft_check_env_var_exists(cmd, &envi, i) == TRUE)					// var existente
-		{
-			printf("export_**************************__2\n\n");
-			ft_replace_node_parsed(&envi, cmd[i]);
-			// printf("\n\n");
-			// printf("export********\n");
-			// ft_print_lst_2(envi); // solo para check
-			// printf("\n\n");
-		}
+		else if (ft_check_env_var_exists(cmd, envi, i) == TRUE)
+			ft_replace_node_parsed(envi, cmd[i]);
 		else
 		{
-			printf("export_**************************__3\n\n");
 			aux = ft_parser_arguments(cmd[i]);
 			if (aux)
-				ft_export_parsed_variable(aux, &envi);
+				ft_export_parsed_variable(aux, envi);
 		}
 		i++;
 	}

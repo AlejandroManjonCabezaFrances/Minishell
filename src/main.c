@@ -136,10 +136,10 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
 		}
-			printf("\n\n");
-			printf("********MAIN********\n");
-			ft_print_lst_2(info.envi); // solo para check
-			printf("\n\n");
+			// printf("\n\n");
+			// printf("********MAIN********\n");
+			// ft_print_lst_2(info.envi); // solo para check
+			// printf("\n\n");
 		// ft_update_env(&envi, info.env_cpy);
 	}
 	// free_info(info);
