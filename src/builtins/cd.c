@@ -84,7 +84,6 @@ static	void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpw
 		}
 		aux = aux->next;
 	}
-	// ft_print_lst_2(*envi); // solo para check
 }
 
 /**
