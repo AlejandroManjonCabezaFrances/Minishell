@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 15:36:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/24 02:12:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # include <limits.h>
 
 /* ---------- NEW ---------- */
-#include <readline/readline.h>	//función readline -prompt-
-#include <readline/history.h>	//readline() antiguo
-#include <signal.h> 			//función signal() / sigaction()
-#include <termios.h>			//función tcsetattr() para ctrl+c '^C'
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <signal.h>
+#include <termios.h>
 
 /* ---------------- PATH ---------------- */
 # include "../libft/Libft/include/libft.h"
@@ -46,7 +46,7 @@ typedef struct s_inf		t_inf;
 
 typedef struct s_token
 {
-	int				type;				// < << > >> | WORD, QUOTED_WORD
+	int				type;
 	char			*content;
 	struct s_token	*next;
 }	t_token;
@@ -56,14 +56,12 @@ typedef struct s_env
 {
 	char			**env_n;
 	int				flag;
-	// char			*cwd;
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
-
 
 typedef struct s_info
 {
@@ -86,7 +84,7 @@ typedef struct s_scmd
 	struct s_scmd	*next;
 }	t_scmd;
 
-typedef struct s_inf				//para utilizar variable globales o estructuras globales
+typedef struct s_inf
 {
 	// char			**env_n;
 	char 			*cwd;
@@ -188,14 +186,11 @@ int		parser(t_token **token_list, t_scmd **scmds_list, t_info *info);
 
 /* ------ EXECUTER ------ */
 void	ft_dup(int old_fd, int new_fd);
-
 void	check_cmds(t_scmd **scmds_list, t_info *info);
 void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
 void	last_child(t_scmd *scmd, t_info *info, int upstream);
-
 void	ft_builtin(char **args, t_info *info);
 void	ft_builtins(char **cmd, t_info *info);
-
 void	parent_close(int fd_1, int fd_2, t_scmd *scmd);
 int		check_builtin(t_scmd *scmd);
 int		exec_command(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
@@ -232,12 +227,6 @@ char	**copy_env(char **envp);
 char	*get_path(char **env);
 char	*find_var(char *varname, char **env);
 
-/* ------ ENVIRO ------ */
-t_env	*ft_lstnew_str_env(char *str_env);
-void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
-void	ft_linked_list_env(t_env **envi, char **env);
-
-
 /* ----------- BUILTINS ----------- */
 void	ft_builtins(char **cmd, t_info *info);
 
@@ -246,7 +235,6 @@ void	ft_echo(char **cmd);
 	/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
-// void    ft_export(char **cmd, t_env *envi, t_env **declare);
 void    ft_export(char **cmd, t_env **envi);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi);
@@ -274,24 +262,5 @@ void	del_ms(void *content);
 void	ft_simulate_env_i_minishell(t_env **envi, t_info *info);
 void	ft_print_double_pointer(char **env_array);
 void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
-
-/* ------ SANDBOX2 ------ */
-// int		ft_strcmp(const char *s1, const char *s2);
-// // char	*ft_strjoin_2(char *s1, char *s2);
-// void	ft_lstclear_mshell_2(t_env **lst);
-// void	ft_replace_SHLVL(t_env **env_copy);
-// void	ft_find_and_delete_variable_env(t_env **env_copy, const char *var);
-// char	*ft_find_content_var_env(t_env *env_copy, char *var);
-// void	ft_print_double_pointer(char **env_array);
-// char	**ft_convert_linked_list_to_array(t_env *env_copy);
-// void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node);
-// t_env	*ft_lstnew_penultimate_str_env(char *str_env);
-
-// char	*ft_itoa(int nbr);
-// int		ft_atoi(const char *str);
-// size_t	ft_strlen(const char *str);
-// char	*ft_strdup(const char	*s1);
-// int		ft_strncmp(const char *s1, const char *s2, size_t n);
-// void	ft_lstdelone_mshell(t_env *env_copy);
 
 #endif

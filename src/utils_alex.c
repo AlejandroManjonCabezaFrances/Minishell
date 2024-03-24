@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/22 08:31:29 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/24 02:07:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node)
 	}
 	else
 		new_node->next = NULL;
-	ft_lstdelone_ms(&node_free, &del_ms);	// &node_free new toqietenado punteros
+	ft_lstdelone_ms(&node_free, &del_ms);
 }
 
 /**
@@ -143,7 +143,7 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 			aux = aux->prev;
 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
 			ft_trim(aux, aux2, node_free, new_node);
-			break;
+			break ;
 		}
 		aux = aux->next;
 	}
@@ -157,7 +157,7 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 */
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((s1[i] != '\0' || s2[i] != '\0'))
@@ -174,19 +174,19 @@ int	ft_strcmp(const char *s1, const char *s2)
  * @param	t_env **t_env, char **env
  * @return	void
 */
-void ft_linked_list_env(t_env **envi, char **env)
+void	ft_linked_list_env(t_env **envi, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i])
 	{
 		ft_lstadd_back_str_env(envi, ft_lstnew_str_env(env[i]));
-		i++;	
+		i++;
 	}
 }
 
-void ft_print_lst_2(t_env *temp)
+void	ft_print_lst_2(t_env *temp)
 {
 	while (temp)
 	{
@@ -197,8 +197,8 @@ void ft_print_lst_2(t_env *temp)
 
 void	ft_print_double_pointer(char **env_array)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (env_array[i])
 	{
@@ -206,7 +206,6 @@ void	ft_print_double_pointer(char **env_array)
 		i++;
 	}
 }
-
 
 // void	del_ms(void *content)
 // {
@@ -268,7 +267,7 @@ void	ft_lstadd_back_str_env(t_env **envi, t_env *node)
 
 void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
 {
-	int i;
+	int	i;
 
 	while (temp)
 	{
@@ -282,19 +281,19 @@ void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
 				i++;
 			}
 			free(*env_array);
-			break;	// checkear si es correcto este break
+			break ;
 		}
 		temp = temp->next;
 		(*count)++;
 	}
 }
+
 char	**ft_convert_list_to_double_pointer(t_env **envi)
 {
 	t_env	*temp;
 	char	**env_array;
 	int		count;
-	// int 	i;
-	
+
 	temp = *envi;
 	count = 0;
 	while(temp)
@@ -308,23 +307,6 @@ char	**ft_convert_list_to_double_pointer(t_env **envi)
 	temp = *envi;
 	count = 0;
 	ft_convert_list_2(temp, env_array, &count);
-	// while (temp)
-	// {
-	// 	env_array[count] = ft_strdup(temp->content);
-	// 	if (env_array[count] == NULL)
-	// 	{
-	// 		i = 0;
-	// 		while (i < count)
-	// 		{
-	// 			free(env_array[i]);
-	// 			i++;
-	// 		}
-	// 		free(*env_array);
-	// 		break;	// checkear si es correcto este break
-	// 	}
-	// 	temp = temp->next;
-	// 	count++;
-	// }
 	env_array[count] = NULL;
 	return (env_array);
 }
@@ -360,16 +342,40 @@ void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
 
 void	ft_lstclear_ms(t_env **lst, void (*del)(void*))
 {
-	// t_env	*next;
-
 	if (lst != NULL && del != NULL)
 	{
 		while (*lst != NULL)
 		{
-			// next = (*lst)->next;
 			(*del)((*lst)->content);
 			free(*lst);
 			*lst = (*lst)->next;
 		}
+	}
+}
+
+/**
+ * Change contained of SHLVL +1
+ * @param	t_env **t_env
+ * @return	void
+*/
+void	ft_replace_SHLVL(t_env **envi)
+{
+	t_env	*aux;
+	char	*temp;
+	
+	aux = *envi;
+	temp = NULL;
+	while (aux)
+	{
+		if (ft_strncmp("SHLVL=", aux->content, 6) == 0)
+		{
+			if (ft_atoi(aux->content + 6) > 0)
+			{
+				temp = ft_itoa(ft_atoi(aux->content + 6) + 1);
+				printf("temp ft_itoaft_atoi = %s\n\n\n", temp);
+				aux->content = ft_strjoin("SHLVL=", temp);
+			}
+		}	
+		aux = aux->next;
 	}
 }

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 11:02:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:53:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o exit && ./exit
-
-// ################ env -i ./minishell ######################
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o exit && env -i ./exit
-// ################ env -i ./minishell ######################
 
 /**
  * Lower the shlvl by -1, checking that shlvl > 1
@@ -25,7 +19,7 @@
 */
 static	void	ft_lower_shlvl(t_env *envi)
 {
-	t_env   *aux;
+	t_env	*aux;
 	char	*n_shlvl;
 
 	aux = envi;
@@ -43,7 +37,6 @@ static	void	ft_lower_shlvl(t_env *envi)
 		}
 		aux = aux->next;
 	}
-	// ft_print_lst_2(envi);	// para check
 }
 
 /**
@@ -66,8 +59,9 @@ static	int	ft_manage_numerics(char **cmd)
 			if (check_num > 1)
 			{
 				ft_putendl_fd("exit", STDOUT_FILENO);
-				ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO); 
-				break;
+				ft_putendl_fd("minishell: exit: too many arguments",
+					STDERR_FILENO);
+				break ;
 			}
 		}
 		n_argc++;
@@ -76,7 +70,8 @@ static	int	ft_manage_numerics(char **cmd)
 }
 
 /**
- * Replicates the "exit" builtin. Check if the argument is NULL/digit or not digit
+ * Replicates the "exit" builtin. Check if the argument is
+ * NULL/digit or not digit
  * @param	char **cmd, t_env *envi
  * @return	void
 */
@@ -95,7 +90,8 @@ void	ft_exit(char **cmd, t_env *envi)
 		else
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			ft_putendl_fd("minishell: exit: numeric argument required", STDERR_FILENO);
+			ft_putendl_fd("minishell: exit: numeric argument required",
+				STDERR_FILENO);
 			ft_lower_shlvl(envi);
 			exit (255);
 		}

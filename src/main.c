@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 17:09:59 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:43:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	check_argc(int argc)
 */
 // void	init_struct(t_info *info, t_inf *inf)
 // {
-	
 // 	inf->cwd = NULL;
-	
-	
 // 	(*envi)->env_n = NULL;
 // 	(*envi)->flag = 0;			// new fusion minishell
 // 	(*envi)->pwd = NULL;		// new fusion minishell
@@ -71,7 +68,7 @@ int	check_argc(int argc)
 */
 void	disable_ctrl_c_printing_chars(void)
 {
-	int rc;
+	int		rc;
 	t_inf	info;
 
 	rc = tcgetattr(0, &info.termios);
@@ -100,18 +97,13 @@ int	main(int argc, char **argv, char **envp)
 	t_info	info;
 	t_token	*token_list;
 	t_scmd	*scmds_list;
-	// t_inf	inf;
 	char	*cmd_line;
 
-	// info = NULL;
 	info.envi = NULL;
 	info.env_cpy = NULL;
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
-	// ################ env -i ./minishell ######################
-	// if (*envp == NULL)
-	// 	ft_simulate_env_i_minishell(&(info.envi), &(info.declare));
 	if (*envp == NULL)
 	{						
 		ft_simulate_env_i_minishell(&(info.envi), &info);
@@ -136,12 +128,6 @@ int	main(int argc, char **argv, char **envp)
 			cmd_line[ft_strlen(cmd_line)] = '\0';
 			shell_operation(cmd_line, token_list, scmds_list, &info);
 		}
-			// printf("\n\n");
-			// printf("********MAIN********\n");
-			// ft_print_lst_2(info.envi); // solo para check
-			// printf("\n\n");
-		// ft_update_env(&envi, info.env_cpy);
 	}
-	// free_info(info);
 	return (0);
 }

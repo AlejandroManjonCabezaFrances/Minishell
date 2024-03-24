@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/21 12:51:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:44:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_builtins(char **cmd, t_info *info)
 {
 	if (ft_strcmp(*cmd, "echo") == 0)
 		ft_echo(cmd);
-    else if (ft_strcmp(*cmd, "env") == 0)
+	else if (ft_strcmp(*cmd, "env") == 0)
 		ft_env(&(info->envi), cmd);
 	else if (ft_strcmp(*cmd, "export") == 0)
 		ft_export(cmd, &(info->envi));

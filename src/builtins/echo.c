@@ -6,18 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 09:37:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/24 01:50:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c cd.c exit.c env.c echo.c pwd.c export.c -o echo && ./echo
-
-// ################ env -i ./minishell ######################
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c cd.c exit.c env.c echo.c pwd.c export.c -o echo && env -i ./echo
-// ################ env -i ./minishell ######################
-
 /**
  * Print the string that the function receives
  * @param	char **cmd, int len
@@ -41,7 +34,7 @@ static	void	ft_writing_echo(char **cmd, int len)
 */
 static	int	ft_flag_n(char *str)
 {	
-	int i;
+	int	i;
 
 	i = 1;
 	while (str[i] == 'n')
@@ -58,8 +51,8 @@ static	int	ft_flag_n(char *str)
 */
 void	ft_echo(char **cmd)
 {
-	int len;
-	int flag;
+	int	len;
+	int	flag;
 
 	len = 1;
 	flag = 0;

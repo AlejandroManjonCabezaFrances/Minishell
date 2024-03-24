@@ -6,17 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/15 09:45:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/24 01:50:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o cd && ./cd
-
-// ################ env -i ./minishell ######################
-// gcc -Wall -Werror -Wextra ../../libft/Libft/src/ft_putstr_fd.c ../utils.c unset.c ../sandbox2.c ../../libft/Libft/src/ft_strtrim.c ../../libft/Libft/src/ft_strjoin.c builtins.c env.c echo.c exit.c pwd.c export.c cd.c -o cd && env -i ./cd
-// ################ env -i ./minishell ######################
-
 /**
  * We update the node by overwriting the content when --> env -i ./minishell
  * @param	t_env **envi, char *str, char *pwd_oldpwd
@@ -55,7 +49,7 @@ static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 	new_node->next = aux->next->next;
 	aux->next = new_node;
 	new_node->prev = aux;
-	ft_lstdelone_ms(&node_free, &del_ms);	// new double pointer
+	ft_lstdelone_ms(&node_free, &del_ms);
 }
 
 /**
@@ -63,7 +57,7 @@ static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
-static	void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpwd)
+static	void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
 	int		len;
@@ -80,22 +74,23 @@ static	void	ft_replace_node_tail_header(t_env **envi, char *str, char *pwd_oldpw
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
 			else
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
-			return;
+			return ;
 		}
 		aux = aux->next;
 	}
 }
 
 /**
- * int chdir(const char *path); Check the path of the directory you want to change to.
+ * int chdir(const char *path); Check the path of the directory
+ * you want to change to.
  * @param	char *path, char **env_cpy
  * @return	int. corresponds to the correct or incorrect change of the path
  * 
 */
 static	int	ft_change_directory(t_env *envi, char *path)
 {
-	int change;
-	char cwd[PATH_MAX];
+	int		change;
+	char	cwd[PATH_MAX];
 
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	change = chdir(path);
@@ -139,8 +134,8 @@ static	void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
-		ft_replace_node_tail_header(&envi, "PWD=", envi->pwd);
-		ft_replace_node_tail_header(&envi, "OLDPWD=", envi->old_pwd);
+		ft_replace_node_cd(&envi, "PWD=", envi->pwd);
+		ft_replace_node_cd(&envi, "OLDPWD=", envi->old_pwd);
 	}
 	else
 	{
@@ -188,14 +183,13 @@ static	int	ft_one_step_back(t_env *envi)
 */
 static	void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 {
-	char cwd[PATH_MAX];
+	char	cwd[PATH_MAX];
 	char	*node_oldpwd;
 
 	node_oldpwd = NULL;
 	if (ft_strcmp(cmd[1], "..") == 0)
 		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
-	
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
 	free (node_oldpwd);
 }
@@ -231,7 +225,7 @@ static	int	ft_env_var_existing(t_env *envi, char *str)
 */
 static	int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
 {
-	if (ft_strncmp("..", cmd[1], 2) == 0)	// ..
+	if (ft_strncmp("..", cmd[1], 2) == 0)
 	{
 		if (ft_env_var_existing(envi, "OLDPWD=") == FALSE)
 			ft_add_node_tail_lst(envi, cmd);
@@ -270,7 +264,7 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 			// g_signal_code = 1;
 			return (1);
 		}
-		path_home= ft_find_path_env(envi, "HOME=");
+		path_home = ft_find_path_env(envi, "HOME=");
 		ft_change_directory(envi, path_home);
 	}
 	if (!ok_change_dir)
