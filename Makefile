@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/03/22 10:54:59 by marvin           ###   ########.fr        #
+#    Updated: 2024/03/24 02:59:36 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,7 @@ SRC = main.c lexer.c lexer_utils.c list_utils.c list_utils_2.c error.c \
 		parser.c parser_utils.c parser_utils_2.c parser_utils_3.c \
 		parser_utils_4.c parser_utils_5.c parser_utils_6.c env.c exec.c \
 		exec_utils.c exec_utils_2.c signals.c utils_alex.c \
-		builtins/cd.c builtins/echo.c builtins/env_builtin.c builtins/exit.c builtins/export.c builtins/unset.c builtins/builtins.c builtins/pwd.c \
-#SRC = sandbox2.c sandbox.c
-
+		builtins/cd_1.c builtins/cd_2.c builtins/cd_3.c builtins/echo.c builtins/env_builtin.c builtins/exit.c builtins/export_1.c builtins/export_2.c builtins/export_3.c builtins/unset.c builtins/builtins.c builtins/pwd.c \
 # CASA # **********************
 # RLINE_INC = $(shell brew --prefix readline)
 # RLINE_L	=	-lreadline -lhistory -L $(RLINE_INC)/lib

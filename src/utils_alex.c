@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 02:07:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/24 02:55:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,71 +30,6 @@ void	ft_simulate_env_i_minishell(t_env **envi, t_info *info)
 	ft_linked_list_env(envi, info->env_cpy);
 	(*envi)->flag = 1;
 }
-
-// /**
-//  * We create a double pointer and simulate the environment variables
-//  *	when --> env -i ./minishell
-//  * @param	t_env *envi
-//  * @return	void
-// */
-// void	ft_simulate_env_i_minishell(t_info *info)
-// {
-// 	char	**env_n;
-// 	char	cwd[PATH_MAX];
-
-// 	env_n = malloc(sizeof(char *) * 4);
-// 	env_n[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
-// 	env_n[1] = ft_strdup("SHLVL=1");
-// 	env_n[2] = ft_strdup("_=/usr/bin/env");
-// 	env_n[3] = NULL;
-// 	ft_linked_list_env(&(info->envi), env_n);
-// 	ft_linked_list_env(&(info->declare), env_n);
-// 	info->env_cpy = copy_env(env_n);
-// 	(info->envi)->flag = 1;
-// }
-/**
- * Replaces the existing environment variable node
- * @param	t_env *envi, char *str, char *pwd_oldpwd
- * @return	void
-*/
-// void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
-// {
-// 	t_env	*aux;
-// 	t_env	*aux2;
-// 	t_env	*node_free;
-// 	t_env	*new_node;
-// 	int		len;
-
-// 	aux = envi;
-// 	aux2 = NULL;
-// 	node_free = NULL;
-// 	len = 0;
-// 	while (str[len] != '=')
-// 		len++;
-// 	while (aux)
-// 	{
-// 		if (ft_strncmp(aux->content, str, len) == 0)
-// 		{
-// 			node_free = aux;
-// 			aux2 = aux->next;
-// 			aux = aux->prev;
-// 			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-// 			aux->next = new_node;
-// 			new_node->prev = aux;
-// 			if (aux2)
-// 			{
-// 				aux2->prev = new_node;
-// 				new_node->next = aux2;
-// 			}
-// 			else
-// 				new_node->next = NULL;
-// 			ft_lstdelone_ms(node_free, &del_ms);
-// 			break;
-// 		}
-// 		aux = aux->next;
-// 	}
-// 	// ft_print_lst_2(envi); // solo para check
-// }
 
 /**
  * Replaces the existing environment variable node
@@ -206,20 +141,6 @@ void	ft_print_double_pointer(char **env_array)
 		i++;
 	}
 }
-
-// void	del_ms(void *content)
-// {
-// 	free(content);
-// }
-
-// void	ft_lstdelone_ms(t_env **lst, void (*del_ms)(void *))
-// {
-// 	if (*lst != NULL && del_ms != NULL)
-// 	{
-// 		free((*lst)->content);
-// 		free(*lst);
-// 	}
-// }
 
 t_env	*ft_lstlast_ms(t_env *lst)
 {

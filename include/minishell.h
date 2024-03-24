@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 02:12:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/24 03:02:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,10 +236,20 @@ void	ft_echo(char **cmd);
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
 void    ft_export(char **cmd, t_env **envi);
+int		ft_check_env_var_exists(char **cmd, t_env **envi, int i);
+void	ft_replace_node_parsed(t_env **envi, char *cmd);
+char	*ft_parser_arguments(char *cmd);
+void	ft_export_parsed_variable(char *cmd, t_env **envi);
+int		ft_is_equal(char *str);
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi);
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
+int		ft_one_step_back(t_env *envi);
+int		ft_change_directory(t_env *envi, char *path);
+char	*ft_find_path_env(t_env *envi, char *str);
+void	ft_update_env_pwd_oldpwd(t_env *envi);
+void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd);
 	/* ------ ENV ------ */
 void	ft_env(t_env **envi, char **cmd);
 	/* ------ EXIT ------ */
