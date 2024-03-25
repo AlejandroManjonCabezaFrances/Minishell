@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 01:43:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/25 10:18:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// int g_signal_code = 0;
-int	exit_status = 0;
+int	g_signal_code = 0;
 
 void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 {
@@ -49,19 +48,6 @@ int	check_argc(int argc)
 }
 
 /**
- * Structure is initialized for signals
- * @param	t_inf *inf
- * @return	void
-*/
-// void	init_struct(t_info *info, t_inf *inf)
-// {
-// 	inf->cwd = NULL;
-// 	(*envi)->env_n = NULL;
-// 	(*envi)->flag = 0;			// new fusion minishell
-// 	(*envi)->pwd = NULL;		// new fusion minishell
-// 	(*envi)->old_pwd = NULL;	// new fusion minishell
-// }
-/**
  * This function disable chars printed by ctrl+c '^C'
  * @param	void
  * @return	void
@@ -86,12 +72,6 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
-void	ft_update_env(t_env **envi, char **env_cpy)
-{
-	ft_print_double_pointer(env_cpy);
-	ft_print_lst_2(*envi);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
@@ -105,9 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	scmds_list = NULL;
 	cmd_line = NULL;
 	if (*envp == NULL)
-	{						
 		ft_simulate_env_i_minishell(&(info.envi), &info);
-	}
 	else
 	{
 		ft_linked_list_env(&(info.envi), envp);
@@ -116,7 +94,6 @@ int	main(int argc, char **argv, char **envp)
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
-	// init_struct(&(info.envi), &inf);
 	while (1)
 	{
 		ft_signals();

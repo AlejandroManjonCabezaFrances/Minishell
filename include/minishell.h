@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 03:02:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/25 10:43:30 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # include <limits.h>
 
 /* ---------- NEW ---------- */
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <termios.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <termios.h>
 
 /* ---------------- PATH ---------------- */
 # include "../libft/Libft/include/libft.h"
@@ -42,7 +42,7 @@ typedef struct s_token		t_token;
 typedef struct s_info		t_info;
 typedef struct s_scmd		t_scmd;
 typedef struct s_inf		t_inf;
-// int							g_signal_code;
+extern int	g_signal_code;
 
 typedef struct s_token
 {
@@ -92,7 +92,6 @@ typedef struct s_inf
 	struct 	termios	termios;		//disable (ctrl + c) printing ^C
 }	t_inf;
 
-
 /* ------ ENUMS ------ */
 enum e_boolean
 {
@@ -133,12 +132,8 @@ enum e_error
 	FORK_ERR
 };
 
-/* ------ GLOBAL ------ */
-extern int	exit_status;
-
 /* ------ MAIN ------ */
 void	disable_ctrl_c_printing_chars(void);
-void	init_struct(t_env **envi, t_inf *info);
 int		check_argc(int argc);
 void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info);
 
@@ -235,7 +230,7 @@ void	ft_echo(char **cmd);
 	/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
-void    ft_export(char **cmd, t_env **envi);
+void	ft_export(char **cmd, t_env **envi);
 int		ft_check_env_var_exists(char **cmd, t_env **envi, int i);
 void	ft_replace_node_parsed(t_env **envi, char *cmd);
 char	*ft_parser_arguments(char *cmd);
@@ -253,7 +248,7 @@ void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd);
 	/* ------ ENV ------ */
 void	ft_env(t_env **envi, char **cmd);
 	/* ------ EXIT ------ */
-void    ft_exit(char **cmd, t_env *envi);
+void	ft_exit(char **cmd, t_env *envi);
 
 /* ------ UTILS_ALEX ------ */
 int		ft_strcmp(const char *s1, const char *s2);

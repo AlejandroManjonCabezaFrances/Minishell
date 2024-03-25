@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:31:16 by vini              #+#    #+#             */
-/*   Updated: 2024/03/06 21:11:04 by vini             ###   ########.fr       */
+/*   Updated: 2024/03/25 10:44:22 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ char	*find_var(char *varname, char **env)
 		i++;
 	}
 	if (!ft_strncmp(varname, "?", ft_strlen(varname)))
-		return (ft_itoa(exit_status));
+		return (ft_itoa(g_signal_code));
 	return (NULL);
 }

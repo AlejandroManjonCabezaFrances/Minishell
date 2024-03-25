@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/21 10:45:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 10:17:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,6 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 
 void	ft_builtin(char **args, t_info *info)
 {
-	ft_builtins(args,info);
-	
-	// info->env_cpy = ft_convert_list_to_double_pointer(&info->envi);
-	// printf("printeando mi lista envi pasada a doble puntero\n");
-	// ft_print_double_pointer(info->env_cpy);
-	
-/* The code snippet `printf("*****************************\n"); ft_print_lst_2(*envi);
-printf("\n******************+\n\n");` is printing the contents of a linked list pointed to by the
-`envi` pointer. */
-	// printf("*****************************\n");
-	// ft_print_lst_2(envi);
-	// printf("\n******************+\n\n");
-	// printf("%s\n", args[0]);	// Vini
+	ft_builtins(args, info);
+	info->env_cpy = ft_convert_list_to_double_pointer(&info->envi);
 }
