@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:33:42 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 09:45:16 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:09:33 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static	void	ft_just_export(t_env *envi)
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void    ft_export(char **cmd, t_env **envi)
+void	ft_export(char **cmd, t_env **envi)
 {
 	char	*aux;
 	int		i;
@@ -123,18 +123,26 @@ void    ft_export(char **cmd, t_env **envi)
 	{
 		if (cmd[1] == NULL || cmd == NULL)
 		{
+			printf("ft_export_1\n");
 			ft_just_export(*envi);
 			break ;
 		}
-		else if (ft_check_env_var_exists(cmd, envi, i) == TRUE && ft_is_equal(cmd[1]))
+		else if (ft_env_var_exists(cmd, envi, i) == TRUE && ft_is_equal(cmd[1]))
+		{
 			ft_replace_node_parsed(envi, cmd[i]);
+		}
 		else
 		{
-			if (ft_check_env_var_exists(cmd, envi, i) == TRUE && ft_is_equal(cmd[1]) == FALSE)
+			printf("ft_export_2\n");
+			if (ft_env_var_exists(cmd, envi, i) == TRUE
+				&& ft_is_equal(cmd[1]) == FALSE)
 				break ;
 			aux = ft_parser_arguments(cmd[i]);
 			if (aux)
+			{
+				printf("ft_export_3\n");
 				ft_export_parsed_variable(aux, envi);
+			}
 		}
 		i++;
 	}

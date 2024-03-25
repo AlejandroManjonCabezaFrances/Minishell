@@ -43,6 +43,7 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 */
 void	ft_export_parsed_variable(char *cmd, t_env **envi)
 {
+	printf("ft_export_penuultimate_1\n");
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
 }
 
@@ -105,4 +106,23 @@ char	*ft_parser_arguments(char *cmd)
 		return (var_parsed);
 	}
 	return (NULL);
+}
+
+/**
+ * Look for a "=" in the received string
+ * @param	char *str
+ * @return	TRUE, FALSE
+*/
+int	ft_is_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
 }

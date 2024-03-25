@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 02:58:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:35:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 		if (*env == NULL)
 		{
 			ft_putstr_fd("minisell: cd: HOME not set\n", 2);
-			// g_signal_code = 1;
+			g_signal_code = 1;
 			return (1);
 		}
 		path_home = ft_find_path_env(envi, "HOME=");

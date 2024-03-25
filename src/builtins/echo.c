@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:09 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 01:50:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:35:43 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	void	ft_writing_echo(char **cmd, int len)
  * @return	static int. TRUE or FALSE
 */
 static	int	ft_flag_n(char *str)
-{	
+{
 	int	i;
 
 	i = 1;

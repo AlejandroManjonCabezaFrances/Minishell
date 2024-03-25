@@ -70,7 +70,7 @@ int	ft_change_directory(t_env *envi, char *path)
 	if (change != 0)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		// g_signal_code = 1;
+		g_signal_code = 1;
 		perror(path);
 	}
 	return (change);

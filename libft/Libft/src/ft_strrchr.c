@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:16:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/01/25 11:22:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:32:04 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strrchr(const char *s, int c)
 	{
 		if (a[i] == (char)c)
 			return (&a[i]);
-	i--;
+		i--;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 10:43:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:40:42 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,8 @@ typedef struct s_scmd
 
 typedef struct s_inf
 {
-	// char			**env_n;
-	char 			*cwd;
-	// int				signal_code;
-	struct 	termios	termios;		//disable (ctrl + c) printing ^C
+	char			*cwd;
+	struct termios	termios;
 }	t_inf;
 
 /* ------ ENUMS ------ */
@@ -231,7 +229,7 @@ void	ft_echo(char **cmd);
 void	ft_pwd(char **cmd);
 	/* ------ EXPORT ------ */
 void	ft_export(char **cmd, t_env **envi);
-int		ft_check_env_var_exists(char **cmd, t_env **envi, int i);
+int		ft_env_var_exists(char **cmd, t_env **envi, int i);
 void	ft_replace_node_parsed(t_env **envi, char *cmd);
 char	*ft_parser_arguments(char *cmd);
 void	ft_export_parsed_variable(char *cmd, t_env **envi);

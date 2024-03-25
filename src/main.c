@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 12:40:14 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:24:13 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	disable_ctrl_c_printing_chars(void)
 // {
 //    system("leaks -q minishell");
 // }
-
 
 int	main(int argc, char **argv, char **envp)
 {

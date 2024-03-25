@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/25 13:04:39 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:15:17 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	void	ft_upper_shlvl(t_env *envi)
 	{
 		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
 		{
-			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) >= 1) // =
+			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) >= 1)
 			{
 				n_shlvl = ft_itoa((ft_atoi(aux->content + 6) + 1));
 				ft_replace_node(envi, "SHLVL=", n_shlvl);
@@ -83,7 +83,8 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 		if (check_builtin(scmd) == 1)
 		{
 			ft_builtin(scmd->cmd_args, info);
-			exit(1);
+			return ;
+			// exit(1);		// necesario el exit sin conflicto con builtin
 		}
 		exit(127);
 	}

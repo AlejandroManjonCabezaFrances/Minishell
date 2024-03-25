@@ -62,36 +62,45 @@ static	char	*ft_parser_arguments_2(char *cmd)
 
 /**
  * Replaces the existing environment variable node parsed for builtin export
+ * @param	t_env **envi, t_env *aux, char *cmd
+ * @return	void
+*/
+void	ft_trim_replace_node_parsed(t_env **envi, t_env *aux, char *cmd)
+{
+	t_env	*node_free;
+	t_env	*new_node;
+
+	node_free = NULL;
+	node_free = aux;
+	new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
+	new_node->next = aux->next;
+	if (aux->next != NULL)
+		aux->next->prev = new_node;
+	new_node->prev = aux->prev;
+	ft_handle_head_tail(envi, &aux, &new_node);
+	ft_lstdelone_ms(&node_free, &del_ms);
+}
+
+/**
+ * Replaces the existing environment variable node parsed for builtin export
  * @param	t_env *envi, char *cmd
  * @return	void
 */
 void	ft_replace_node_parsed(t_env **envi, char *cmd)
 {
 	t_env	*aux;
-	t_env	*node_free;
-	t_env	*new_node;
 	int		len;
 
 	aux = *envi;
-	node_free = NULL;
 	len = 0;
+	
 	while (cmd[len] != '=')
 		len++;
 	while (aux)
 	{
 		if (ft_strncmp(aux->content, cmd, len) == 0)
 		{
-			printf("aux->content = %s\n", aux->content);
-			node_free = aux;
-			new_node = ft_lstnew_str_env(ft_parser_arguments_2(cmd));
-			new_node->next = aux->next;
-			if (aux->next != NULL)
-				aux->next->prev = new_node;
-
-
-			new_node->prev = aux->prev;
-			ft_handle_head_tail(envi, &aux, &new_node);
-			ft_lstdelone_ms(&node_free, &del_ms);
+			ft_trim_replace_node_parsed(envi, aux, cmd);
 			break ;
 		}
 		aux = aux->next;
@@ -103,15 +112,12 @@ void	ft_replace_node_parsed(t_env **envi, char *cmd)
  * @param	char **cmd, t_env *envi
  * @return	(TRUE) --> env var exists
 */
-int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
+int	ft_env_var_exists(char **cmd, t_env **envi, int i)
 {
 	t_env	*aux;
 	int		len;
 
 	aux = *envi;
-	// printf("***************************\n\n");
-	// ft_print_lst_2(aux);
-	// printf("***************************\n\n");
 	while (aux)
 	{
 		len = 0;
@@ -122,25 +128,6 @@ int	ft_check_env_var_exists(char **cmd, t_env **envi, int i)
 			return (TRUE);
 		}
 		aux = aux->next;
-	}
-	return (FALSE);
-}
-
-/**
- * Look for a "=" in the received string
- * @param	char *str
- * @return	TRUE, FALSE
-*/
-int	ft_is_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (TRUE);
-		i++;
 	}
 	return (FALSE);
 }
