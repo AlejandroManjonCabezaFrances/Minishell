@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/13 10:50:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:15:15 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ int	exec_cmds(t_scmd **scmds_list, t_info *info)
 		upstream = pipe_fd[0];
 		aux = aux->next;
 	}
+	// sigignore ctrl c y ctrl 4
 	while (wait(NULL) != -1 || errno != ECHILD)
 		;
+	// recuoerar señales
 	parent_close(pipe_fd[0], upstream, aux);
 	return (1);
 }

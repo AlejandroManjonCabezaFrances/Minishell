@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 10:18:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 11:28:23 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
+ void leaks(void)
+{
+   system("leaks -q minishell");
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
@@ -106,5 +112,11 @@ int	main(int argc, char **argv, char **envp)
 			shell_operation(cmd_line, token_list, scmds_list, &info);
 		}
 	}
+	free(cmd_line);
+	ms_lstclear(&token_list);
+	free_array(info.env_cpy);
+	free_array(info.bin_paths);
+	ft_lstclear_ms(&(info.envi), &del_ms);
+	atexit(leaks);
 	return (0);
 }

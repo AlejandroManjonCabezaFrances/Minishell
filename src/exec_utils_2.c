@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/25 10:17:36 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 11:48:30 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 		if (check_builtin(scmd) == 1)
 		{
 			ft_builtin(scmd->cmd_args, info);
-			return ;
-			// exit(1);
+			exit(1);
 		}
 		exit(127);
 	}
