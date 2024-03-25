@@ -6,11 +6,40 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/25 11:48:30 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:04:39 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static	void	ft_upper_shlvl(t_env *envi)
+{
+	t_env	*aux;
+	char	*n_shlvl;
+
+	aux = envi;
+	n_shlvl = NULL;
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
+		{
+			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) >= 1) // =
+			{
+				n_shlvl = ft_itoa((ft_atoi(aux->content + 6) + 1));
+				ft_replace_node(envi, "SHLVL=", n_shlvl);
+				free(n_shlvl);
+				break ;
+			}
+		}
+		aux = aux->next;
+	}
+}
+
+static	void	ft_nested_minishell(t_info *info)
+{
+	ft_upper_shlvl(info->envi);
+	info->env_cpy = ft_convert_list_to_double_pointer(&info->envi);
+}
 
 void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 {
@@ -34,7 +63,11 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 			exit(127);
 	}
 	if (info->path != NULL)
+	{
+		if (!ft_strncmp(scmd->cmd_args[0], "./minishell", 11))
+			ft_nested_minishell(info);
 		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
+	}
 }
 
 void	last_child(t_scmd *scmd, t_info *info, int upstream)
@@ -55,7 +88,11 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 		exit(127);
 	}
 	if (info->path != NULL)
+	{
+		if (!ft_strncmp(scmd->cmd_args[0], "./minishell", 11))
+			ft_nested_minishell(info);
 		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
+	}
 }
 
 void	ft_builtin(char **args, t_info *info)
