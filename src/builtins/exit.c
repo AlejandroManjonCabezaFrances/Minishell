@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 01:53:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:43:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,44 @@ static	int	ft_manage_numerics(char **cmd)
 	return (check_num);
 }
 
+static int	ft_shlvl_equal_one(t_env *envi)
+{
+	t_env	*aux;
+	// char *shlvl;
+
+	aux = envi;
+	// shlvl = "SHLVL=";
+	while (aux)
+	{
+		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
+		{			
+			printf("aux->content = %s\n", aux->content);
+			printf("aux->content + 6 = %s\n", aux->content + 6);
+			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) == 1)
+			{
+				printf("entramos en esta funcion para el exit?\n");
+				return (TRUE);
+			}
+		}
+		aux = aux->next;
+	}
+	printf("antes del FALSE\n");
+	return (FALSE);
+}
+
+int *ft_flag_exit(t_info *info)
+{
+	(info)->flag_exit++;
+	return (NULL);
+}
+
 /**
  * Replicates the "exit" builtin. Check if the argument is
  * NULL/digit or not digit
  * @param	char **cmd, t_env *envi
  * @return	void
 */
-void	ft_exit(char **cmd, t_env *envi)
+void	ft_exit(char **cmd, t_info *info)
 {
 	int	check_two_num;
 
@@ -85,15 +116,17 @@ void	ft_exit(char **cmd, t_env *envi)
 		if (cmd[1] == NULL || ft_isdigit(*cmd[1]) == 1)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			ft_lower_shlvl(envi);
+			ft_lower_shlvl(info->envi);
 		}
 		else
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_putendl_fd("minishell: exit: numeric argument required",
 				STDERR_FILENO);
-			ft_lower_shlvl(envi);
+			ft_lower_shlvl(info->envi);
 			exit (255);
 		}
+		if (ft_shlvl_equal_one(info->envi) == TRUE)
+			ft_flag_exit(info);
 	}
 }

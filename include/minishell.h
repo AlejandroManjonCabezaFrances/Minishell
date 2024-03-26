@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 08:54:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:40:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_env
 
 typedef struct s_info
 {
+	int				flag_exit;
 	int				pipe_nbr;
 	char			*path;
 	char			**bin_paths;
@@ -247,7 +248,8 @@ void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd);
 	/* ------ ENV ------ */
 void	ft_env(t_env **envi, char **cmd);
 	/* ------ EXIT ------ */
-void	ft_exit(char **cmd, t_env *envi);
+void	ft_exit(char **cmd, t_info *info);
+int 	*ft_flag_exit(t_info *info);
 
 /* ------ UTILS_ALEX ------ */
 int		ft_strcmp(const char *s1, const char *s2);

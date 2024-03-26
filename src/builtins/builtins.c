@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 07:24:28 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 09:48:41 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	ft_builtins(char **cmd, t_info *info)
 	else if (ft_strcmp(*cmd, "cd") == 0)
 		ft_cd(cmd, info->envi, info->env_cpy);
 	else if (ft_strcmp(*cmd, "exit") == 0)
-		ft_exit(cmd, info->envi);
+		ft_exit(cmd, info);
 }
