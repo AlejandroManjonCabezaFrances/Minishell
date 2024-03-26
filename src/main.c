@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 15:24:13 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 08:55:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 	ms_cmdclear(&scmds);
 }
 
-int	check_argc(int argc)
-{
-	if (argc != 1)
-	{
-		printf("enter only the executable ./minishell, thanks\n");
-		return (1);
-	}
-	return (0);
-}
-
 /**
  * This function disable chars printed by ctrl+c '^C'
  * @param	void
@@ -72,6 +62,35 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
+int	loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line)
+{
+	ft_signals();
+	cmd_line = readline("minishell-0.2$ ");
+	if (!cmd_line)
+		return (1);
+	if (cmd_line[0])
+	{
+		cmd_line[ft_strlen(cmd_line)] = '\0';
+		shell_operation(cmd_line, token_list, scmds_list, info);
+	}
+	return (0);
+}
+
+int	ft_handle_envp_executable(t_info *info, int argc, char **argv, char **envp)
+{
+	if (*envp == NULL)
+		ft_simulate_env_i_minishell(&(info->envi), info);
+	else
+	{
+		ft_linked_list_env(&(info->envi), envp);
+		info->env_cpy = copy_env(envp);
+	}
+	disable_ctrl_c_printing_chars();
+	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
+		return (printf("No smartass shenanigans, just the executable ;)\n"));
+	return (0);
+}
+
 //  void leaks(void)
 // {
 //    system("leaks -q minishell");
@@ -79,9 +98,9 @@ void	disable_ctrl_c_printing_chars(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_info	info;
 	t_token	*token_list;
 	t_scmd	*scmds_list;
+	t_info	info;
 	char	*cmd_line;
 
 	info.envi = NULL;
@@ -89,27 +108,11 @@ int	main(int argc, char **argv, char **envp)
 	token_list = NULL;
 	scmds_list = NULL;
 	cmd_line = NULL;
-	if (*envp == NULL)
-		ft_simulate_env_i_minishell(&(info.envi), &info);
-	else
-	{
-		ft_linked_list_env(&(info.envi), envp);
-		info.env_cpy = copy_env(envp);
-	}
-	disable_ctrl_c_printing_chars();
-	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
-		return (printf("No smartass shenanigans, just the executable ;)\n"));
+	ft_handle_envp_executable(&info, argc, argv, envp);
 	while (1)
 	{
-		ft_signals();
-		cmd_line = readline("minishell-0.2$ ");
-		if (!cmd_line)
+		if (loop(&info, token_list, scmds_list, cmd_line))
 			break ;
-		if (cmd_line[0])
-		{
-			cmd_line[ft_strlen(cmd_line)] = '\0';
-			shell_operation(cmd_line, token_list, scmds_list, &info);
-		}
 	}
 	free(cmd_line);
 	ms_lstclear(&token_list);

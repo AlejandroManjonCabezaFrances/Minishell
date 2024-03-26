@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 15:10:43 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:24:28 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_builtins(char **cmd, t_info *info)
 {
-	printf("entra en builtins?_1\n");
 	if (ft_strcmp(*cmd, "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(*cmd, "env") == 0)

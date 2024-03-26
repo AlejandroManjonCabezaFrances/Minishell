@@ -101,6 +101,7 @@ int	ft_one_step_back(t_env *envi)
 		ft_strlcpy(cd_back, envi->old_pwd, len + 1);
 	}
 	change = chdir(cd_back);
+	printf("change = %d\n", change);
 	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (change != 0)
 		perror(cd_back);

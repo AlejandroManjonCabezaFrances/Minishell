@@ -43,7 +43,6 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 */
 void	ft_export_parsed_variable(char *cmd, t_env **envi)
 {
-	printf("ft_export_penuultimate_1\n");
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
 }
 
@@ -57,7 +56,7 @@ static	int	ft_export_error_argv(char *cmd)
 {
 	int	i;
 
-	i = -1;		
+	i = -1;
 	if (cmd != NULL)
 	{
 		while (cmd[++i])
@@ -67,7 +66,7 @@ static	int	ft_export_error_argv(char *cmd)
 				ft_putstr_fd("minishell: export: '", 2);
 				ft_putstr_fd(cmd, 2);
 				ft_putstr_fd("': not a valid identifier\n", 2);
-				// g_signal_code = 1;
+				g_signal_code = 1;
 				return (TRUE);
 			}
 		}

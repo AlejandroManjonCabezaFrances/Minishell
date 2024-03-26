@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 14:40:42 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 08:54:34 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_token		t_token;
 typedef struct s_info		t_info;
 typedef struct s_scmd		t_scmd;
 typedef struct s_inf		t_inf;
-extern int	g_signal_code;
+extern int					g_signal_code;
 
 typedef struct s_token
 {
@@ -132,8 +132,9 @@ enum e_error
 
 /* ------ MAIN ------ */
 void	disable_ctrl_c_printing_chars(void);
-int		check_argc(int argc);
 void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info);
+int		ft_handle_envp_executable(t_info *info, int argc, char **argv, char **envp);
+int		loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line);
 
 /* ------ LEXER ------ */
 int		lexer(t_token **token_list, char *input);

@@ -93,7 +93,6 @@ void	ft_replace_node_parsed(t_env **envi, char *cmd)
 
 	aux = *envi;
 	len = 0;
-	
 	while (cmd[len] != '=')
 		len++;
 	while (aux)
@@ -124,9 +123,7 @@ int	ft_env_var_exists(char **cmd, t_env **envi, int i)
 		while (aux->content[len] != '=' && aux->content[len])
 			len++;
 		if (ft_strncmp(cmd[i], aux->content, len) == 0)
-		{
 			return (TRUE);
-		}
 		aux = aux->next;
 	}
 	return (FALSE);
