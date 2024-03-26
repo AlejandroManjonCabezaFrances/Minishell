@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 11:45:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:10:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
-int	ft_handle_envp_executable(t_info *info, int argc, char **argv, char **envp)
+int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 {
 	if (*envp == NULL)
 		ft_simulate_env_i_minishell(&(info->envi), info);
@@ -91,44 +91,37 @@ int	loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line)
 	return (0);
 }
 
-//  void leaks(void)
-// {
-//    system("leaks -q minishell");
-// }
+ void leaks(void)
+{
+   system("leaks -q minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
 	t_scmd	*scmds_list;
 	t_info	info;
-	char	*cmd_line;
-	
+	char	*line;
+
 	info.envi = NULL;
 	info.env_cpy = NULL;
-	info.flag_exit = 0;
+	info.fl_exit = 0;
 	token_list = NULL;
 	scmds_list = NULL;
-	cmd_line = NULL;
-	ft_handle_envp_executable(&info, argc, argv, envp);
+	line = NULL;
+	ft_handle_env_execut(&info, argc, argv, envp);
 	while (1)
 	{
-		if (loop(&info, token_list, scmds_list, cmd_line))
+		if (loop(&info, token_list, scmds_list, line) || info.fl_exit == 1)
 			break ;
-		// printf("info.flag_exit = %d\n", info.flag_exit);
-		// if (info.flag_exit == 1)
-		// 	break;
-		printf("info.flag_exit = %d\n", info.flag_exit);
-		if (/* ft_flag_exit(&info) == 1 */info.flag_exit == 1)
-		{
-			printf("BREAKKKKK\n");
-			return (0);
-		}
 	}
-	// free(cmd_line);
-	// ms_lstclear(&token_list);
-	// free_array(info.env_cpy);
-	// free_array(info.bin_paths);
-	// ft_lstclear_ms(&(info.envi), &del_ms);
-	// atexit(leaks);
+	free(line);
+	ms_lstclear(&token_list);
+	free_array(info.env_cpy);
+	free_array(info.bin_paths);
+	ft_lstclear_ms(&(info.envi), &del_ms);
+	atexit(leaks);
 	return (0);
 }
+// info.flag_exit --> para cerrar minishell en caso de SHLVL=1,
+// se ejecuta el break en proceso builtin pero no salimos por proceso padre

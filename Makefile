@@ -6,14 +6,14 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/03/25 12:39:58 by amanjon-         ###   ########.fr        #
+#    Updated: 2024/03/26 13:10:20 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
-DEBUG = -g3 -fsanitize=address
+# DEBUG = -g3 -fsanitize=address
 RM = rm -f
 SRC = main.c lexer.c lexer_utils.c list_utils.c list_utils_2.c error.c \
 		parser.c parser_utils.c parser_utils_2.c parser_utils_3.c \

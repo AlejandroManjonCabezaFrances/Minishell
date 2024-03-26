@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:47:29 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 10:16:00 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:03:23 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ft_atoi(const char *str)
 		c = c * 10 + (str[i] - '0');
 		i++;
 	}
-	printf("(c * m) = %d\n\n\n", c * m);
 	return ((int)(c * m));
 }
 

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 11:40:29 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:12:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_env
 
 typedef struct s_info
 {
-	int				flag_exit;
+	int				fl_exit;
 	int				pipe_nbr;
 	char			*path;
 	char			**bin_paths;
@@ -134,8 +134,8 @@ enum e_error
 /* ------ MAIN ------ */
 void	disable_ctrl_c_printing_chars(void);
 void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info);
-int		ft_handle_envp_executable(t_info *info, int argc, char **argv, char **envp);
-int		loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line);
+int		ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp);
+int		loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *line);
 
 /* ------ LEXER ------ */
 int		lexer(t_token **token_list, char *input);
@@ -227,8 +227,10 @@ void	ft_builtins(char **cmd, t_info *info);
 
 	/* ------ ECHO ------ */
 void	ft_echo(char **cmd);
+
 	/* ------ PWD ------ */
 void	ft_pwd(char **cmd);
+
 	/* ------ EXPORT ------ */
 void	ft_export(char **cmd, t_env **envi);
 int		ft_env_var_exists(char **cmd, t_env **envi, int i);
@@ -236,8 +238,10 @@ void	ft_replace_node_parsed(t_env **envi, char *cmd);
 char	*ft_parser_arguments(char *cmd);
 void	ft_export_parsed_variable(char *cmd, t_env **envi);
 int		ft_is_equal(char *str);
+
 	/* ------ UNSET ------ */
 void	ft_unset(char **cmd, t_env **envi);
+
 	/* ------ CD ------ */
 int		ft_cd(char **cmd, t_env *envi, char **env);
 int		ft_one_step_back(t_env *envi);
@@ -245,11 +249,12 @@ int		ft_change_directory(t_env *envi, char *path);
 char	*ft_find_path_env(t_env *envi, char *str);
 void	ft_update_env_pwd_oldpwd(t_env *envi);
 void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd);
+
 	/* ------ ENV ------ */
 void	ft_env(t_env **envi, char **cmd);
+
 	/* ------ EXIT ------ */
 void	ft_exit(char **cmd, t_info *info);
-int 	*ft_flag_exit(t_info *info);
 
 /* ------ UTILS_ALEX ------ */
 int		ft_strcmp(const char *s1, const char *s2);
