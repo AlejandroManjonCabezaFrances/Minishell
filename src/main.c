@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 13:52:54 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:06:03 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 	return (0);
 }
 
- void leaks(void)
-{
-   system("leaks -q minishell");
-}
+//  void leaks(void)
+// {
+//    system("leaks -q minishell");
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -131,10 +131,9 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free(line);
 	ms_lstclear(&token_list);
-	free_array(info.env_cpy);
-	free_array(info.bin_paths);
+	free_info(info);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	atexit(leaks);
+	// atexit(leaks);
 	return (0);
 }
 // info.flag_exit --> para cerrar minishell en caso de SHLVL=1,

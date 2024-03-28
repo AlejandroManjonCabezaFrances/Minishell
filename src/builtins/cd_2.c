@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/24 02:56:43 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/24 02:56:43 by marvin           ###   ########.fr       */
+/*   Created: 2024/03/28 15:00:36 by amanjon-          #+#    #+#             */
+/*   Updated: 2024/03/28 15:00:36 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ int	ft_change_directory(t_env *envi, char *path)
 	return (change);
 }
 
+static void	ft_trim_one_step_back(int change, char *cd_back)
+{
+	if (change != 0)
+		perror(cd_back);
+	free(cd_back);
+}
+
 /**
  * We reserve memory to update envi->old_pwd and envi->pwd and
  * we return an int to manage whether or not the directory can be changed
@@ -89,10 +96,13 @@ int	ft_one_step_back(t_env *envi)
 	char	*cd_back;
 	int		change;
 	size_t	len;
+	char	*is_null;
 
 	change = -1;
 	cd_back = NULL;
-	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	is_null = getcwd(cwd, sizeof(cwd));
+	if (is_null != NULL)
+		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -104,8 +114,6 @@ int	ft_one_step_back(t_env *envi)
 	}
 	change = chdir(cd_back);
 	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	if (change != 0)
-		perror(cd_back);
-	free(cd_back);
+	ft_trim_one_step_back(change, cd_back);
 	return (change);
 }

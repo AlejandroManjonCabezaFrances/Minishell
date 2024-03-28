@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 14:00:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:19:10 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int		open_outfile(t_scmd *scmd, t_token *token);
 int		open_infile(t_scmd *scmd, t_token *token);
 int		check_files(t_scmd *scmd);
 int		build_scmdlist(t_token **token_list, t_scmd **scmds_list, t_info *info);
+int		is_valid_char(char c);
 int		is_redir(int type);
 int		check_pipe(t_token *token);
 int		check_redir(t_token *token);

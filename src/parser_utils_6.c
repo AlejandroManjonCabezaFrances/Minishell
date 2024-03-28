@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 20:25:53 by vini              #+#    #+#             */
-/*   Updated: 2024/03/06 20:18:54 by vini             ###   ########.fr       */
+/*   Updated: 2024/03/28 15:18:20 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,11 @@ int	count_flen(char *str, int i)
 			f_len++;
 	}
 	return (f_len);
+}
+
+int	is_valid_char(char c)
+{
+	if ((!ft_isalnum(c) && (c != '_')) || (c == '?'))
+		return (0);
+	return (1);
 }

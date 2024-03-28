@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/03/06 20:48:11 by vini             ###   ########.fr       */
+/*   Updated: 2024/03/28 15:19:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ char	*expand_dsign(char *str, char **env, int start)
 		{
 			start++;
 			end = start;
-			while (exp[end] && !is_space(exp[end]) && !is_operator(exp[end])
-				&& !is_qte(exp[end]) && !is_dsign(exp[end]) && exp[end] != '?')
+			while (exp[end] && is_valid_char(exp[end]))
 				end++;
 			if (exp[end] == '?' && end - start == 0)
 				end++;

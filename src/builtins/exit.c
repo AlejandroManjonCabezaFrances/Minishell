@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 09:25:04 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:09:24 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	void	ft_lower_shlvl(t_env *envi)
 	{
 		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
 		{
-			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) > 1)
+			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) >= 1)
 			{
 				n_shlvl = ft_itoa((ft_atoi(aux->content + 6) - 1));
 				ft_replace_node(envi, "SHLVL=", n_shlvl);
@@ -84,7 +84,7 @@ static int	ft_shlvl_equal_one(t_env *envi, t_info *info)
 	{
 		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
 		{
-			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) == 1)
+			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) == 0)
 			{
 				(info)->fl_exit++;
 				return (TRUE);
