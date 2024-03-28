@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:07:20 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/25 10:18:31 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:54:31 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,14 @@ int	parser(t_token **token_list, t_scmd **scmds_list, t_info *info)
 	info->path = get_path(info->env_cpy);
 	if (info->path != NULL)
 		info->bin_paths = ft_split(info->path, ':');
-	err = check_syntax(token_list);
-	if (err != 1)
-		return (err);
+	if (*token_list != NULL)
+	{
+		err = check_syntax(token_list);
+		if (err != 1)
+			return (err);
+	}
+	else
+		return (2);
 	assign_filenames(token_list);
 	err = build_scmdlist(token_list, scmds_list, info);
 	if (err != 1)

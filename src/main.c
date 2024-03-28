@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 08:30:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:52:54 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 	add_history(line);
 	if (err != 1)
 		panic(err, NULL, NULL);
-	if (err == 1)
+	else
 	{
 		err = parser(&list, &scmds, info);
 		if (err != 1)
 			panic(err, NULL, NULL);
-		err = executer(&scmds, info);
-		if (err != 1)
-			panic(err, NULL, NULL);
+		else if (err == 1)
+		{
+			err = executer(&scmds, info);
+			if (err != 1)
+				panic(err, NULL, NULL);
+		}
 	}
 	free(line);
 	ms_lstclear(&list);
@@ -114,6 +117,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 
 	info.envi = NULL;
+	info.bin_paths = NULL;
 	info.env_cpy = NULL;
 	info.fl_exit = 0;
 	token_list = NULL;

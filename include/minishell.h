@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 12:12:12 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:00:38 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void	ft_builtin(char **args, t_info *info);
 void	ft_builtins(char **cmd, t_info *info);
 void	parent_close(int fd_1, int fd_2, t_scmd *scmd);
 int		check_builtin(t_scmd *scmd);
+int		exec_builtin(t_scmd *scmd, t_info *info);
 int		exec_command(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd);
 int		last_command(t_scmd *scmd, t_info *info, int upstream);
 int		exec_cmds(t_scmd **scmds_list, t_info *info);

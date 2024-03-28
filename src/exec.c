@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/25 12:21:51 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:56:09 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,8 @@ void	check_cmds(t_scmd **scmds_list, t_info *info)
 int	executer(t_scmd **scmds_list, t_info *info)
 {
 	check_cmds(scmds_list, info);
-	return (exec_cmds(scmds_list, info));
+	if (!(*scmds_list)->next & (check_builtin(*scmds_list) == 1))
+		return (exec_builtin(*scmds_list, info));
+	else
+		return (exec_cmds(scmds_list, info));
 }

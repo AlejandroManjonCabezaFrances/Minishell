@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:45:54 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/02/27 15:31:14 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:59:32 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_array(char **str)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str[i])
 		return ;
 	while (str[i])
 	{
