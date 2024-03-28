@@ -12,6 +12,11 @@
 
 #include "../../include/minishell.h"
 
+/**
+ * We add the nodes in the penultimate position
+ * @param	t_env **envi, t_env *node
+ * @return	static	void
+*/
 static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 {
 	t_env	*aux;
@@ -36,9 +41,8 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 }
 
 /**
- * Exports the variable already parsed and puts it in the
- * penultimate position as the terminal
- * @param	char *cmd, t_env *envi
+ * Exports the var already parsed and puts it in the penultimate position
+ * @param	char *cmd, t_env **envi
  * @return	void
 */
 void	ft_export_parsed_variable(char *cmd, t_env **envi)
@@ -47,10 +51,10 @@ void	ft_export_parsed_variable(char *cmd, t_env **envi)
 }
 
 /**
- * Splits arguments without '=', not numbers and creates two alphabetically
+ * We replicate bash printing an error
  * ordered lists
- * @param	t_env *envi, char *cmd
- * @return	 void
+ * @param	char *cmd
+ * @return	 static	int. TRUE or FALSE
 */
 static	int	ft_export_error_argv(char *cmd)
 {
@@ -76,8 +80,8 @@ static	int	ft_export_error_argv(char *cmd)
 
 /**
  * The non-existing variable to be exported will be parsed.
- * @param	char **cmd, char *aux, int *fail
- * @return	var_parsed. Parsed mallocated string
+ * @param	char *cmd
+ * @return	char. var_parsed. Parsed mallocated string
 */
 char	*ft_parser_arguments(char *cmd)
 {

@@ -6,12 +6,18 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:33:42 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 07:57:18 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 08:54:25 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * We put quotes around the content of the environment variables
+ * with the "bubble sort".
+ * @param	t_env *copy_lst
+ * @return	static	void
+*/
 static	void	ft_put_quotes_in_declare(t_env *copy_lst)
 {
 	t_env	*aux;
@@ -42,10 +48,9 @@ static	void	ft_put_quotes_in_declare(t_env *copy_lst)
 }
 
 /**
- * When "export" has not argument, this function sorts the environment
- * alphabetically with the "bubble sort".
+ * This function sorts the environment alphabetically with the "bubble sort"
  * @param	t_env *envi
- * @return	void
+ * @return	static	void
 */
 static	void	ft_export_without_argv_sort(t_env *envi)
 {
@@ -69,6 +74,11 @@ static	void	ft_export_without_argv_sort(t_env *envi)
 	}
 }
 
+/**
+ * We make a copy of the env list
+ * @param	t_env *envi
+ * @return	static	t_env
+*/
 static	t_env	*ft_copy_lst_to_declare(t_env *envi)
 {
 	t_env	*dest;
@@ -95,6 +105,12 @@ static	t_env	*ft_copy_lst_to_declare(t_env *envi)
 	return (dest);
 }
 
+/**
+ * When there is only "export" in the prompt, we order the env alphabetically
+ * and put quotes
+ * @param	t_env *envi
+ * @return	static	void
+*/
 static	void	ft_just_export(t_env *envi)
 {
 	t_env	*copy_lst;

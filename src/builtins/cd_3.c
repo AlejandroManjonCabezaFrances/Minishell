@@ -15,7 +15,7 @@
 /**
  * We update the node by overwriting the content when --> env -i ./minishell
  * @param	t_env **envi, char *str, char *pwd_oldpwd
- * @return	void
+ * @return	static void
 */
 static	void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
 {
@@ -30,7 +30,7 @@ static	void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
  * Replaces the oldpwd of the linked list when --> env -i ./minishell
  * updating the pointers and deleting the node
  * @param	t_env *aux, char *str, char *pwd_oldpwd
- * @return	void
+ * @return	static void
 */
 static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 {

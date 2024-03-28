@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 12:07:31 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:25:04 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Lower the shlvl by -1, checking that shlvl > 1
  * @param	t_env *envi
- * @return	void
+ * @return	static void
 */
 static	void	ft_lower_shlvl(t_env *envi)
 {
@@ -42,7 +42,7 @@ static	void	ft_lower_shlvl(t_env *envi)
 /**
  * Manages the numeric arguments of "exit"
  * @param	char **cmd
- * @return	int
+ * @return	static int
 */
 static	int	ft_manage_numerics(char **cmd)
 {
@@ -69,6 +69,12 @@ static	int	ft_manage_numerics(char **cmd)
 	return (check_num);
 }
 
+/**
+ * When SHLVL is equal to 1, I add the contents of a flag to exit
+ * the minishell program
+ * @param	t_env *envi, t_info *info
+ * @return	static void
+*/
 static int	ft_shlvl_equal_one(t_env *envi, t_info *info)
 {
 	t_env	*aux;

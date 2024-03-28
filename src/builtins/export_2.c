@@ -14,8 +14,8 @@
 
 /**
  * Manipulates the pointers of the nodes of the head, tail and middle linked list
- * @param	t_env **envi, t_env *aux, t_env *new_node
- * @return	void
+ * @param	t_env **envi, t_env **aux, t_env **new_node
+ * @return	static void
 */
 static	void	ft_handle_head_tail(t_env **envi, t_env **aux, t_env **new_node)
 {
@@ -83,7 +83,7 @@ void	ft_trim_replace_node_parsed(t_env **envi, t_env *aux, char *cmd)
 
 /**
  * Replaces the existing environment variable node parsed for builtin export
- * @param	t_env *envi, char *cmd
+ * @param	t_env **envi, char *cmd
  * @return	void
 */
 void	ft_replace_node_parsed(t_env **envi, char *cmd)
@@ -108,8 +108,8 @@ void	ft_replace_node_parsed(t_env **envi, char *cmd)
 
 /**
  * This function searches to see if the variable you want to export exists.
- * @param	char **cmd, t_env *envi
- * @return	(TRUE) --> env var exists
+ * @param	char **cmd, t_env **envi, int i
+ * @return	(TRUE) --> env var exists or (FALSE)
 */
 int	ft_env_var_exists(char **cmd, t_env **envi, int i)
 {

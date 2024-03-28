@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 13:10:12 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 08:30:38 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,30 @@ void	disable_ctrl_c_printing_chars(void)
 	}
 }
 
+/**
+ * Loop content, signals, readline and main function of the program
+ * @param	t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line
+ * @return	int
+*/
+int	loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line)
+{
+	ft_signals();
+	cmd_line = readline("minishell-0.2$ ");
+	if (!cmd_line)
+		return (1);
+	if (cmd_line[0])
+	{
+		cmd_line[ft_strlen(cmd_line)] = '\0';
+		shell_operation(cmd_line, token_list, scmds_list, info);
+	}
+	return (0);
+}
+
+/**
+ * We copy the env received from the int main and if it is null, we create an env
+ * @param	t_info *info, int argc, char **argv, char **envp
+ * @return	int
+*/
 int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 {
 	if (*envp == NULL)
@@ -74,20 +98,6 @@ int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 	disable_ctrl_c_printing_chars();
 	if (argc > 1 || ft_strncmp(argv[0], "./minishell", ft_strlen(argv[0])))
 		return (printf("No smartass shenanigans, just the executable ;)\n"));
-	return (0);
-}
-
-int	loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line)
-{
-	ft_signals();
-	cmd_line = readline("minishell-0.2$ ");
-	if (!cmd_line)
-		return (1);
-	if (cmd_line[0])
-	{
-		cmd_line[ft_strlen(cmd_line)] = '\0';
-		shell_operation(cmd_line, token_list, scmds_list, info);
-	}
 	return (0);
 }
 

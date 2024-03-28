@@ -6,12 +6,17 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:41:16 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/26 09:48:41 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 08:32:39 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * We compare that we have found a "builtin" command in the prompt
+ * @param	char **cmd, t_info *info
+ * @return	void
+*/
 void	ft_builtins(char **cmd, t_info *info)
 {
 	if (ft_strcmp(*cmd, "echo") == 0)

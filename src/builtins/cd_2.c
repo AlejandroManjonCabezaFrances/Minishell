@@ -77,7 +77,9 @@ int	ft_change_directory(t_env *envi, char *path)
 }
 
 /**
- * We reserve memory to update envi->old_pwd and envi->pwd
+ * We reserve memory to update envi->old_pwd and envi->pwd and
+ * we return an int to manage whether or not the directory can be changed
+ * @param	t_env *envi
  * @return	int
 */
 int	ft_one_step_back(t_env *envi)
@@ -101,8 +103,6 @@ int	ft_one_step_back(t_env *envi)
 		ft_strlcpy(cd_back, envi->old_pwd, len + 1);
 	}
 	change = chdir(cd_back);
-	printf("*************************\n");
-	printf("change = %d\n", change);
 	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (change != 0)
 		perror(cd_back);

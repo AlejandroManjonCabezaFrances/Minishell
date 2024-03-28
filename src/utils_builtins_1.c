@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 10:38:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:27:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	ft_linked_list_env(t_env **envi, char **env)
 	}
 }
 
+/**
+ * This function receives a pointer to a list and prints it
+ * @param	t_env *temp
+ * @return	void
+*/
 void	ft_print_lst_2(t_env *temp)
 {
 	while (temp)
@@ -38,6 +43,11 @@ void	ft_print_lst_2(t_env *temp)
 	}
 }
 
+/**
+ * This function receives a double pointer and prints it
+ * @param	char **env_array
+ * @return	void
+*/
 void	ft_print_double_pointer(char **env_array)
 {
 	int	i;
@@ -53,7 +63,7 @@ void	ft_print_double_pointer(char **env_array)
 /**
  * We create a double pointer and simulate the environment variables
  *	when --> env -i ./minishell
- * @param	t_env *envi
+ * @param	t_env **envi, t_info *info
  * @return	void
 */
 void	ft_simulate_env_i_minishell(t_env **envi, t_info *info)

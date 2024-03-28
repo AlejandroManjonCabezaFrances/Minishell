@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 14:35:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:16:56 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /**
  * Adds a node to the end of the env linked list
- * @param	t_env *envi
- * @return	void
+ * @param	t_env *envi, char **cmd
+ * @return	static void
 */
 static	void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 {
@@ -56,7 +56,7 @@ static	int	ft_env_var_existing(t_env *envi, char *str)
 /**
  * We manage the cd with arguments ".., folder change and when we
  * do env -i ./minishell"
- * @param	t_env *envi, char *str
+ * @param	char **cmd, t_env *envi, int ok_change_dir
  * @return	int. ok_change_dir
 */
 static	int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
@@ -80,8 +80,8 @@ static	int	ft_cd_with_argv(char **cmd, t_env *envi, int ok_change_dir)
  * Replicates the "cd" builtin. Checks if the command has argv
  * ('..' or a path) or not (go to home) and updates PWD and OLDPWD of the env
  * with/without env -i ./minishell
- * @param	char **cmd, t_env *envi
- * @return	void
+ * @param	char **cmd, t_env *envi, char **env
+ * @return	int
 */
 int	ft_cd(char **cmd, t_env *envi, char **env)
 {

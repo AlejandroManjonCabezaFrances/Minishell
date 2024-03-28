@@ -6,12 +6,17 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/25 14:35:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/03/28 08:34:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * We print the nodes that contain a '='
+ * @param	t_env *temp
+ * @return	static	void
+*/
 static	void	ft_print_lst_3(t_env *temp)
 {
 	while (temp)

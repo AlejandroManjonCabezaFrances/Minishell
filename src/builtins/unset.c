@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/24 02:04:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 09:15:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * We manipulate the pointers correctly by paying attention to the first/last
+ * node in the list
+ * @param	t_env **envi, t_env **aux
+ * @return	static void
+*/
 static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 {
 	t_env	*temp;
@@ -38,6 +44,11 @@ static	void	ft_handle_list_header_and_tail(t_env **envi, t_env **aux)
 	}
 }
 
+/**
+ * We look for the node we want to delete
+ * @param	t_env **envi, char *cmd
+ * @return	static void
+*/
 static	void	ft_delete_node(t_env **envi, char *cmd)
 {
 	t_env	*aux;
@@ -55,6 +66,11 @@ static	void	ft_delete_node(t_env **envi, char *cmd)
 	}
 }
 
+/**
+ * Replicates the "unset" builtin like bash.
+ * @param	char **cmd, t_env **envi
+ * @return	void
+*/
 void	ft_unset(char **cmd, t_env **envi)
 {
 	int	i;
