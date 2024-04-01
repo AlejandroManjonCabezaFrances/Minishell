@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:44:58 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 09:27:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/01 12:22:29 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_simulate_env_i_minishell(t_env **envi, t_info *info)
 	char	cwd[PATH_MAX];
 
 	info->env_cpy = malloc(sizeof(char *) * 4);
-	info->env_cpy[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
+	info->env_cpy[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));	
 	info->env_cpy[1] = ft_strdup("SHLVL=1");
 	info->env_cpy[2] = ft_strdup("_=/usr/bin/env");
 	info->env_cpy[3] = NULL;

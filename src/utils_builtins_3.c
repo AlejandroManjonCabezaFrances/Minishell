@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:33:42 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 09:42:42 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:44:31 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,37 @@ char	**ft_convert_list_to_double_pointer(t_env **envi)
 
 /**
  * Replaces the existing environment variable node
+ * @param	t_env *node_free, t_env *aux, t_env *aux2
+ * @return	void
+*/
+void	ft_trim_1(t_env **node_free, t_env **aux, t_env **aux2)
+{
+	*node_free = *aux;
+	*aux2 = (*aux)->next;
+	*aux = (*aux)->prev;
+}
+
+/**
+ * Replaces the existing environment variable node
+ * @param	char *str, char *pwd_oldpwd, t_env *new_node
+ * @return	void
+*/
+void	ft_trim_2(char *str, char *pwd_oldpwd, t_env **new_node)
+{
+	char	*var_join;
+	
+	var_join = NULL;
+	var_join = ft_strjoin(str, pwd_oldpwd);
+	*new_node = ft_lstnew_str_env(var_join);
+	free(var_join);
+}
+
+/**
+ * Replaces the existing environment variable node
  * @param	t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node
  * @return	void
 */
-void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node)
+void	ft_trim_3(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node)
 {
 	aux->next = new_node;
 	new_node->prev = aux;
@@ -115,10 +142,11 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 	t_env	*node_free;
 	t_env	*new_node;
 	int		len;
-
+	
 	aux = envi;
 	aux2 = NULL;
 	node_free = NULL;
+	new_node = NULL;
 	len = 0;
 	while (str[len] != '=')
 		len++;
@@ -126,11 +154,9 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 	{
 		if (ft_strncmp(aux->content, str, len) == 0)
 		{
-			node_free = aux;
-			aux2 = aux->next;
-			aux = aux->prev;
-			new_node = ft_lstnew_str_env(ft_strjoin(str, pwd_oldpwd));
-			ft_trim(aux, aux2, node_free, new_node);
+			ft_trim_1(&node_free, &aux, &aux2);
+			ft_trim_2(str, pwd_oldpwd, &new_node);
+			ft_trim_3(aux, aux2, node_free, new_node);
 			break ;
 		}
 		aux = aux->next;

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 15:19:10 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:45:53 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ void	ft_env(t_env **envi, char **cmd);
 	/* ------ EXIT ------ */
 void	ft_exit(char **cmd, t_info *info);
 
-/* ------ UTILS_ALEX ------ */
+/* ------ UTILS_BUILTINS ------ */
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_linked_list_env(t_env **envi, char **env);
 void	ft_print_lst_2(t_env *temp);
@@ -274,6 +274,8 @@ void	ft_lstclear_ms(t_env **lst, void (*del)(void*));
 void	del_ms(void *content);
 void	ft_simulate_env_i_minishell(t_env **envi, t_info *info);
 void	ft_print_double_pointer(char **env_array);
-void	ft_trim(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
+void	ft_trim_1(t_env **node_free, t_env**aux, t_env **aux2);
+void	ft_trim_2(char *str, char *pwd_oldpwd, t_env **ew_node);
+void	ft_trim_3(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
 
 #endif
