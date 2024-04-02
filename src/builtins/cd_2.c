@@ -96,12 +96,10 @@ int	ft_one_step_back(t_env *envi)
 	char	*cd_back;
 	int		change;
 	size_t	len;
-	char	*is_null;
 
 	change = -1;
 	cd_back = NULL;
-	is_null = getcwd(cwd, sizeof(cwd));
-	if (is_null != NULL)
+	if ((getcwd(cwd, sizeof(cwd))) != NULL)
 		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)

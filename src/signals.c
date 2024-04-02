@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 10:39:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/02 06:45:21 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
  * You declare a structure called "act" that will receive the signal.
  * All elements of the struct are initialized to 0 with the memset function.
  * When SIGQUIT signal is received it will be ignored
- * The signation function is used to set this configuration for the SIGQUIT signal.
+ * The signation function is used to set this configuration for the
+ * SIGQUIT signal.
  * @param	void
  * @return	void
 */
@@ -58,7 +59,8 @@ void	ft_signal_reset_prompt(int signal)
  * All elements of the struct are initialized to 0 with the memset function.
  * We assign the address of the function 'ft_signal_reset_prompt', so that
  * this function is executed with the SIGINT signal.
- * The signation function is used to set this configuration for the SIGINT signal.
+ * The signation function is used to set this configuration for the
+ * SIGINT signal.
  * @param	void
  * @return	void
 */

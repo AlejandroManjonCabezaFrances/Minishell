@@ -6,7 +6,7 @@
 #    By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/04/01 11:18:40 by amanjon-         ###   ########.fr        #
+#    Updated: 2024/04/02 06:42:14 by amanjon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ RM = rm -f
 SRC = main.c lexer.c lexer_utils.c list_utils.c list_utils_2.c error.c \
 		parser.c parser_utils.c parser_utils_2.c parser_utils_3.c \
 		parser_utils_4.c parser_utils_5.c parser_utils_6.c env.c exec.c \
-		exec_utils.c exec_utils_2.c exec_utils_3.c signals.c utils_builtins_1.c utils_builtins_2.c \
-		utils_builtins_3.c builtins/cd_1.c builtins/cd_2.c builtins/cd_3.c builtins/echo.c builtins/environment.c \
+		exec_utils.c exec_utils_2.c exec_utils_3.c signals.c utils_builtins_1.c utils_builtins_2.c utils_builtins_3.c \
+		utils_builtins_4.c builtins/cd_1.c builtins/cd_2.c builtins/cd_3.c builtins/echo.c builtins/environment.c \
 		builtins/exit.c builtins/export_1.c builtins/export_2.c builtins/export_3.c builtins/unset.c \
 		builtins/builtins.c builtins/pwd.c \
 
