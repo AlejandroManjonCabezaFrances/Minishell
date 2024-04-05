@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/02 06:44:36 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:15:11 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 	if (info->bin_paths)
 		free_array(info->bin_paths);
 	free(line);
-	ms_lstclear(&list);
+	free_list(list);
 	ms_close_fds(&scmds);
 	ms_cmdclear(&scmds);
 }
@@ -106,10 +106,10 @@ int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 	return (0);
 }
 
-void	leaks(void)
-{
-	system("leaks -q minishell");
-}
+// void	leaks(void)
+// {
+// 	system("leaks -q minishell");
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -132,9 +132,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	free(line);
-	ms_lstclear(&token_list);
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	atexit(leaks);
+	// atexit(leaks);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/01 13:00:21 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/05 19:58:13 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 void	ft_builtin(char **args, t_info *info)
 {
 	ft_builtins(args, info);
-	info->env_cpy = ft_convert_list_to_double_pointer(&info->envi);
+	free_array(info->env_cpy);
+	info->env_cpy = ft_convert_list_to_double_pointer(info->envi);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:57:51 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/01 12:10:47 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:09:43 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,19 @@ void	ms_lstclear(t_token **list)
 			(*list) = aux;
 		}
 		*list = NULL;
+	}
+}
+
+void	free_list(t_token *head)
+{
+	t_token	*tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		if (tmp->content)
+			free(tmp->content);
+		head = head->next;
+		free(tmp);
 	}
 }

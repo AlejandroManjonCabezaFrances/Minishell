@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:33:42 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/02 06:40:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:05:59 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,19 @@ t_env	*ft_lstlast_ms(t_env *lst)
  * @param	t_env *temp, char **env_array, int *count
  * @return	void
 */
-void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
+void	ft_convert_list_2(t_env *temp, char **env_array)
 {
 	int	i;
+	int	count;
 
+	count = 0;
 	while (temp)
 	{
-		env_array[*count] = ft_strdup(temp->content);
-		if (env_array[*count] == NULL)
+		env_array[count] = ft_strdup(temp->content);
+		if (env_array[count] == NULL)
 		{
 			i = 0;
-			while (i < (*count))
+			while (i < (count))
 			{
 				free(env_array[i]);
 				i++;
@@ -52,7 +54,7 @@ void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
 			break ;
 		}
 		temp = temp->next;
-		(*count)++;
+		count++;
 	}
 }
 
@@ -61,13 +63,13 @@ void	ft_convert_list_2(t_env *temp, char **env_array, int *count)
  * @param	t_env **envi
  * @return	char **env_array
 */
-char	**ft_convert_list_to_double_pointer(t_env **envi)
+char	**ft_convert_list_to_double_pointer(t_env *envi)
 {
 	t_env	*temp;
 	char	**env_array;
 	int		count;
 
-	temp = *envi;
+	temp = envi;
 	count = 0;
 	while (temp)
 	{
@@ -77,9 +79,8 @@ char	**ft_convert_list_to_double_pointer(t_env **envi)
 	env_array = malloc(sizeof(char *) * (count + 1));
 	if (env_array == NULL)
 		return (NULL);
-	temp = *envi;
-	count = 0;
-	ft_convert_list_2(temp, env_array, &count);
+	temp = envi;
+	ft_convert_list_2(temp, env_array);
 	env_array[count] = NULL;
 	return (env_array);
 }

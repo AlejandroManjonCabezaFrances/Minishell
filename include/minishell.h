@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/01 15:45:53 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:13:04 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void	ms_cmdclear(t_scmd **list);
 void	ms_print_lst(t_token *token);
 void	ms_print_cmdlst(t_scmd *sequence);
 void	ms_close_fds(t_scmd **list);
+void	free_list(t_token *head);
 
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);
