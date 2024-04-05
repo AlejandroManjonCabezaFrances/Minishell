@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/05 20:13:04 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/05 20:16:53 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,8 +269,8 @@ t_env	*ft_lstlast_ms(t_env *lst);
 t_env	*ft_lstnew_str_env(char *str_env);
 void	ft_lstadd_back_str_env(t_env **envi, t_env *node);
 void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd);
-char	**ft_convert_list_to_double_pointer(t_env **envi);
-void	ft_convert_list_2(t_env *temp, char **env_array, int *count);
+char	**ft_convert_list_to_double_pointer(t_env *envi);
+void	ft_convert_list_2(t_env *temp, char **env_array);
 void	ft_lstclear_ms(t_env **lst, void (*del)(void*));
 void	del_ms(void *content);
 void	ft_simulate_env_i_minishell(t_env **envi, t_info *info);

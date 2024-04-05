@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/05 19:58:13 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/05 20:17:34 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static	void	ft_upper_shlvl(t_env *envi)
 static	void	ft_nested_minishell(t_info *info)
 {
 	ft_upper_shlvl(info->envi);
-	info->env_cpy = ft_convert_list_to_double_pointer(&info->envi);
+	info->env_cpy = ft_convert_list_to_double_pointer(info->envi);
 }
 
 void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
