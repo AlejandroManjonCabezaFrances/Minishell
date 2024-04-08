@@ -75,7 +75,6 @@ void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd)
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
 			else
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
-			// free (pwd_oldpwd);		// NEW ***********
 			return ;
 		}
 		aux = aux->next;

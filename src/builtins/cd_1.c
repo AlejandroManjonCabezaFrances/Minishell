@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/08 07:54:14 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:20:30 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 	int		ok_change_dir;
 
 	path_home = NULL;
-	ok_change_dir = 0;
+	ok_change_dir = 0;	
 	if (cmd[1] != NULL)
 		ok_change_dir = ft_cd_with_argv(cmd, envi, ok_change_dir);
 	else
@@ -106,5 +106,6 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 	}
 	if (!ok_change_dir)
 		ft_update_env_pwd_oldpwd(envi);
+	
 	return (0);
 }

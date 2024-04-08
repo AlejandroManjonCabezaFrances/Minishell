@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/05 20:16:53 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/08 11:45:33 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_env
 {
 	char			**env_n;
 	int				flag;
+	char			*special;
 	char			*content;
 	char			*pwd;
 	char			*old_pwd;
@@ -275,8 +276,8 @@ void	ft_lstclear_ms(t_env **lst, void (*del)(void*));
 void	del_ms(void *content);
 void	ft_simulate_env_i_minishell(t_env **envi, t_info *info);
 void	ft_print_double_pointer(char **env_array);
-void	ft_trim_1(t_env **node_free, t_env**aux, t_env **aux2);
-void	ft_trim_2(char *str, char *pwd_oldpwd, t_env **ew_node);
-void	ft_trim_3(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
+// void	ft_trim_1(t_env **node_free, t_env**aux, t_env **aux2);
+// void	ft_trim_2(char *str, char *pwd_oldpwd, t_env **ew_node);
+// void	ft_trim_3(t_env *aux, t_env *aux2, t_env *node_free, t_env *new_node);
 
 #endif
