@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 06:39:18 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/02 06:46:24 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 07:07:46 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_trim_2(char *str, char *pwd_oldpwd, t_env **new_node)
 	var_join = NULL;
 	var_join = ft_strjoin(str, pwd_oldpwd);
 	*new_node = ft_lstnew_str_env(var_join);
-	free(var_join);
+	free (pwd_oldpwd);		// NEW ***********
+	free (var_join);
 }
 
 /**

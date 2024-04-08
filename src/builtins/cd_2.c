@@ -19,6 +19,7 @@
 */
 void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
+	printf("envi->pwd = %s\n", envi->pwd);
 	if (envi->flag == 1)
 	{
 		ft_replace_node_cd(&envi, "PWD=", envi->pwd);
@@ -79,7 +80,10 @@ int	ft_change_directory(t_env *envi, char *path)
 static void	ft_trim_one_step_back(int change, char *cd_back)
 {
 	if (change != 0)
+	{
+		printf("antes del perror **********\n");
 		perror(cd_back);
+	}
 	free(cd_back);
 }
 
@@ -109,9 +113,11 @@ int	ft_one_step_back(t_env *envi)
 		if (cd_back == NULL)
 			return (0);
 		ft_strlcpy(cd_back, envi->old_pwd, len + 1);
+		// free (envi->old_pwd);		// NEW *************
 	}
 	change = chdir(cd_back);
-	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	if ((getcwd(cwd, sizeof(cwd))) != NULL)			// NEW *************** ABORT o SEGV
+		envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	ft_trim_one_step_back(change, cd_back);
 	return (change);
 }

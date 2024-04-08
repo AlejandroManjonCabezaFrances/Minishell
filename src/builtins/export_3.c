@@ -48,6 +48,7 @@ static	void	ft_lstadd_penultimate_str_env(t_env **envi, t_env *node)
 void	ft_export_parsed_variable(char *cmd, t_env **envi)
 {
 	ft_lstadd_penultimate_str_env(envi, ft_lstnew_str_env(cmd));
+	free (cmd);		// NEW ***********
 }
 
 /**

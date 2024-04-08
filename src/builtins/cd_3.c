@@ -44,7 +44,7 @@ static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
 	aux = aux->prev;
 	result_join = ft_strjoin(str, pwd_oldpwd);
 	new_node = ft_lstnew_str_env(result_join);
-	free(result_join);
+	free (result_join);
 	if (aux->next->next != NULL)
 		aux->next->next->prev = new_node;
 	new_node->next = aux->next->next;
@@ -75,6 +75,7 @@ void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd)
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
 			else
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
+			// free (pwd_oldpwd);		// NEW ***********
 			return ;
 		}
 		aux = aux->next;

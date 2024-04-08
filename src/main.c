@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/05 20:15:11 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/08 06:35:06 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 	return (0);
 }
 
-// void	leaks(void)
-// {
-// 	system("leaks -q minishell");
-// }
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -134,6 +134,6 @@ int	main(int argc, char **argv, char **envp)
 	free(line);
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	// atexit(leaks);
+	atexit(leaks);
 	return (0);
 }

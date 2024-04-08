@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/03/28 09:16:56 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 07:54:14 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static	void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
+	// free (envi->old_pwd);					// NEW *********************
 	free (node_oldpwd);
 }
 
