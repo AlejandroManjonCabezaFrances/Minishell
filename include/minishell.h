@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/05 20:16:53 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/08 13:21:06 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int		count_flen(char *str, int i);
 int		closing_quote(char *str, int i);
 int		build_cmd(t_scmd *scmd);
 int		find_cmds(t_scmd **scmds_list);
+int		check_heredoc_line(char *line, char *content);
 int		open_heredoc(t_scmd *scmd, t_token *token);
 int		open_append(t_scmd *scmd, t_token *token);
 int		open_outfile(t_scmd *scmd, t_token *token);
@@ -212,12 +213,13 @@ void	free_list(t_token *head);
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);
 void	free_array(char **str);
-void	free_info(t_info info);
 
 /* ------ SIGNALS ------ */
 void	ft_signals(void);
 void	ft_signal_interrupt(void);
 void	ft_signal_reset_prompt(int signal);
+void	ft_signal_newline(int signal);
+void	ft_signals_noninteractive(void);
 void	ft_signal_quit(void);
 
 /* ------ ENV ------ */

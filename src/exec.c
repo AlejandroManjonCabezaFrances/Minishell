@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/28 13:56:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:02:12 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,23 @@ int	check_builtin(t_scmd *scmd)
 	if (str)
 	{
 		if (!ft_strncmp(str, "echo", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "cd", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "pwd", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "export", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "unset", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "env", ft_strlen(str)))
-			return (1);
+			return (0);
 		else if (!ft_strncmp(str, "exit", ft_strlen(str)))
-			return (1);
+			return (0);
 		else
-			return (2);
+			return (1);
 	}
-	return (0);
+	return (2);
 }
 
 void	check_cmds(t_scmd **scmds_list, t_info *info)
@@ -83,29 +83,30 @@ void	check_cmds(t_scmd **scmds_list, t_info *info)
 	while (aux)
 	{
 		err = check_builtin(aux);
-		if (err == 2)
+		if (err == 1)
 		{
 			err = check_path(aux);
-			if (err == 1)
+			if (err == 0)
 				aux->cmd_path = aux->cmd_name;
-			else if (err == 0)
+			else if (err == 1)
 			{
 				err = get_cmd(aux, info);
-				if (err != 1)
-					panic(err, NULL, NULL);
+				if (err != 0)
+					panic(COMMAND_ERR, NULL, NULL);
 			}
 			else
 				panic(err, NULL, NULL);
 		}
 		aux = aux->next;
 	}
+	g_signal_code = err;
 	free(aux);
 }
 
 int	executer(t_scmd **scmds_list, t_info *info)
 {
 	check_cmds(scmds_list, info);
-	if (!(*scmds_list)->next & (check_builtin(*scmds_list) == 1))
+	if (!(*scmds_list)->next & (check_builtin(*scmds_list) == 0))
 		return (exec_builtin(*scmds_list, info));
 	else
 		return (exec_cmds(scmds_list, info));

@@ -6,7 +6,7 @@
 /*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:40:48 by vini              #+#    #+#             */
-/*   Updated: 2024/03/04 11:28:09 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:59:23 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ int	build_cmd(t_scmd *scmd)
 	if (scmd->cmd_args == NULL)
 		return (MALLOC_ERR);
 	store_cmdargs(scmd);
+	return (1);
+}
+
+int	check_heredoc_line(char *line, char *content)
+{
+	if (!line || !ft_strncmp(line, content, ft_strlen(content)))
+		return (0);
 	return (1);
 }
 
