@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/08 11:38:25 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/09 10:57:26 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ int	ft_handle_env_execut(t_info *info, int argc, char **argv, char **envp)
 	return (0);
 }
 
-void	leaks(void)
-{
-	system("leaks -q minishell");
-}
+// void	leaks(void)
+// {
+// 	system("leaks -q minishell");
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -134,6 +134,6 @@ int	main(int argc, char **argv, char **envp)
 	free(line);
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	atexit(leaks);
+	// atexit(leaks);
 	return (0);
 }
