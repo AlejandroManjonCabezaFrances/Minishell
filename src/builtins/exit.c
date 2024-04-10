@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/09 15:22:03 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:20:54 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,10 @@ void	ft_exit(char **cmd, t_info *info)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_lower_shlvl(info->envi);
+			if (!cmd[1])
+				exit(0);
+			else
+				exit(ft_atoi(cmd[1]));
 		}
 		else
 		{
