@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/10 12:53:25 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:43:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static	void	ft_upper_shlvl(t_env *envi)
 			{
 				n_shlvl = ft_itoa((ft_atoi(aux->content + 6) + 1));
 				ft_replace_node(envi, "SHLVL=", n_shlvl);
-				// free(n_shlvl);
 				break ;
 			}
 		}

@@ -69,13 +69,13 @@ void	ft_trim_replace_node_parsed(t_env **envi, t_env *aux, char *cmd)
 {
 	t_env	*node_free;
 	t_env	*new_node;
-	char	*var_parsed;	// NEW ***********
+	char	*var_parsed;
 
 	node_free = NULL;
 	node_free = aux;
 	var_parsed = ft_parser_arguments_2(cmd);
-	new_node = ft_lstnew_str_env(var_parsed);	// NEW ***********
-	free (var_parsed);		// NEW ***********
+	new_node = ft_lstnew_str_env(var_parsed);
+	free (var_parsed);
 	new_node->next = aux->next;
 	if (aux->next != NULL)
 		aux->next->prev = new_node;

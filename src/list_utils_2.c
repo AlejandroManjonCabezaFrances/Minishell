@@ -6,16 +6,16 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:41:58 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/10 13:36:04 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:47:11 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void ms_print_cmdlst(t_scmd *sequence)
+void	ms_print_cmdlst(t_scmd *sequence)
 {
-	t_token *aux;
-	int i;
+	t_token	*aux;
+	int		i;
 
 	while (sequence)
 	{
@@ -41,9 +41,9 @@ void ms_print_cmdlst(t_scmd *sequence)
 	}
 }
 
-void ms_close_fds(t_scmd **list)
+void	ms_close_fds(t_scmd **list)
 {
-	t_scmd *aux;
+	t_scmd	*aux;
 
 	if (list != NULL)
 	{
@@ -61,9 +61,9 @@ void ms_close_fds(t_scmd **list)
 	}
 }
 
-t_scmd *ms_cmdnew(void)
+t_scmd	*ms_cmdnew(void)
 {
-	t_scmd *new;
+	t_scmd	*new;
 
 	new = NULL;
 	new = malloc(sizeof(t_scmd));
@@ -80,15 +80,15 @@ t_scmd *ms_cmdnew(void)
 	return (new);
 }
 
-void ms_cmdadd_back(t_scmd **list, t_scmd *new)
+void	ms_cmdadd_back(t_scmd **list, t_scmd *new)
 {
-	t_scmd *aux;
+	t_scmd	*aux;
 
 	aux = *list;
 	if (*list == NULL)
 	{
 		*list = new;
-		return;
+		return ;
 	}
 	else
 	{
@@ -98,37 +98,9 @@ void ms_cmdadd_back(t_scmd **list, t_scmd *new)
 	}
 }
 
-/* void	ms_cmdclear(t_scmd **list)
+void	ms_cmdclear(t_scmd **list)
 {
 	t_scmd	*aux;
-
-	if (list != NULL)
-	{
-		while (*list)
-		{
-			if ((*list)->next)
-				aux = (*list)->next;
-			else
-				aux = NULL;
-			if ((*list)->cmd_args)
-				free_array((*list)->cmd_args);
-			if ((*list)->cmd_name)
-				free((*list)->cmd_name);
-			if ((*list)->cmd_path)
-				free((*list)->cmd_path);
-			printf("hola\n");
-			ms_lstclear(&(*list)->wordlist);
-			printf("puto\n");
-			free(*list);
-			(*list) = aux;
-		}
-		*list = NULL;
-	}
-} */
-
-void ms_cmdclear(t_scmd **list)
-{
-	t_scmd *aux;
 
 	while (*list)
 	{
@@ -146,8 +118,8 @@ void ms_cmdclear(t_scmd **list)
 			free_array(aux->cmd_args);
 		if (aux->cmd_name)
 			free(aux->cmd_name);
-		if (aux->cmd_path &&
-			ft_strncmp(aux->cmd_name, aux->cmd_path, ft_strlen(aux->cmd_path)))
+		if (aux->cmd_path
+			&& ft_strncmp(aux->cmd_name, aux->cmd_path, ft_strlen(aux->cmd_path)))
 			free(aux->cmd_path);
 		ms_lstclear(&aux->wordlist);
 		free(aux);

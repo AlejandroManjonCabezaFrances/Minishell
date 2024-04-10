@@ -19,18 +19,16 @@
 */
 void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
-		if (envi->flag == 1)
-		{
-			ft_replace_node_cd(&envi, "PWD=", envi->pwd);
-			ft_replace_node_cd(&envi, "OLDPWD=", envi->old_pwd);
-		}
-		else
-		{
-			ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
-			// free (envi->old_pwd);
-			ft_replace_node(envi, "PWD=", envi->pwd);
-			// free (envi->pwd);
-		}
+	if (envi->flag == 1)
+	{
+		ft_replace_node_cd(&envi, "PWD=", envi->pwd);
+		ft_replace_node_cd(&envi, "OLDPWD=", envi->old_pwd);
+	}
+	else
+	{
+		ft_replace_node(envi, "OLDPWD=", envi->old_pwd);
+		ft_replace_node(envi, "PWD=", envi->pwd);
+	}
 }
 
 /**
@@ -67,15 +65,15 @@ int	ft_change_directory(t_env *envi, char *path)
 	char	cwd[PATH_MAX];
 
 	envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	printf("put oldpwd: %p\n", envi->old_pwd);
 	change = chdir(path);
 	envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	printf("put pwd: %p\n", envi->pwd);
 	if (change != 0)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		g_signal_code = 1;
 		perror(path);
+		free(envi->old_pwd);
+		free(envi->pwd);
 	}
 	return (change);
 }
@@ -103,11 +101,8 @@ int	ft_one_step_back(t_env *envi)
 
 	change = -1;
 	cd_back = NULL;
-	printf("llega aqui+++++++++++++++++++++++++++++++++\n");
 	if ((getcwd(cwd, sizeof(cwd))) != NULL)
-	{
 		envi->old_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	}
 	last_ocurrence = ft_strrchr(envi->old_pwd, '/');
 	if (last_ocurrence != NULL)
 	{
@@ -118,10 +113,8 @@ int	ft_one_step_back(t_env *envi)
 		ft_strlcpy(cd_back, envi->old_pwd, len + 1);
 	}
 	change = chdir(cd_back);
-	if ((getcwd(cwd, sizeof(cwd))) != NULL)		// NEW
-	{
+	if ((getcwd(cwd, sizeof(cwd))) != NULL)
 		envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	}
 	ft_trim_one_step_back(change, cd_back);
 	return (change);
 }

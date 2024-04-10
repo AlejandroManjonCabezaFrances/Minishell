@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:17 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/08 07:27:50 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:53:48 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static	void	ft_delete_node(t_env **envi, char *cmd)
 		{
 			node_free = aux;
 			ft_handle_list_header_and_tail(envi, &aux);
-			ft_lstdelone_ms(&node_free, &del_ms);		// NEW *********************
+			ft_lstdelone_ms(&node_free, &del_ms);
 		}
 		aux = aux->next;
 	}
