@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 11:28:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:30:08 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (loop(&info, token_list, scmds_list, line) || info.fl_exit == 1)
 			break ;
-	system("leaks -q minishell");
+		system("leaks -q minishell");
 	}
 	free(line);
 	free_array(info.env_cpy);
