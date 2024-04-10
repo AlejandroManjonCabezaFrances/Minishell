@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 06:39:18 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 16:15:05 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:24:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_replace_node(t_env *envi, char *str, char *pwd_oldpwd)
 		{
 			ft_trim_1(&node_free, &aux, &aux2);
 			ft_trim_2(str, pwd_oldpwd, &new_node);
-			ft_trim_3(&aux, &aux2, &node_free, &new_node|);
+			ft_trim_3(&aux, &aux2, &node_free, &new_node);
 			break ;
 		}
 		aux = aux->next;
