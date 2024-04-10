@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:11 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/09 09:53:34 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:29:15 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int	get_cmd(t_scmd *scmd, t_info *info)
 			if (access(command, F_OK & R_OK & X_OK) == 0)
 			{
 				scmd->cmd_path = command;
-				return (1);
+				return (0);
 			}
 			free(command);
 			i++;
 		}
 	}
-	return (COMMAND_ERR);
+	return (127);
 }
 
 int	check_path(t_scmd *scmd)
@@ -75,9 +75,9 @@ int	check_path(t_scmd *scmd)
 	if (scmd->cmd_name[0] == '.' || scmd->cmd_name[0] == '/')
 	{
 		if (access(scmd->cmd_name, F_OK & R_OK & X_OK) == 0)
-			return (1);
+			return (0);
 		else
 			return (COMMAND_ERR);
 	}
-	return (0);
+	return (1);
 }

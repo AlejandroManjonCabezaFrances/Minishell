@@ -3,36 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:26:44 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/02 06:45:21 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:05:54 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 /**
- * --------- CTRL + D - CTRL + \  ---------
- * You declare a structure called "act" that will receive the signal.
- * All elements of the struct are initialized to 0 with the memset function.
- * When SIGQUIT signal is received it will be ignored
- * The signation function is used to set this configuration for the
- * SIGQUIT signal.
- * @param	void
- * @return	void
-*/
-void	ft_signal_quit(void)
-{
-	struct sigaction	act;
-
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &act, NULL);
-}
-
-/**
- * --------- RESET PROMT ---------
+ * --------- RESET PROMPT ---------
  * The value 130 represents termination by Ctrl + C, which sends
  * the SIGINT signal.
  * rl_on_new_line: system function, that the cursor has moved to a new line
@@ -68,20 +49,53 @@ void	ft_signal_interrupt(void)
 {
 	struct sigaction	act;
 
+	ft_signal_quit();
 	memset(&act, 0, sizeof(act));
 	act.sa_handler = &ft_signal_reset_prompt;
 	sigaction(SIGINT, &act, NULL);
 }
 
 /**
- * Control + "D": close the terminal.
- * Control + "C": prints a new entry on a new line.
- * Control + "\": does nothing.
+ * Prints a newline for noninteractive signal handling.
+*/
+void	ft_signal_newline(int signal)
+{
+	(void)signal;
+	rl_on_new_line();
+}
+
+/**
+ * Sets the behavior in response to SIGINT (ctrl -c) and SIGQUIT (ctrl -\).
+ * Used when minishell is in noninteractive mode, meaning it is not awaiting
+ * user input. For example, when a command is running (i.e. cat), minishell
+ * should not react to SIGINT and SIGQUIT because only the running process (cat)
+ * needs to react to those signals.
+*/
+void	ft_signals_noninteractive(void)
+{
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = &ft_signal_newline;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+}
+
+/**
+ * --------- CTRL + D - CTRL + \  ---------
+ * You declare a structure called "act" that will receive the signal.
+ * All elements of the struct are initialized to 0 with the memset function.
+ * When SIGQUIT signal is received it will be ignored
+ * The signation function is used to set this configuration for the
+ * SIGQUIT signal.
  * @param	void
  * @return	void
 */
-void	ft_signals(void)
+void	ft_signal_quit(void)
 {
-	ft_signal_interrupt();
-	ft_signal_quit();
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &act, NULL);
 }

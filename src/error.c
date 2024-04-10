@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:45:54 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/02 06:25:58 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:57:27 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	free_info(t_info info)
-{
-	if (info.bin_paths)
-		free_array(info.bin_paths);
-	if (info.env_cpy)
-		free_array(info.env_cpy);
-}
 
 void	free_array(char **str)
 {

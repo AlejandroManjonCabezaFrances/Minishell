@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/09 15:25:00 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:29:25 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 	if (!scmd->cmd_path)
 	{
 		if (check_builtin(scmd) == 1)
-		{
 			ft_builtin(scmd->cmd_args, info);
-			exit(1);
-		}
-		else
-			exit(127);
+		exit(127);
 	}
 	if (info->path != NULL)
 	{
@@ -81,10 +77,7 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 	if (!scmd->cmd_path)
 	{
 		if (check_builtin(scmd) == 1)
-		{
 			ft_builtin(scmd->cmd_args, info);
-			exit(1);
-		}
 		exit(127);
 	}
 	if (info->path != NULL)
@@ -100,4 +93,5 @@ void	ft_builtin(char **args, t_info *info)
 	ft_builtins(args, info);
 	free_array(info->env_cpy);
 	info->env_cpy = ft_convert_list_to_double_pointer(info->envi);
+	exit(0);
 }

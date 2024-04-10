@@ -6,7 +6,7 @@
 /*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:28:24 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/04 11:16:36 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:31:08 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	open_heredoc(t_scmd *scmd, t_token *token)
 {
-	char	*buf;
+	char	*line;
 	int		file;
 
 	if (scmd->infile != -1)
@@ -24,14 +24,15 @@ int	open_heredoc(t_scmd *scmd, t_token *token)
 		return (INFILE_ERR);
 	while (1)
 	{
-		write(1, "> ", 2);
-		buf = get_next_line(0);
-		if (!ft_strncmp(buf, token->content, ft_strlen(token->content)))
+		ft_signal_interrupt();
+		line = readline(">");
+		ft_signals_noninteractive();
+		if (!check_heredoc_line(line, token->content))
 			break ;
-		write(file, buf, ft_strlen(buf));
-		free(buf);
+		write(file, line, ft_strlen(line));
+		free(line);
 	}
-	free(buf);
+	free(line);
 	close(file);
 	scmd->infile = open(".heredoc", O_RDONLY, 0644);
 	if (scmd->infile < 0)

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/09 12:26:15 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:29:04 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int		count_flen(char *str, int i);
 int		closing_quote(char *str, int i);
 int		build_cmd(t_scmd *scmd);
 int		find_cmds(t_scmd **scmds_list);
+int		check_heredoc_line(char *line, char *content);
 int		open_heredoc(t_scmd *scmd, t_token *token);
 int		open_append(t_scmd *scmd, t_token *token);
 int		open_outfile(t_scmd *scmd, t_token *token);
@@ -213,12 +214,13 @@ void	free_list(t_token *head);
 /* ------ ERROR ------ */
 void	panic(int err, t_token **list, t_token *token);
 void	free_array(char **str);
-void	free_info(t_info info);
 
 /* ------ SIGNALS ------ */
 void	ft_signals(void);
 void	ft_signal_interrupt(void);
 void	ft_signal_reset_prompt(int signal);
+void	ft_signal_newline(int signal);
+void	ft_signals_noninteractive(void);
 void	ft_signal_quit(void);
 
 /* ------ ENV ------ */
