@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 15:52:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:00:27 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,19 @@ static	int	ft_manage_numerics(char **cmd)
 	return (check_num);
 }
 
-/**
- * When SHLVL is equal to 1, I add the contents of a flag to exit
- * the minishell program
- * @param	t_env *envi, t_info *info
- * @return	static void
-*/
-static int	ft_shlvl_equal_one(t_env *envi, t_info *info)
+static int ft_check_nb(char *str)
 {
-	t_env	*aux;
-
-	aux = envi;
-	while (aux)
+	int i;
+	
+	i = 0;
+	while (str[i])
 	{
-		if (ft_strncmp(aux->content, "SHLVL=", 6) == 0)
-		{
-			if (ft_atoi((ft_strrchr(aux->content, '=')) + 1) == 0)
-			{
-				(info)->fl_exit++;
-				return (TRUE);
-			}
-		}
-		aux = aux->next;
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			return (1);
 	}
-	return (FALSE);
+	return (0);
 }
 
 /**
@@ -107,7 +96,7 @@ void	ft_exit(char **cmd, t_info *info)
 	check_two_num = ft_manage_numerics(cmd);
 	if (check_two_num <= 1)
 	{
-		if (cmd[1] == NULL || ft_isdigit(*cmd[1]) == 1)
+		if (cmd[1] == NULL || ft_check_nb(cmd[1]) == 0)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_lower_shlvl(info->envi);
@@ -124,6 +113,5 @@ void	ft_exit(char **cmd, t_info *info)
 			ft_lower_shlvl(info->envi);
 			exit (255);
 		}
-		ft_shlvl_equal_one(info->envi, info);
 	}
 }
