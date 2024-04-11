@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:28:24 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/11 15:26:19 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:03:57 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ int	check_files(t_scmd *scmd)
 		else if (aux->type == APPEND)
 			err = open_append(scmd, aux->next);
 		else if (aux->type == HEREDOC)
+		{
+			if (scmd->infile != -1)
+				close(scmd->infile);
 			err = open_heredoc(scmd, aux->next);
+		}
 		if (err != 1)
 			return (err);
 		aux = aux->next;

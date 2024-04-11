@@ -3,22 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:16:38 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/11 15:18:07 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:04:49 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_heredoc_line(char *line, char *content)
+{
+	if (!line || !ft_strncmp(line, content, ft_strlen(content)))
+		return (0);
+	return (1);
+}
 
 int	open_heredoc(t_scmd *scmd, t_token *token)
 {
 	char	*line;
 	int		file;
 
-	if (scmd->infile != -1)
-		close(scmd->infile);
 	file = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (file < 0)
 		return (INFILE_ERR);

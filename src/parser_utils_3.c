@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:40:48 by vini              #+#    #+#             */
-/*   Updated: 2024/04/08 12:59:23 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:55:16 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ void	store_cmdargs(t_scmd *scmd)
 		aux = aux->next;
 	}
 	free(aux);
-	scmd->cmd_args[i] = 0;
-	if (scmd->cmd_args[0])
-		scmd->cmd_name = ft_strdup(scmd->cmd_args[0]);
+	if (scmd->cmd_args)
+	{
+		scmd->cmd_args[i] = 0;
+		if (scmd->cmd_args[0])
+			scmd->cmd_name = ft_strdup(scmd->cmd_args[0]);
+	}
 }
 
 int	build_cmd(t_scmd *scmd)
@@ -48,17 +51,13 @@ int	build_cmd(t_scmd *scmd)
 		aux = aux->next;
 	}
 	free(aux);
-	scmd->cmd_args = malloc(sizeof(char *) * (argcount + 1));
-	if (scmd->cmd_args == NULL)
-		return (MALLOC_ERR);
+	if (argcount)
+	{
+		scmd->cmd_args = malloc(sizeof(char *) * (argcount + 1));
+		if (scmd->cmd_args == NULL)
+			return (MALLOC_ERR);
+	}
 	store_cmdargs(scmd);
-	return (1);
-}
-
-int	check_heredoc_line(char *line, char *content)
-{
-	if (!line || !ft_strncmp(line, content, ft_strlen(content)))
-		return (0);
 	return (1);
 }
 
