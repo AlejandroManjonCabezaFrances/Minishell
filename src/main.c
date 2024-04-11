@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/11 13:02:38 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:21:49 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	g_signal_code = 0;
 
-// void	leaks(void)
-// {
-// 	system("leaks -q minishell");
-// }
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
 
 /**
  * Control + "D": close the terminal.
@@ -51,11 +51,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (loop(&info, token_list, scmds_list, line))
 			break ;
-		system("leaks -q minishell");
+		// system("leaks -q minishell");
 	}
 	// free(line);
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	// atexit(leaks);
+	atexit(leaks);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:45:45 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/11 13:28:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:03:20 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	exec_child(t_scmd *scmd, t_info *info, int upstream, int *pipe_fd)
 		if (!ft_strncmp(scmd->cmd_args[0], "./minishell", 11))
 			ft_nested_minishell(info);
 		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
-		exit(1);
+		exit (1);
 	}
 }
 
@@ -85,7 +85,7 @@ void	last_child(t_scmd *scmd, t_info *info, int upstream)
 		if (!ft_strncmp(scmd->cmd_args[0], "./minishell", 11))
 			ft_nested_minishell(info);
 		execve(scmd->cmd_path, scmd->cmd_args, info->env_cpy);
-		exit(1);
+		exit (1);
 	}
 }
 

@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:28:24 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/08 11:31:08 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:26:19 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	open_heredoc(t_scmd *scmd, t_token *token)
-{
-	char	*line;
-	int		file;
-
-	if (scmd->infile != -1)
-		close(scmd->infile);
-	file = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (file < 0)
-		return (INFILE_ERR);
-	while (1)
-	{
-		ft_signal_interrupt();
-		line = readline(">");
-		ft_signals_noninteractive();
-		if (!check_heredoc_line(line, token->content))
-			break ;
-		write(file, line, ft_strlen(line));
-		free(line);
-	}
-	free(line);
-	close(file);
-	scmd->infile = open(".heredoc", O_RDONLY, 0644);
-	if (scmd->infile < 0)
-		return (INFILE_ERR);
-	scmd->heredoc = 1;
-	return (1);
-}
 
 int	open_append(t_scmd *scmd, t_token *token)
 {

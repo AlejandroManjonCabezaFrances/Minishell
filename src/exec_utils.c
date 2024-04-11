@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:11 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/11 13:30:23 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:46:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_cmd(t_scmd *scmd, t_info *info)
 			aux = ft_strjoin(info->bin_paths[i], "/");
 			command = ft_strjoin(aux, scmd->cmd_name);
 			free(aux);
-			if (access(command, F_OK & R_OK & X_OK) == 0)
+			if (access(command, F_OK & R_OK) == 0)
 			{
 				scmd->cmd_path = command;
 				return (0);
@@ -74,7 +74,7 @@ int	check_path(t_scmd *scmd)
 {
 	if (scmd->cmd_name[0] == '.' || scmd->cmd_name[0] == '/')
 	{
-		if (access(scmd->cmd_name, F_OK & R_OK & X_OK) == 0)
+		if (access(scmd->cmd_name, X_OK) == 0)
 			return (0);
 		else
 			return (COMMAND_ERR);
