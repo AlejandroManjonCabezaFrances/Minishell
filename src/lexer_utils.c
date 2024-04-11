@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:58:28 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/03/06 20:16:20 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/11 11:25:50 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_dsign(char c)
 
 int	is_space(char c)
 {
-	if (c == ' ')
+	if (c == ' ' || c == '\t' || c == '\n')
 		return (TRUE);
 	return (FALSE);
 }

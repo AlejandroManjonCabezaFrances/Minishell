@@ -17,12 +17,13 @@
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	static void
 */
-static	void	ft_pwd_without_env(t_env **envi, char *str, char *pwd_oldpwd)
+static	void	ft_pwd_without_env(t_env *envi, char *str, char *pwd_oldpwd)
 {
 	char	*result_join;
 
 	result_join = ft_strjoin(str, pwd_oldpwd);
-	(*envi)->content = ft_strdup(result_join);
+	free (envi->content);
+	(envi)->content = ft_strdup(result_join);
 	free (result_join);
 }
 
@@ -58,12 +59,12 @@ static	void	ft_oldpwd_without_env(t_env *aux, char *str, char *pwd_oldpwd)
  * @param	t_env **envi, char *str, char *pwd_oldpwd
  * @return	void
 */
-void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd)
+void	ft_replace_node_cd(t_env *envi, char *str, char *pwd_oldpwd)
 {
 	t_env	*aux;
 	int		len;
 
-	aux = *envi;
+	aux = envi;
 	len = 0;
 	while (str[len] != '=')
 		len++;
@@ -71,10 +72,11 @@ void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd)
 	{
 		if (ft_strncmp(aux->content, str, len + 1) == 0)
 		{
-			if (aux == *envi)
+			if (aux == envi)
 				ft_pwd_without_env(envi, str, pwd_oldpwd);
 			else
 				ft_oldpwd_without_env(aux, str, pwd_oldpwd);
+			free (pwd_oldpwd);
 			return ;
 		}
 		aux = aux->next;

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:59:44 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/08 14:00:17 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:12:02 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/**
- * Control + "D": close the terminal.
- * Control + "C": prints a new entry on a new line.
- * Control + "\": does nothing.
- * @param	void
- * @return	void
-*/
-void	ft_signals(void)
+static int	ft_only_space(char *str)
 {
-	ft_signal_interrupt();
-	ft_signal_quit();
+	int	i;
+	int	k;
+
+	i = -1;
+	k = 0;
+	while (str[++i])
+		if (!is_space(str[i]))
+			k++;
+	return (k);
 }
 
 void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
@@ -45,8 +45,9 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 		g_signal_code = 1;
 	if (info->bin_paths)
 		free_array(info->bin_paths);
-	free(line);
-	free_list(list);
+	// free(line);
+	if (list)
+		free_list(list);
 	ms_close_fds(&scmds);
 	ms_cmdclear(&scmds);
 }
@@ -90,8 +91,14 @@ int	loop(t_info *info, t_token *token_list, t_scmd *scmds_list, char *cmd_line)
 	if (cmd_line[0])
 	{
 		cmd_line[ft_strlen(cmd_line)] = '\0';
+		if (!ft_only_space(cmd_line))
+		{
+			free(cmd_line);
+			return (0);
+		}
 		shell_operation(cmd_line, token_list, scmds_list, info);
 	}
+	free(cmd_line);
 	return (0);
 }
 

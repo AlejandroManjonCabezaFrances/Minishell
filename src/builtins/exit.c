@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 18:00:27 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:08:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static	int	ft_manage_numerics(char **cmd)
 	return (check_num);
 }
 
-static int ft_check_nb(char *str)
+static int	ft_check_nb(char *str)
 {
 	int i;
 	

@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 11:29:04 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:31:47 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ int		ft_one_step_back(t_env *envi);
 int		ft_change_directory(t_env *envi, char *path);
 char	*ft_find_path_env(t_env *envi, char *str);
 void	ft_update_env_pwd_oldpwd(t_env *envi);
-void	ft_replace_node_cd(t_env **envi, char *str, char *pwd_oldpwd);
+void	ft_replace_node_cd(t_env *envi, char *str, char *pwd_oldpwd);
 
 	/* ------ ENV ------ */
 void	ft_env(t_env **envi, char **cmd);

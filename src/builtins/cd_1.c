@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:13:12 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/10 15:35:37 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:36:17 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static	void	ft_add_node_tail_lst(t_env *envi, char **cmd)
 	node_oldpwd = ft_strjoin("OLDPWD=", envi->old_pwd);
 	ft_lstadd_back_str_env(&envi, ft_lstnew_str_env(node_oldpwd));
 	free (node_oldpwd);
+	free (envi->old_pwd);		// NEW por si peta otra cosa
 }
 
 /**
@@ -87,9 +88,11 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 {
 	char	*path_home;
 	int		ok_change_dir;
+	int		ok_change_dir_2;
 
 	path_home = NULL;
 	ok_change_dir = 0;
+	ok_change_dir_2 = 0;
 	if (cmd[1] != NULL)
 		ok_change_dir = ft_cd_with_argv(cmd, envi, ok_change_dir);
 	else
@@ -101,9 +104,9 @@ int	ft_cd(char **cmd, t_env *envi, char **env)
 			return (1);
 		}
 		path_home = ft_find_path_env(envi, "HOME=");
-		ft_change_directory(envi, path_home);
+		ok_change_dir_2 = ft_change_directory(envi, path_home);
 	}
-	if (!ok_change_dir)
+	if (!ok_change_dir && !ok_change_dir_2)
 		ft_update_env_pwd_oldpwd(envi);
 	return (0);
 }

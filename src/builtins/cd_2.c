@@ -21,8 +21,8 @@ void	ft_update_env_pwd_oldpwd(t_env *envi)
 {
 	if (envi->flag == 1)
 	{
-		ft_replace_node_cd(&envi, "PWD=", envi->pwd);
-		ft_replace_node_cd(&envi, "OLDPWD=", envi->old_pwd);
+		ft_replace_node_cd(envi, "PWD=", envi->pwd);
+		ft_replace_node_cd(envi, "OLDPWD=", envi->old_pwd);
 	}
 	else
 	{
@@ -115,6 +115,8 @@ int	ft_one_step_back(t_env *envi)
 	change = chdir(cd_back);
 	if ((getcwd(cwd, sizeof(cwd))) != NULL)
 		envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	// printf("*********envi->old_pwd = %p\n", envi->old_pwd);
+	// printf("*********envi->pwd = %p\n", envi->pwd);
 	ft_trim_one_step_back(change, cd_back);
 	return (change);
 }
