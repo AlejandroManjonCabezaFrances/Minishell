@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/11 18:01:20 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/15 13:15:12 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void	ft_signal_quit(void);
 char	**copy_env(char **envp);
 char	*get_path(char **env);
 char	*find_var(char *varname, char **env);
+int		ft_find_path(char **str);
 
 /* ----------- BUILTINS ----------- */
 void	ft_builtins(char **cmd, t_info *info);
