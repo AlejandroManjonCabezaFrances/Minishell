@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vini <vini@student.42.fr>                  +#+  +:+       +#+         #
+#    By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 09:03:02 by amanjon-          #+#    #+#              #
-#    Updated: 2024/04/11 17:39:34 by vini             ###   ########.fr        #
+#    Updated: 2024/04/15 11:22:24 by vipalaci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I /libft/ft_printf/include -I /libft/gnl/include -I /libft/Libft/include
-DEBUG = -g3 -fsanitize=leak
+# DEBUG = -g3 -fsanitize=address
 RM = rm -f
 SRC = main.c main_utils.c lexer.c lexer_utils.c list_utils.c list_utils_2.c error.c \
 		parser.c parser_utils.c parser_utils_2.c parser_utils_3.c \

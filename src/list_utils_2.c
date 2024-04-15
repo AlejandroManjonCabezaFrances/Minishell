@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:41:58 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/11 15:29:17 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:54:15 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	ms_cmdclear(t_scmd **list)
 			(*list) = NULL;
 		}
 		if (aux->cmd_args)
-			free_array(aux->cmd_args);
-		if (aux->cmd_name)
-			free(aux->cmd_name);
+			free(aux->cmd_args);
+		// if (aux->cmd_name)
+		// 	free(aux->cmd_name);
 		if (aux->cmd_path
 			&& ft_strncmp(aux->cmd_name, aux->cmd_path, ft_strlen(aux->cmd_path)))
 			free(aux->cmd_path);
