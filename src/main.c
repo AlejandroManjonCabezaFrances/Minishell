@@ -6,7 +6,7 @@
 /*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/15 11:21:58 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:56:47 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (loop(&info, token_list, scmds_list, line))
 			break ;
-		// system("leaks -q minishell");
+		system("leaks -q minishell");
 	}
-	// free(line);
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
 	atexit(leaks);

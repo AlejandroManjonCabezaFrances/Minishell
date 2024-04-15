@@ -115,8 +115,6 @@ int	ft_one_step_back(t_env *envi)
 	change = chdir(cd_back);
 	if ((getcwd(cwd, sizeof(cwd))) != NULL)
 		envi->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	// printf("*********envi->old_pwd = %p\n", envi->old_pwd);
-	// printf("*********envi->pwd = %p\n", envi->pwd);
 	ft_trim_one_step_back(change, cd_back);
 	return (change);
 }
