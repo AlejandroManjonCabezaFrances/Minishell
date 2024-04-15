@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/04/15 11:48:44 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:56:32 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,11 @@ char	*expand_dsign(char *str, char **env, int start)
 			temp = buffer_var(exp, start, end, env);
 			free(exp);
 			exp = temp;
-			free(temp);
 			start--;
 		}
 		else
 			start++;
 	}
+	free(temp);
 	return (exp);
 }
