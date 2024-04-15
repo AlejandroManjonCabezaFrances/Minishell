@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/04/11 13:06:07 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:48:44 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,18 @@ void	check_quotes(t_scmd *scmd)
 	while (aux)
 	{
 		if (aux->type == WORD || aux->type == FILENAME || aux->type == EOF_N)
+		{
 			if (ft_strchr(aux->content, '"') || ft_strchr(aux->content, '\''))
 			{
 				flag = 1;
 				aux->content = unquote(aux->content);
 			}
+		}
 		if (flag)
 			free(aux->content);
 		aux = aux->next;
 		flag = 0;
 	}
-	// free(aux);
 }
 
 void	remove_quotes(t_scmd **scmds_list)

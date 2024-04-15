@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:59:44 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/11 13:12:02 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:44:35 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 		g_signal_code = 1;
 	if (info->bin_paths)
 		free_array(info->bin_paths);
-	// free(line);
 	if (list)
 		free_list(list);
 	ms_close_fds(&scmds);
