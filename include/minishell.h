@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 09:29:49 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/15 13:21:54 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:13:58 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void	ft_signal_quit(void);
 char	**copy_env(char **envp);
 char	*get_path(char **env);
 char	*find_var(char *varname, char **env);
+int		ft_find_path(char **str);
 
 /* ----------- BUILTINS ----------- */
 void	ft_builtins(char **cmd, t_info *info);

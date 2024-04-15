@@ -6,7 +6,7 @@
 /*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:59:44 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/15 14:02:09 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:19:40 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 	}
 	if (err != 1)
 		g_signal_code = 1;
-	if (info->bin_paths && find_var("PATH=", info->env_cpy))
+		
+	// if (info->bin_paths && ft_find_path("PATH=", info->env_cpy))
+	if (info->bin_paths && ft_find_path(info->env_cpy))		// VINI SHOULD CHECK
 		free_array(info->bin_paths);
 	if (list)
 		free_list(list);

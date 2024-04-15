@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:41:58 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/15 13:56:11 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:13:33 by amanjon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,18 @@ void	ms_cmdclear(t_scmd **list)
 		free(aux);
 	}
 	*list = NULL;
+}
+
+int	ft_find_path(char **str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (ft_strncmp(str[i], "PATH", ft_strlen(str[i])) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
