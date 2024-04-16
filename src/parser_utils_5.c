@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/04/16 21:19:57 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/16 23:22:07 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,5 @@ char	*expand_dsign(char *str, char **env, int start)
 		else
 			start++;
 	}
-	free(temp);
 	return (exp);
 }
