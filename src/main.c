@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/15 15:22:17 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:16:55 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int	g_signal_code = 0;
-
-void	leaks(void)
-{
-	system("leaks -q minishell");
-}
 
 /**
  * Control + "D": close the terminal.
@@ -51,10 +46,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (loop(&info, token_list, scmds_list, line))
 			break ;
-		system("leaks -q minishell");
 	}
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	atexit(leaks);
-	return (0);
+	exit (0);
 }

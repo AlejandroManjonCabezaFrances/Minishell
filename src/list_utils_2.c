@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:41:58 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/15 15:13:33 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:20:10 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,27 +116,11 @@ void	ms_cmdclear(t_scmd **list)
 		}
 		if (aux->cmd_args)
 			free(aux->cmd_args);
-		// if (aux->cmd_name)
-		// 	free(aux->cmd_name);
-		if (aux->cmd_path
-			&& ft_strncmp(aux->cmd_name, aux->cmd_path, ft_strlen(aux->cmd_path)))
+		if (aux->cmd_path && ft_strncmp(aux->cmd_name, aux->cmd_path
+				, ft_strlen(aux->cmd_path)))
 			free(aux->cmd_path);
 		ms_lstclear(&aux->wordlist);
 		free(aux);
 	}
 	*list = NULL;
-}
-
-int	ft_find_path(char **str)
-{
-	int	i;
-
-	i = 0;
-	while(str[i])
-	{
-		if (ft_strncmp(str[i], "PATH", ft_strlen(str[i])) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
 }

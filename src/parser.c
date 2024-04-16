@@ -6,7 +6,7 @@
 /*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:07:20 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/15 11:21:18 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:06:42 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ int	parser(t_token **token_list, t_scmd **scmds_list, t_info *info)
 {
 	int	err;
 
-	info->path = get_path(info->env_cpy);
-	if (info->path != NULL)
+	if (!info->path)
+		info->path = get_path(info->env_cpy);
+	if (info->path != NULL && !info->bin_paths)
 		info->bin_paths = ft_split(info->path, ':');
 	if (*token_list != NULL)
 	{

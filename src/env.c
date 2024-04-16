@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:31:16 by vini              #+#    #+#             */
-/*   Updated: 2024/04/15 13:21:48 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:20:46 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,18 @@ char	*find_var(char *varname, char **env)
 	if (!ft_strncmp(varname, "?", ft_strlen(varname)))
 		return (ft_itoa(g_signal_code));
 	return (NULL);
+}
+
+int	ft_find_path(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strncmp(str[i], "PATH", ft_strlen(str[i])) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
