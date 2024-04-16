@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:40:48 by vini              #+#    #+#             */
-/*   Updated: 2024/04/16 11:21:13 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/16 22:57:35 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	build_cmd(t_scmd *scmd)
 			argcount++;
 		aux = aux->next;
 	}
-	free(aux);
+	// free(aux);
 	if (argcount)
 	{
-		scmd->cmd_args = malloc(sizeof(char *) * (argcount + 1));
+		scmd->cmd_args = (char **)malloc(sizeof(char *) * (argcount + 1));
 		if (scmd->cmd_args == NULL)
 			return (MALLOC_ERR);
 	}

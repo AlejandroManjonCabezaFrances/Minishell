@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:07:20 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 12:54:24 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:00:09 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ int	parser(t_token **token_list, t_scmd **scmds_list, t_info *info)
 	else
 		return (2);
 	assign_filenames(token_list);
-	err = build_scmdlist(token_list, scmds_list, info);
-	if (err != 1)
-		ms_cmdclear(scmds_list);
+	build_scmdlist(token_list, scmds_list, info);
 	expand_var(scmds_list, info->env_cpy);
 	remove_quotes(scmds_list);
 	handle_redir(scmds_list);

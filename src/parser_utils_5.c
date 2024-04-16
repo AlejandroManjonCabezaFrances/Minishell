@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/04/15 13:56:32 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/16 21:19:57 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,16 @@ char	*unquote(char *str)
 void	check_quotes(t_scmd *scmd)
 {
 	t_token	*aux;
-	int		flag;
 
 	aux = scmd->wordlist;
-	flag = 0;
 	while (aux)
 	{
 		if (aux->type == WORD || aux->type == FILENAME || aux->type == EOF_N)
-		{
 			if (ft_strchr(aux->content, '"') || ft_strchr(aux->content, '\''))
-			{
-				flag = 1;
 				aux->content = unquote(aux->content);
-			}
-		}
-		if (flag)
-			free(aux->content);
 		aux = aux->next;
-		flag = 0;
 	}
+	free(aux);
 }
 
 void	remove_quotes(t_scmd **scmds_list)
