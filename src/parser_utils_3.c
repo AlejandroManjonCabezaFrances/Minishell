@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:40:48 by vini              #+#    #+#             */
-/*   Updated: 2024/04/16 22:57:35 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/17 16:00:02 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ void	store_cmdargs(t_scmd *scmd)
 	{
 		if (aux->type == WORD || aux->type == QUOTED_WORD)
 		{
-			scmd->cmd_args[i] = aux->content;
+			scmd->cmd_args[i] = ft_strdup(aux->content);
 			i++;
 		}
 		aux = aux->next;
 	}
+	free(aux);
 	if (scmd->cmd_args)
 	{
 		scmd->cmd_args[i] = 0;
 		if (scmd->cmd_args[0])
-			scmd->cmd_name = scmd->cmd_args[0];
+			scmd->cmd_name = ft_strdup(scmd->cmd_args[0]);
 	}
 }
 
@@ -49,10 +50,10 @@ int	build_cmd(t_scmd *scmd)
 			argcount++;
 		aux = aux->next;
 	}
-	// free(aux);
+	free(aux);
 	if (argcount)
 	{
-		scmd->cmd_args = (char **)malloc(sizeof(char *) * (argcount + 1));
+		scmd->cmd_args = malloc(sizeof(char *) * (argcount + 1));
 		if (scmd->cmd_args == NULL)
 			return (MALLOC_ERR);
 	}

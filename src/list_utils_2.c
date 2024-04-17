@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:41:58 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 20:37:02 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/17 16:04:32 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,52 @@ void	ms_cmdadd_back(t_scmd **list, t_scmd *new)
 	}
 }
 
+// void	ms_cmdclear(t_scmd **list)
+// {
+// 	t_scmd	*aux;
+
+// 	while (*list)
+// 	{
+// 		if ((*list)->next)
+// 		{
+// 			aux = (*list);
+// 			*list = (*list)->next;
+// 		}
+// 		else
+// 		{
+// 			aux = *list;
+// 			(*list) = NULL;
+// 		}
+// 		if (aux->cmd_args)
+// 			free(aux->cmd_args);
+// 		if (aux->cmd_path && ft_strncmp(aux->cmd_name, aux->cmd_path
+// 				, ft_strlen(aux->cmd_path)))
+// 			free(aux->cmd_path);
+// 		ms_lstclear(&aux->wordlist);
+// 		free(aux);
+// 	}
+// 	*list = NULL;
+// }
+
 void	ms_cmdclear(t_scmd **list)
 {
 	t_scmd	*aux;
 
-	while (*list)
+	if (list != NULL)
 	{
-		if ((*list)->next)
+		while (*list)
 		{
-			aux = (*list);
-			*list = (*list)->next;
+			aux = (*list)->next;
+			if ((*list)->cmd_args)
+				free_array((*list)->cmd_args);
+			if ((*list)->cmd_name)
+				free((*list)->cmd_name);
+			if ((*list)->cmd_path)
+				free((*list)->cmd_path);
+			ms_lstclear(&(*list)->wordlist);
+			free(*list);
+			(*list) = aux;
 		}
-		else
-		{
-			aux = *list;
-			(*list) = NULL;
-		}
-		if (aux->cmd_args)
-			free(aux->cmd_args);
-		if (aux->cmd_path && ft_strncmp(aux->cmd_name, aux->cmd_path
-				, ft_strlen(aux->cmd_path)))
-			free(aux->cmd_path);
-		ms_lstclear(&aux->wordlist);
-		free(aux);
+		*list = NULL;
 	}
-	*list = NULL;
 }
