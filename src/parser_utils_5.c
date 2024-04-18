@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:15:01 by vini              #+#    #+#             */
-/*   Updated: 2024/04/16 23:22:07 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/18 19:31:39 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,28 +97,26 @@ char	*buffer_var(char *source, int start, int end, char **env)
 
 char	*expand_dsign(char *str, char **env, int start)
 {
-	char	*exp;
 	char	*temp;
 	int		end;
 
-	exp = ft_strdup(str);
-	while (exp[start])
+	while (str[start])
 	{
-		if (is_dsign(exp[start]))
+		if (is_dsign(str[start]))
 		{
 			start++;
 			end = start;
-			while (exp[end] && is_valid_char(exp[end]))
+			while (str[end] && is_valid_char(str[end]))
 				end++;
-			if (exp[end] == '?' && end - start == 0)
+			if (str[end] == '?' && end - start == 0)
 				end++;
-			temp = buffer_var(exp, start, end, env);
-			free(exp);
-			exp = temp;
+			temp = buffer_var(str, start, end, env);
+			free(str);
+			str = temp;
 			start--;
 		}
 		else
 			start++;
 	}
-	return (exp);
+	return (str);
 }

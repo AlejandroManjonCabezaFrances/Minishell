@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:57:51 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 21:52:22 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/18 19:09:22 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	ms_print_lst(t_token *token)
 {
-	printf("--token list--\n");
-	while (token)
+	if (token)
 	{
-		printf("token = -%s- type = -%d-\n", token->content, token->type);
-		token = token->next;
+		printf("--token list--\n");
+		while (token)
+		{
+			printf("token = -%s- type = -%d- address = %p\n", token->content, token->type, token->content);
+			token = token->next;
+		}
 	}
 }
 
@@ -64,7 +67,10 @@ void	ms_lstclear(t_token **list)
 		{
 			aux = (*list)->next;
 			if (*list)
+			{
+				free((*list)->content);
 				free(*list);
+			}
 			(*list) = aux;
 		}
 		*list = NULL;

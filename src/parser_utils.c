@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:30:55 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 20:08:31 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/18 15:43:53 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	create_node(t_token *token, t_token **wordlist)
 
 	word = ms_lstnew();
 	word->type = token->type;
-	word->content = token->content;
+	word->content = ft_strdup(token->content);
 	ms_lstadd_back(wordlist, word);
 }
 

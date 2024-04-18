@@ -6,7 +6,7 @@
 /*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:59:44 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 21:20:38 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/18 19:27:11 by vini             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	shell_operation(char *line, t_token *list, t_scmd *scmds, t_info *info)
 		g_signal_code = 1;
 	if (info->bin_paths && find_var("PATH=", info->env_cpy))
 		free_array(info->bin_paths);
-	if (list)
-		free_list(list);
+	ms_lstclear(&list);
 	ms_close_fds(&scmds);
 	ms_cmdclear(&scmds);
 }
