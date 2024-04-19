@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:29:20 by amanjon-          #+#    #+#             */
-/*   Updated: 2024/04/16 20:35:02 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/19 13:04:30 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	g_signal_code = 0;
 
-// void	leaks(void)
-// {
-// 	system("leaks -q minishell");
-// }
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
 
 /**
  * Control + "D": close the terminal.
@@ -54,6 +54,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_array(info.env_cpy);
 	ft_lstclear_ms(&(info.envi), &del_ms);
-	// atexit(leaks);
+	atexit(leaks);
 	exit (0);
 }

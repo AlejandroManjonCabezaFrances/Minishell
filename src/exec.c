@@ -6,7 +6,7 @@
 /*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:16:05 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/16 12:54:57 by vipalaci         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:03:13 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	check_cmds(t_scmd **scmds_list, t_info *info)
 		{
 			err = check_path(aux);
 			if (err == 0)
-				aux->cmd_path = aux->cmd_name;
+				aux->cmd_path = ft_strdup(aux->cmd_name);
 			else if (err == 1)
 			{
 				err = get_cmd(aux, info);

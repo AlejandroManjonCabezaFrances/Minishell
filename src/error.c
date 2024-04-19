@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amanjon- <amanjon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:45:54 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/15 14:02:20 by amanjon-         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:02:42 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	free_array(char **str)
 		free(str[i]);
 		i++;
 	}
-	free(str[i]);
-	free(str);
+	if (str[i])
+		free(str[i]);
+	if (str)
+		free(str);
 	return ;
 }
 
