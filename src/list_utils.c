@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vini <vini@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vipalaci <vipalaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:57:51 by vipalaci          #+#    #+#             */
-/*   Updated: 2024/04/18 19:09:22 by vini             ###   ########.fr       */
+/*   Updated: 2024/04/19 13:13:02 by vipalaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ms_print_lst(t_token *token)
 		printf("--token list--\n");
 		while (token)
 		{
-			printf("token = -%s- type = -%d- address = %p\n", token->content, token->type, token->content);
+			printf("token = -%s- type = -%d-\n", token->content, token->type);
 			token = token->next;
 		}
 	}
